@@ -56,7 +56,7 @@ def train(net,loader_train,loader_test,optim,criterion):
 		x,y=next(iter(loader_train))
 		x=x.to(opt.device);y=y.to(opt.device)
 		N,C,H,W=y.size()
-		i=tools.get_illumination(y)+torch.zeros([N,1,H,W])
+		i=tools.get_illumination(y)+torch.zeros([N,1,H,W]).to(opt.device)
 		out=net(torch.cat([x,i],1))
 		loss=0
 		if opt.l1loss:
@@ -98,7 +98,7 @@ def test(net,loader_test):
 	for i ,(inputs,targets) in enumerate(loader_test):
 		inputs=inputs.to(opt.device);targets=targets.to(opt.device)
 		N,C,H,W=targets.size()
-		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W])
+		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
 		pred=net(torch.cat([inputs,i],1))
 		ssim1=ssim(pred,targets).item()
 		psnr1=psnr(pred,targets)
