@@ -60,9 +60,10 @@ def def_illumination(arr,shape):
 		ts.append(t)
 	return ts
 def unNorm(tensor,mean=[0.0629,0.0606,0.0558],std=[0.0430,0.0412,0.0425]):
+	t=tensor.clone()
 	for i in range(len(mean)):
-		tensor[:,i,:,:]=tensor[:,i,:,:]*std[i]+mean[i]
-	return tensor
+		t[:,i,:,:]=t[:,i,:,:]*std[i]+mean[i]
+	return t
 if __name__ == "__main__":
 	ts=torch.ones([1,1,1,1])
 	print(ts.item())
