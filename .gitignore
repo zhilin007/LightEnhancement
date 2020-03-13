@@ -2,7 +2,14 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.png
+*.jpg
+*.npy
+*.pk
+*.pth
+*.zip
+.DS_Store
+*.tmp
 # C extensions
 *.so
 
