@@ -53,7 +53,7 @@ def get_illumination(ts):
 	return i
 if __name__ == "__main__":
 	ts=torch.ones([3,3,256,256])
-	t=torch.zeros_like(ts)
 	i=get_illumination(ts)
-	i=i+t
-	x=torch.cat([ts,i],dim=1)
+	print(i.size())
+	
+	

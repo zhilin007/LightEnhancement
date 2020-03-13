@@ -88,5 +88,7 @@ class UNet(nn.Module):
 		return d1
 
 if __name__ == "__main__":
+	x=torch.zeros([1,4,160,160])
 	net=UNet()
-	print(sum([p.numel() for p in net.parameters()]))
+	y=net(x)
+	# print(sum([p.numel() for p in net.parameters()]))
