@@ -60,8 +60,7 @@ def def_illumination(arr,shape):
 		ts.append(t)
 	return ts
 if __name__ == "__main__":
-	ts=torch.ones([3,3,256,256])
-	i=get_illumination(ts)
-	print(i.size())
+	ts=torch.ones([1,1,1,1])
+	print(ts.item())
 	
 	
