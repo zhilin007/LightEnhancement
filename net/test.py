@@ -26,11 +26,11 @@ def eval(net,loader):
 			with torch.no_grad():
 				pred=net(torch.cat([inputs,i_c],1))
 				tensorgrid=torch.cat([tensorgrid,pred],1)
-		tensorgrid=utils.make_grid(tensorgrid,8,0)
+		grid=utils.make_grid(tensorgrid,8,0)
 		i_gt=tools.get_illumination(targets).item()
 		save_dir=os.path.join(cwd,'grids','unet',f'{ind}_in_gt_{i_gt}_0.1_0.2_0.3_0.4_0.5.png')
-		print(type(tensorgrid),ind)
-		utils.save_image(tensorgrid,save_dir)
+		print(type(grid),grid.shape,ind)
+		utils.save_image(grid,save_dir)
 if __name__ == "__main__":
 	#rpython test.py --net='unet' --pth=unet_160p_1e5_l1 --divisor=16
 	net=getNet()
