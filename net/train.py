@@ -98,7 +98,8 @@ def test(net,loader_test):
 	l=len(loader_test)
 	for i ,(inputs,targets) in enumerate(loader_test):
 		inputs=inputs.to(opt.device);targets=targets.to(opt.device)
-		pred=net(inputs)
+		i=tools.get_illumination(targets)+torch.zeros_like(targets)
+		pred=net(torch.cat([inputs,i],1))
 		ssim1=ssim(pred,targets).item()
 		psnr1=psnr(pred,targets)
 		ssims.append(ssim1)
