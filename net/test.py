@@ -37,8 +37,10 @@ def eval_imgs(net,path):
 	imgs=glob.glob(os.path.join(path,'*.png'))
 	illumination=[0.01,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
 	for im in imgs:
+		id=im.split('/')[-1].split('.')[0]
 		print(im)
 		im=Image.open(im).convert('RGB')
+		im=im.resize((256,256))
 		im=tfs.ToTensor()(im)
 		data=tfs.Normalize(mean=[0.0629,0.0606,0.0558],std=[0.0430,0.0412,0.0425])(im)[None,::]
 		N,C,H,W=data.size()
@@ -49,7 +51,7 @@ def eval_imgs(net,path):
 				pred=net(torch.cat([data,i_c],1))
 				grid=torch.cat([grid,pred],0)
 		grid=utils.make_grid(grid,4)
-		save_dir=os.path.join(cwd,'grids_real','unet',f'{im[:-4]}_in_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
+		save_dir=os.path.join(cwd,'grids_real','unet',f'{id}_in_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		utils.save_image(grid,save_dir)
 if __name__ == "__main__":
 	#rpython test.py --net='unet' --pth=unet_160p_1e5_l1 --divisor=16
