@@ -12,7 +12,7 @@ def getNet():
 	print(f'psnr:',ckp['max_psnr'],'ssim:',ckp['max_ssim'])
 	return net
 def eval(net,loader):
-	illumination=[0.1,0.2,0.3,0.4,0.5]
+	illumination=[0.01,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
 	for ind ,(inputs,targets) in enumerate(loader):
 		inputs=inputs.to(opt.device);targets=targets.to(opt.device)
 		N,C,H,W=targets.size()
@@ -26,9 +26,9 @@ def eval(net,loader):
 			with torch.no_grad():
 				pred=net(torch.cat([inputs,i_c],1))
 				tensorgrid=torch.cat([tensorgrid,pred],0)
-		grid=utils.make_grid(tensorgrid,8,0)
+		grid=utils.make_grid(tensorgrid,4)
 		i_gt=tools.get_illumination(targets).item()
-		save_dir=os.path.join(cwd,'grids','unet',f'{ind}_in_gt_{i_gt}_0.1_0.2_0.3_0.4_0.5.png')
+		save_dir=os.path.join(cwd,'grids','unet',f'{ind}_in_gt_{i_gt}_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		print(type(grid),grid.shape,ind)
 		utils.save_image(grid,save_dir)
 if __name__ == "__main__":
