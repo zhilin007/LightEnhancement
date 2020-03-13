@@ -51,8 +51,6 @@ def train(net,loader_train,loader_test,optim,criterion):
 	for step in range(start_step+1,opt.steps+1):
 		net.train()
 		lr=lr_schedule_cosdecay(step,T)
-		if opt.nocos:
-			lr=opt.lr
 		for param_group in optim.param_groups:
 			param_group["lr"] = lr  
 		x,y=next(iter(loader_train))
