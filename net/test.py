@@ -19,13 +19,13 @@ def eval(net,loader):
 		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
 		with torch.no_grad():
 			pred1=net(torch.cat([inputs,i],1))
-		tensorgrid=torch.cat([inputs,targets,pred1],dim=1)
+		tensorgrid=torch.cat([inputs,targets,pred1],dim=0)
 		i_conditions=tools.def_illumination(illumination,[1,1,H,W])
 		for i_c in i_conditions:
 			i_c=i_c.to(opt.device)
 			with torch.no_grad():
 				pred=net(torch.cat([inputs,i_c],1))
-				tensorgrid=torch.cat([tensorgrid,pred],1)
+				tensorgrid=torch.cat([tensorgrid,pred],0)
 		grid=utils.make_grid(tensorgrid,8,0)
 		i_gt=tools.get_illumination(targets).item()
 		save_dir=os.path.join(cwd,'grids','unet',f'{ind}_in_gt_{i_gt}_0.1_0.2_0.3_0.4_0.5.png')
