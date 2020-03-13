@@ -49,7 +49,7 @@ def eval_imgs(net,path):
 		for i_c in i_cs:
 			with torch.no_grad():
 				pred=net(torch.cat([data,i_c],1))
-				grid=torch.cat([grid,pred],0)
+				grid=torch.cat([grid,pred.cpu()],0)
 		grid=utils.make_grid(grid,4)
 		save_dir=os.path.join(cwd,'grids_real','unet',f'{id}_in_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		utils.save_image(grid,save_dir)
