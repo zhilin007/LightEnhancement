@@ -19,7 +19,7 @@ def eval(net,loader):
 		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
 		with torch.no_grad():
 			pred1=net(torch.cat([inputs,i],1))
-		tensorgrid=torch.cat([inputs,targets,pred1],dim=0)
+		tensorgrid=torch.cat([tools.unNorm(inputs),targets,pred1],dim=0)
 		i_conditions=tools.def_illumination(illumination,[1,1,H,W])
 		for i_c in i_conditions:
 			i_c=i_c.to(opt.device)
