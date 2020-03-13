@@ -10,7 +10,6 @@ import torch,warnings
 from torch import nn
 # from tensorboardX import SummaryWriter
 import torchvision.utils as vutils
-warnings.filterwarnings('ignore')
 from option import opt,step_save_pth,model_name
 from data_utils import *
 from ssim_loss import SSIM as ssimloss

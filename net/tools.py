@@ -51,6 +51,14 @@ def get_illumination(ts):
 	Y=Y[:,None,:,:]
 	i=torch.mean(Y,(2,3),keepdim=True)
 	return i
+def def_illumination(arr,shape):
+	#arr:list of illumination range 0-1
+	#shape:list of [1,1,H,W]
+	ts=[]
+	for a in arr:
+		t=torch.zeros(shape)+a
+		ts.append(t)
+	return ts
 if __name__ == "__main__":
 	ts=torch.ones([3,3,256,256])
 	i=get_illumination(ts)
