@@ -24,7 +24,7 @@ def tensorShow(tensors,titles=None):
         for tensor,tit,i in zip(tensors,titles,range(len(tensors))):
             img = make_grid(tensor)
             npimg = img.numpy()
-            ax = fig.add_subplot(211+i)
+            ax = fig.add_subplot(221+i)
             ax.imshow(np.transpose(npimg, (1, 2, 0)))
             ax.set_title(tit)
         plt.show()
