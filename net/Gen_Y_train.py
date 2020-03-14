@@ -72,8 +72,8 @@ def train(net,loader_train,loader_test,optim_y,optim_net,criterion):
 		loss_out.backward()
 		optim_net.step()
 		optim_net.zero_grad()
-
-		losses.append((loss_out+loss_y).item())
+		loss=loss_out+loss_y#for recording
+		losses.append(loss.item())
 		esti_time=((time.time()-start_time)/60)/(step-start_step)
 		esti_time=(opt.steps-step)*esti_time
 		print(f'\rtrain loss : {loss.item():.5f}| step :{step}/{opt.steps}|lr :{lr :.7f} |esti_time :{esti_time/60:.1f}h｜GPU:{torch.cuda.max_memory_allocated()/(1024**3) :.1f}G',end='',flush=True)
