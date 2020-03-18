@@ -17,7 +17,8 @@ from torchvision.models import vgg16
 import tools
 warnings.filterwarnings('ignore')
 models_={
-	'unet':UNet()
+	'unet':UNet(),
+	'gen_y_unet':GE_Y_Unet()
 }
 
 start_time=time.time()

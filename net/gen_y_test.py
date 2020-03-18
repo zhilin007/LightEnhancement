@@ -1,6 +1,6 @@
 import torch,os,sys,torchvision,tools,glob
 from torchvision import utils
-from train import models_
+from Gen_Y_train import models_
 from option import opt,cwd
 from data_utils import get_eval_loader
 from PIL import Image
@@ -16,21 +16,22 @@ def getNet():
 def eval(net,loader):
 	illumination=[0.01,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
 	for ind ,(inputs,targets) in enumerate(loader):
+		print(ind)
 		inputs=inputs.to(opt.device);targets=targets.to(opt.device)
 		N,C,H,W=targets.size()
 		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
 		with torch.no_grad():
-			pred1=net(torch.cat([inputs,i],1))
+			_,pred1=net(inputs,i)
 		tensorgrid=torch.cat([tools.unNorm(inputs),targets,pred1],dim=0)
 		i_conditions=tools.def_illumination(illumination,[1,1,H,W])
 		for i_c in i_conditions:
 			i_c=i_c.to(opt.device)
 			with torch.no_grad():
-				pred=net(torch.cat([inputs,i_c],1))
+				_,pred=net(inputs,i_c)
 				tensorgrid=torch.cat([tensorgrid,pred],0)
 		grid=utils.make_grid(tensorgrid,4)
 		i_gt=tools.get_illumination(targets).item()
-		save_dir=os.path.join(cwd,'grids','unet',f'{ind}_in_gt_{i_gt}_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
+		save_dir=os.path.join(cwd,'grids','gen_y_unet',f'{ind}_in_gt_{i_gt}_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		print(type(grid),grid.shape,ind)
 		utils.save_image(grid,save_dir)
 def eval_imgs(net,path):
@@ -48,14 +49,14 @@ def eval_imgs(net,path):
 		grid=torch.cat([tools.unNorm(data)],0)
 		for i_c in i_cs:
 			with torch.no_grad():
-				pred=net(torch.cat([data,i_c],1))
+				_,pred=net(data,i_c)
 				grid=torch.cat([grid,pred.cpu()],0)
 		grid=utils.make_grid(grid,4)
-		save_dir=os.path.join(cwd,'grids_real','unet',f'{id}_in_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
+		save_dir=os.path.join(cwd,'grids_real','gen_y_unet',f'{id}_in_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		utils.save_image(grid,save_dir)
 if __name__ == "__main__":
 	#rpython test.py --net='unet' --pth=unet_160p_1e5_l1 --divisor=16
-	#python test.py --net='gen_y_unet' --pth=gen_y_unet_160p_2e5_l1 --divisor=16 
+	#python gen_y_test.py --net='gen_y_unet' --pth=gen_y_unet_160p_2e5_l1 --divisor=16 
 	net=getNet()
 	loader=get_eval_loader()
 	eval(net,loader)
