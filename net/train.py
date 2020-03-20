@@ -19,6 +19,7 @@ warnings.filterwarnings('ignore')
 models_={
 	'unet':UNet(),
 	'unet64':UNet64(),
+	'euunet':EUUNet(),
 	'gen_y_unet':GE_Y_Unet(),
 	'gen_y_unet':GE_Y_Unet64(),
 }
