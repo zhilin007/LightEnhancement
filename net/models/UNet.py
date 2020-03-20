@@ -87,8 +87,52 @@ class UNet(nn.Module):
 		d1=self.conv1x1(d2)
 		return d1
 
+class UNet64(nn.Module):#feature 不变
+	def __init__(self,color=3,out_color=3,feature=64,bn=False):
+		#depth=4 2^4=16
+		super(UNet64,self).__init__()
+		self.maxpool=nn.MaxPool2d(kernel_size=2,stride=2)
+		self.conv1=Block(color,feature,bn)
+		self.conv2=Block(feature,feature,bn)
+		self.conv3=Block(feature,feature,bn)
+		self.conv4=Block(feature,feature,bn)
+		self.conv5=Block(feature,feature,bn)
+		
+		self.up5=Up(feature,feature,bn)
+		self.up5_conv=Block(feature*2,feature,bn)
+		self.up4=Up(feature,feature,bn)
+		self.up4_conv=Block(feature*2,feature,bn)
+		self.up3=Up(feature,feature,bn)
+		self.up3_conv=Block(feature*2,feature,bn)
+		self.up2=Up(feature,feature,bn)
+		self.up2_conv=Block(feature*2,feature,bn)
+
+		self.conv1x1=nn.Conv2d(feature,out_color,kernel_size=1,stride=1,padding=0)
+	def forward(self,x):
+		#encoder
+		x1=self.conv1(x)
+		x2=self.maxpool(x1)
+		x2=self.conv2(x2)
+		x3=self.maxpool(x2)
+		x3=self.conv3(x3)
+		x4=self.maxpool(x3)
+		x4=self.conv4(x4)
+		x5=self.maxpool(x4)
+		x5=self.conv5(x5)
+		#decoder
+		d5=self.up5(x5)
+		d5=self.up5_conv(torch.cat([x4,d5],dim=1))
+		d4=self.up4(d5)
+		d4=self.up4_conv(torch.cat([x3,d4],dim=1))
+		d3=self.up3(d4)
+		d3=self.up3_conv(torch.cat([x2,d3],dim=1))
+		d2=self.up2(d3)
+		d2=self.up2_conv(torch.cat([x1,d2],dim=1))
+		d1=self.conv1x1(d2)
+		return d1
+
 if __name__ == "__main__":
 	x=torch.zeros([1,4,160,160])
-	net=UNet()
+	net=UNet64(4)
 	y=net(x)
 	# print(sum([p.numel() for p in net.parameters()]))

@@ -18,7 +18,9 @@ import tools
 warnings.filterwarnings('ignore')
 models_={
 	'unet':UNet(),
-	'gen_y_unet':GE_Y_Unet()
+	'unet64':UNet64(),
+	'gen_y_unet':GE_Y_Unet(),
+	'gen_y_unet':GE_Y_Unet64(),
 }
 
 start_time=time.time()
