@@ -58,24 +58,24 @@ class UNet(nn.Module):
 		self.conv1x1=nn.Conv2d(feature,color,kernel_size=1,stride=1,padding=0)
 	def forward(self,x):
 		#encoder
-		x1=self.conv1(x)
+		x1=self.conv1(x)#64
 		
-		x2=self.maxpool(x1)
-		x2=self.conv2(x2)
+		x2=self.maxpool(x1)#32
+		x2=self.conv2(x2)#32
 
-		x3=self.maxpool(x2)
-		x3=self.conv3(x3)
+		x3=self.maxpool(x2)#16
+		x3=self.conv3(x3)#16
 
-		x4=self.maxpool(x3)
-		x4=self.conv4(x4)
+		x4=self.maxpool(x3)#8
+		x4=self.conv4(x4)#8
 
-		x5=self.maxpool(x4)
-		x5=self.conv5(x5)
+		x5=self.maxpool(x4)#4
+		x5=self.conv5(x5)#4
 		#decoder
-		d5=self.up5(x5)
-		d5=self.up5_conv(torch.cat([x4,d5],dim=1))
+		d5=self.up5(x5)#8
+		d5=self.up5_conv(torch.cat([x4,d5],dim=1))#8
 
-		d4=self.up4(d5)
+		d4=self.up4(d5)#16
 		d4=self.up4_conv(torch.cat([x3,d4],dim=1))
 
 		d3=self.up3(d4)
@@ -88,7 +88,7 @@ class UNet(nn.Module):
 		return d1
 
 class UNet64(nn.Module):#feature 不变
-	def __init__(self,color=3,out_color=3,feature=64,bn=False):
+	def __init__(self,color=4,out_color=3,feature=64,bn=False):
 		#depth=4 2^4=16
 		super(UNet64,self).__init__()
 		self.maxpool=nn.MaxPool2d(kernel_size=2,stride=2)
