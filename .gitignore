@@ -8,6 +8,7 @@ __pycache__/
 *.pk
 *.pth
 *.zip
+logs/
 .DS_Store
 *.tmp
 # C extensions
