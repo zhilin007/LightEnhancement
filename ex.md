@@ -1,5 +1,7 @@
 ### LOL 
 
+对于数据集的指标，使用没有光照scalar的模型做infer。和其他人的一样。
+
 |net|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|
 |unet|1e5|||4h|python train.py --net='unet' --step=100000 --pth=unet_160p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
