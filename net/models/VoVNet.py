@@ -47,8 +47,6 @@ def conv1x1(in_channels, out_channels, module_name, postfix,
         ('{}_{}/relu'.format(module_name, postfix),
             nn.ReLU(inplace=True)),
     ]
-
-
 class _OSA_module(nn.Module):
     def __init__(self,
                  in_ch,
