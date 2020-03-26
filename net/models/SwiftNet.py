@@ -132,7 +132,7 @@ class Decoder(nn.Module):#out_dim=128
 		out=self.up3(x4,out)#x4
 		return out
 class SwiftNet(nn.Module):
-	def __init__(self,incolor=3,outcolor=3):
+	def __init__(self,incolor=4,outcolor=3):
 		super(SwiftNet,self).__init__()
 		self.encoder=ResNet18(incolor)
 		self.spp=SpatialPyramidPooling(512)
@@ -148,10 +148,11 @@ class SwiftNet(nn.Module):
 		return out
 
 if __name__ == "__main__":
-	#最后也是1/4 上采样回去的，这对我们pixel-wise的评测标准非常不好
+	#最后output是1/4 上采样回去的，这对我们pixel-wise的评测标准非常不好!!!!
 	#devisor=32
-	x=torch.zeros([1,3,256,256])
+	x=torch.zeros([1,4,160,160])
 	net=SwiftNet()
-	print(sum([p.numel() for p in net.parameters()]))
+	# print(sum([p.numel() for p in net.parameters()]))
+	net(x)
 
 	
