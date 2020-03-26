@@ -92,7 +92,7 @@ class GE_Y_Unet(nn.Module):
 class GE_Y_Unet64(nn.Module):#feature不变会不会有性能损失
 	def __init__(self,in_color=4,att_color=1,out_color=3,feature_Y=64,feature=64):
 		super(GE_Y_Unet64,self).__init__()
-		from UNet import UNet64
+		from .UNet import UNet64
 		self.genY=UNet64(in_color,att_color,feature_Y)
 		self.unet=UNet64(in_color,out_color,feature)
 	def forward(self,x,illumin_cond):
