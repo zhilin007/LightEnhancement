@@ -43,7 +43,8 @@ if __name__ == "__main__":
 	memory: 16.00MB
 	Flops: 608.17MFlops (x5.4)
 	'''
-	#pending
+	#same with paper
+	#208s
 	x=torch.ones([1,16,256,256]).to('cuda:1')
 	sepnet=sepnet.to('cuda:1')
 	sep_time=time.time()
@@ -53,7 +54,7 @@ if __name__ == "__main__":
 			x=sepnet(x)
 	time_interval=time.time()-sep_time
 	print(time_interval)
-
+	#109s
 	x=torch.ones([1,16,256,256]).to('cuda:1')
 	stanet=stanet.to('cuda:1')
 	stand_time=time.time()
