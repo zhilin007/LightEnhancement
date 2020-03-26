@@ -44,21 +44,21 @@ if __name__ == "__main__":
 	Flops: 608.17MFlops (x5.4)
 	'''
 	#pending
-	# x=torch.ones([1,16,256,256]).to('cuda')
-	# sepnet=sepnet.to('cuda')
-	# sep_time=time.time()
-	# for i in range(steps):
-	# 	with torch.no_grad():
-	# 		x=sepnet(x)
-	# time_interval=time.time()-sep_time
-	# print(time_interval)
+	x=torch.ones([1,16,256,256]).to('cuda')
+	sepnet=sepnet.to('cuda')
+	sep_time=time.time()
+	for i in range(steps):
+		with torch.no_grad():
+			x=sepnet(x)
+	time_interval=time.time()-sep_time
+	print(time_interval)
 
-	# x=torch.ones([1,16,256,256]).to('cuda')
-	# stanet=stanet.to('cuda')
-	# stand_time=time.time()
-	# for i in range(steps):
-	# 	with torch.no_grad():
-	# 		x=stanet(x)
-	# time_interval=time.time()-stand_time
-	# print(time_interval)
+	x=torch.ones([1,16,256,256]).to('cuda')
+	stanet=stanet.to('cuda')
+	stand_time=time.time()
+	for i in range(steps):
+		with torch.no_grad():
+			x=stanet(x)
+	time_interval=time.time()-stand_time
+	print(time_interval)
 	
