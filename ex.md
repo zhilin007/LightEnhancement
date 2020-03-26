@@ -2,6 +2,7 @@
 
 对于数据集的指标，使用没有光照scalar的模型做infer。和其他人的一样。
 ulimit -n 2048
+nohup python >log.out
 
 |net|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|
