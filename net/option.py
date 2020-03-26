@@ -39,13 +39,10 @@ parser.add_argument('--ssimloss',action='store_true',help='ssim loss for train')
 #for data
 parser.add_argument('--divisor',type=int,default=1,help='input fig must can be divisible by it')
 
-
 opt=parser.parse_args()
-opt.device='cuda' if torch.cuda.is_available() else 'cpu'
 cwd='/'.join(os.path.realpath(__file__).split('/')[:-2])
 #/home/zhilin007/VS/derain/
-if cwd.find('Users')!=-1:
-    opt.data='/Users/wangzhilin/Downloads/data'
+opt.data=os.path.join(cwd,'data')
 opt.pth=os.path.join(cwd,'net','best_pth',opt.pth)
 
 if opt.pth.find('.pth') ==-1:

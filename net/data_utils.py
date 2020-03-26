@@ -69,22 +69,22 @@ class EHDataset(data.Dataset):
     def __len__(self):
         return len(self.lows)
 def get_train_loader(trainset='LOL'):
-    path=os.path.join(opt.data,'LightEnchancement',trainset)
+    path=os.path.join(opt.data,trainset)
     loader=DataLoader(EHDataset(path,'train','png'),batch_size=opt.bs,shuffle=True,pin_memory=True)
     return loader
 def get_eval_loader(trainset='LOL'):
-    path=os.path.join(opt.data,'LightEnchancement',trainset)
+    path=os.path.join(opt.data,trainset)
     loader=DataLoader(EHDataset(path,'eval','png'),batch_size=1,shuffle=False,pin_memory=True)
     return loader
 def get_eval_train_loader(trainset='LOL'):#查看是否overfit，和eval数据集一样有15张，从train集合的子集
-    path=os.path.join(opt.data,'LightEnchancement',trainset)
+    path=os.path.join(opt.data,trainset)
     loader=DataLoader(EHDataset(path,'eval_train','png'),batch_size=1,shuffle=False,pin_memory=True)
     return loader
 
 if __name__ == "__main__":
     #python data_utils.py --dcp_data --l1loss
     from tools import get_illumination
-    t_loader=get_eval_train_loader()
+    t_loader=get_train_loader()
     for _,(input,gt) in enumerate(t_loader):
         # ssim1=ssim(input,gt)
         i1=get_illumination(input)
