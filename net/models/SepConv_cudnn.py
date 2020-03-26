@@ -48,6 +48,7 @@ if __name__ == "__main__":
 	sepnet=sepnet.to('cuda:1')
 	sep_time=time.time()
 	for i in range(steps):
+		print(f'\r sepnet {i}/{steps}',end='',flush=True)
 		with torch.no_grad():
 			x=sepnet(x)
 	time_interval=time.time()-sep_time
@@ -57,6 +58,7 @@ if __name__ == "__main__":
 	stanet=stanet.to('cuda:1')
 	stand_time=time.time()
 	for i in range(steps):
+		print(f'\r stanet {i}/{steps}',end='',flush=True)
 		with torch.no_grad():
 			x=stanet(x)
 	time_interval=time.time()-stand_time
