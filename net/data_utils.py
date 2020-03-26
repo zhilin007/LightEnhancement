@@ -15,7 +15,8 @@ from torchvision.utils import make_grid
 from metrics import *
 from option import opt,cwd
 from tools import pad_pil
-
+import torch.multiprocessing
+torch.multiprocessing.set_sharing_strategy('file_system')
 def tensorShow(tensors,titles=None):
         '''
         t:BCWH
