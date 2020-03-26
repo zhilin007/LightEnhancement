@@ -125,7 +125,7 @@ def test(net,loader_test):
 		psnr1=psnr(pred,targets)
 		ssims.append(ssim1)
 		psnrs.append(psnr1)
-		losses.append(loss1)
+		losses.append(loss1.item())
 	return np.mean(ssims),np.mean(psnrs),np.mean(losses)
 
 if __name__ == "__main__":
