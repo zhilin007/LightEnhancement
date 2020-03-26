@@ -75,7 +75,7 @@ def train(net,loader_train,loader_test,loader_eval_train,optim,criterion):
 		losses.append(loss.item())
 		esti_time=((time.time()-start_time)/60)/(step-start_step)
 		esti_time=(opt.steps-step)*esti_time
-		print(f'\rtrain loss : {loss.item():.5f}| step :{step}/{opt.steps}|lr :{lr :.7f} |esti_time :{esti_time/60:.1f}h｜GPU:{torch.cuda.max_memory_allocated()/(1024**3) :.1f}G',end='',flush=True)
+		print(f'\rtrain loss : {loss.item():.5f}| step :{step}/{opt.steps}|lr :{lr :.7f} |esti_time :{esti_time/60:.1f}h',end='',flush=True)
 		if step % opt.eval_step ==0 :
 			with torch.no_grad():
 				ssim_eval,psnr_eval,loss_eval=test(net,loader_test)#on eval_dataset
