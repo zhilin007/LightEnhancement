@@ -30,7 +30,7 @@ parser.add_argument('--mseloss',action='store_true',help='l2 loss')
 parser.add_argument('--ssimloss',action='store_true',help='ssim loss for train')
 
 #for tensorboard
-parser.add_argument('--log_dir',type=str,default='logs')
+parser.add_argument('--log_dir',type=str,default='logs/')
 
 #for test
 #parser.add_argument('--save_fig',action='store_true',help='save fig in test_dataset.py')
@@ -42,14 +42,16 @@ parser.add_argument('--divisor',type=int,default=1,help='input fig must can be d
 opt=parser.parse_args()
 cwd='/'.join(os.path.realpath(__file__).split('/')[:-2])
 #/home/zhilin007/VS/derain/
+opt.log_dir+=opt.pth
 opt.data=os.path.join(cwd,'data')
 opt.pth=os.path.join(cwd,'net','best_pth',opt.pth)
-
 if opt.pth.find('.pth') ==-1:
     opt.pth+='.pth'
 step_save_pth=opt.pth.replace('best_pth','step_pth')
 model_name=opt.pth.split(os.sep)[-1].split('.')[0]
 
+
 if opt.print:
     print('\n'.join(['%s:%s' % item for item in opt.__dict__.items()]) )
 print('model:',opt.pth)
+print('logs:',opt.log_dir)

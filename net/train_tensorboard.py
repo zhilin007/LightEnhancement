@@ -80,7 +80,7 @@ def train(net,loader_train,loader_test,loader_eval_train,optim,criterion):
 				ssim_eval,psnr_eval,loss_eval=test(net,loader_test)#on eval_dataset
 				ssim_train,psnr_train,loss_train=test(net,loader_eval_train)#on train_dataset
 				print(f'\nstep :{step} on eval_dataset |ssim:{ssim_eval:.5f} | psnr:{psnr_eval:.4f} |loss:{loss_eval:.5f}')
-				print(f'\nstep :{step} on train_dataset |ssim:{ssim_train:.5f} | psnr:{psnr_train:.4f} |loss:{loss_train:.5f}')
+				print(f'step :{step} on train_dataset |ssim:{ssim_train:.5f} | psnr:{psnr_train:.4f} |loss:{loss_train:.5f}')
 				#plot tensorboard
 				with SummaryWriter(log_dir=opt.log_dir) as writer:
 					writer.add_scalars('ssim',{'eval':ssim_eval,'train':ssim_train},step)
