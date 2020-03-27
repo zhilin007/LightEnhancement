@@ -31,10 +31,10 @@ import numpy as np
 # print('FPS of trained_net:',FPS)
 
 if __name__ == "__main__":
-	#python cal_FPS --net=
-	net=models[opt.net].to('cuda:0')
+	#python cal_FPS --steps=1000 --device='cuda:0' --net= 
+	net=models[opt.net].to(opt.device)
 	steps=opt.steps
-	x=torch.ones([1,4,1024,1024]).to('cuda:0')
+	x=torch.ones([1,4,1024,1024]).to(opt.device)
 	times=[]
 	stime=time.time()
 	for i in range(steps):
@@ -46,6 +46,7 @@ if __name__ == "__main__":
 		print(f'{i}/{steps} infer_time:{infer_time}')
 	time_interval=time.time()-stime
 	FPS=steps/time_interval
+	print('current device :',torch.cuda.get_device_name(opt.device))
 	print(f'FPS of {opt.net}:',FPS)
 	print(f'infer_time: avg{np.mean(times)},min{np.min(times)},max{np.max(times)}')
 
