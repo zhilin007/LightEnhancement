@@ -122,7 +122,7 @@ class _Upsample(nn.Module):
 class Decoder(nn.Module):#out_dim=128 decoder to x4
 	def __init__(self,features=[16,32,64,64],in_dim=64):
 		super(Decoder,self).__init__()
-		self.up1=_Upsample(in_dim,features[-2],features[-2])
+		self.up1=_Upsample(in_dim,features[-2],features[-2])#original outdim=128
 		self.up2=_Upsample(features[-2],features[-3],features[-3])
 		self.up3=_Upsample(features[-3],features[-4],features[-4])
 	def forward(self,x32,x16,x8,x4):
@@ -133,9 +133,10 @@ class Decoder(nn.Module):#out_dim=128 decoder to x4
 class SwiftNetSlim(nn.Module):
 	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64]):
 		super(SwiftNetSlim,self).__init__()
+		self.sppdim=64 #original 128
 		self.encoder=ResNet18(incolor,features=features)#original features:[64,128,256,512]
-		self.spp=SpatialPyramidPooling(features[-1],out_size=64)
-		self.decoder=Decoder(features)
+		self.spp=SpatialPyramidPooling(features[-1],out_size=self.sppdim)
+		self.decoder=Decoder(features,in_dim=self.sppdim)
 		self.post=ReluConv(features[-4],outcolor,1)
 	def forward(self,x):
 		image_size=x.size()[2:4]
