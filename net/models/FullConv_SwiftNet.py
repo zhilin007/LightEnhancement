@@ -19,7 +19,7 @@ class BasicBlock(nn.Module):
 		out=self.relu(out)
 		return skip,out
 class ResNet18(nn.Module):
-	def __init__(self,color=4,layers=[2,2,2,2],features=[64,128,256,512]):
+	def __init__(self,color=4,layers=[2,2,2,2],features=[32,64,128,256,512]):
 		self.inplanes=features[0]
 		super(ResNet18,self).__init__()
 		self.conv1 = nn.Conv2d(color, features[0], kernel_size=7, stride=2, padding=3,
@@ -27,10 +27,10 @@ class ResNet18(nn.Module):
 		self.relu = nn.ReLU(inplace=True)
 		self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 		block=BasicBlock
-		self.layer1 = self._make_layer(block, features[0], layers[0])
-		self.layer2 = self._make_layer(block, features[1], layers[1], stride=2)
-		self.layer3 = self._make_layer(block, features[2], layers[2], stride=2)
-		self.layer4 = self._make_layer(block, features[3], layers[3], stride=2)
+		self.layer1 = self._make_layer(block, features[1], layers[0])
+		self.layer2 = self._make_layer(block, features[2], layers[1], stride=2)
+		self.layer3 = self._make_layer(block, features[3], layers[2], stride=2)
+		self.layer4 = self._make_layer(block, features[4], layers[3], stride=2)
 	def _make_layer(self, block, planes, blocks, stride=1):
 		downsample = None
 		if stride != 1 or self.inplanes != planes * block.expansion:
@@ -58,8 +58,6 @@ class ResNet18(nn.Module):
 		x16,x=self.forward_layer(x,self.layer3)
 		x32,x=self.forward_layer(x,self.layer4)
 		return x1,x2,x4,x8,x16,x32
-
-
 upsample = lambda x, size: F.interpolate(x, size, mode='bilinear', align_corners=False)
 class ReluConv(nn.Sequential):
 	def __init__(self, in_dim, out_dim,k=3):
@@ -119,42 +117,45 @@ class _Upsample(nn.Module):
 		x = x + skip #element add
 		x = self.blend_conv.forward(x)
 		return x
-class Decoder(nn.Module):#out_dim=128 decoder to x4
-	def __init__(self,features=[64,128,256,512],spp_dim=128):
+class Decoder(nn.Module):#out_dim=128 decoder to x
+	def __init__(self,features=[32,64,128,256,512],spp_dim=128,incolor=4):
 		super(Decoder,self).__init__()
-		self.up1=_Upsample(spp_dim,features[-2],spp_dim)
-		self.up2=_Upsample(spp_dim,features[-3],spp_dim)#这里不太合适吧。一直这么高纬度
-		self.up3=_Upsample(spp_dim,features[-4],spp_dim)
-	def forward(self,x32,x16,x8,x4):
+		self.up1=_Upsample(spp_dim,features[-2],spp_dim-32)#这里不太合适吧。一直这么高纬度
+		self.up2=_Upsample(spp_dim-32,features[-3],spp_dim-64)
+		self.up3=_Upsample(spp_dim-64,features[-4],spp_dim-64)
+		self.up4=_Upsample(spp_dim-64,features[-5],spp_dim-64)
+		self.up5=_Upsample(spp_dim-64,incolor,spp_dim-96)
+	def forward(self,x32,x16,x8,x4,x2,x1):
 		out=self.up1(x16,x32)#x16
 		out=self.up2(x8,out)#x8
 		out=self.up3(x4,out)#x4
+		out=self.up4(x2,out)#x2
+		out=self.up5(x1,out)#x1
 		return out
-class SwiftNetWidth(nn.Module):
-	def __init__(self,incolor=4,outcolor=3,width=1,features=[64,128,256,512]):
-		super(SwiftNetWidth,self).__init__()
+class FullConv_SwiftNet(nn.Module):
+	def __init__(self,incolor=4,outcolor=3,width=1,features=[32,64,128,256,512]):
+		super(FullConv_SwiftNet,self).__init__()
 		#width=width multiplier (0-1]
 		self.sppdim=int(128 * width)
 		features=[int(f*width) for f in features]
-		print(features,self.sppdim)
+		print('features:',features,'sppdim:',self.sppdim)
 		self.encoder=ResNet18(incolor,features=features)#original features:[64,128,256,512]
 		self.spp=SpatialPyramidPooling(features[-1],out_size=self.sppdim)
-		self.decoder=Decoder(features,spp_dim=self.sppdim)
-		self.post=ReluConv(self.sppdim,outcolor,1)
+		self.decoder=Decoder(features,spp_dim=self.sppdim,incolor=incolor)
+		self.post=ReluConv(self.sppdim//4,outcolor,1)
 	def forward(self,x):
 		image_size=x.size()[2:4]
+		#incolor,f[0],f[0],f[1],f[2],f[3]
 		x1,x2,x4,x8,x16,x32=self.encoder(x)
 		x32=self.spp(x32)
-		out_x4=self.decoder(x32,x16,x8,x4)
-		out_x4=self.post(out_x4)
-		out=upsample(out_x4,image_size)
+		out_x1=self.decoder(x32,x16,x8,x4,x2,x1)
+		out=self.post(out_x1)
 		return out
 
 if __name__ == "__main__":
-	#output是1/4 上采样回去的，这对我们pixel-wise的评测标准非常不好!!!!
-	#带着宽度倍乘器
+	#全部用卷积
 	x=torch.zeros([1,4,160,160])
-	net=SwiftNetWidth(4,3,0.2)
+	net=FullConv_SwiftNet(4,3,1)
 	print(sum([p.numel() for p in net.parameters()]))
 	net(x)
 

@@ -3,9 +3,9 @@ from models import *
 from torchvision import models
 import torch
 # net=EUUNet()
-net=SwiftNetSlim()
+# net=SwiftNetSlim()
+net=FullConv_SwiftNet()
 # print(net)
 # x=torch.ones([1,3,224,224])
 # net(x)
-# stat(net,(3,224,224))
-stat(net,(4,1024,1024))
+stat(net,(4,1920,1056))

@@ -22,7 +22,8 @@ models_={
 	'unet64':UNet64(),
 	'euunet':EUUNet(),
 	'swiftnet':SwiftNet(),
-	'swiftnetslim':SwiftNetSlim()
+	'swiftnetslim':SwiftNetSlim(),
+	'FullConv_SwiftNet':FullConv_SwiftNet()
 }
 
 start_time=time.time()

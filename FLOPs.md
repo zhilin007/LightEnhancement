@@ -1,7 +1,7 @@
 
 ### RTX2080Ti Float32:13.45 TFLOPS
 
-##### 1920x1080 目标: < 100GFLOPs
+##### 1920x1080 目标: < 100GFLOPs <1GB
 
 |net|InputSize|FLOPs|memory|paras|
 |-|-|-|-|-|-|
@@ -10,7 +10,8 @@
 |unet64|4x1920x1072|536.25G|7374.58MB|925,507|
 |euunet|4x1920x1072|636.17G|8198.99MB|1,073,219|
 |`swiftnet`|4x1920x1056|101.74G|1022.40MB|11,789,377|
-|`swiftnetslim`|4x1920x1056|3.55GF|129.29MB|424,082|
+|`swiftnetslim`|4x1920x1056|6.87G|249.93MB|424,082|
+|FullConv_SwiftNet|4x1920x1056|136.8G|2713.81MB|11,576,161|
 
 #### 224x224
 
