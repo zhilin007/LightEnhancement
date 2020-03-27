@@ -6,7 +6,7 @@ class BasicBlock(nn.Module):
 	def __init__(self,in_dim,out_dim,stride=1,downsample=None):
 		super(BasicBlock,self).__init__()
 		self.conv1=nn.Conv2d(in_dim,out_dim,3,stride,1)
-		self.relu=nn.ReLU(inplace=True)
+		self.relu=nn.ReLU(inplace=False)
 		self.conv2=nn.Conv2d(out_dim,out_dim,3,1,1)
 		self.downsample=downsample
 	def forward(self,x):
