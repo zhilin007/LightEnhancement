@@ -1,5 +1,5 @@
 import torch,time,os
-from models import *
+from train_tensorboard import models_
 from option import cwd,opt
 import numpy as np
 # x=torch.ones([1,4,1024,1024])
@@ -31,8 +31,8 @@ import numpy as np
 # print('FPS of trained_net:',FPS)
 
 if __name__ == "__main__":
-	#python cal_FPS --steps=1000 --device='cuda:0' --net= 
-	net=models[opt.net].to(opt.device)
+	#python cal_FPS.py --steps=1000 --device='cuda:0' --net= 
+	net=models_[opt.net].to(opt.device)
 	steps=opt.steps
 	x=torch.ones([1,4,1024,1024]).to(opt.device)
 	times=[]
