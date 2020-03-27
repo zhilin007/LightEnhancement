@@ -41,7 +41,7 @@ if __name__ == "__main__":
 		time1=time.time()
 		with torch.no_grad():
 			_=net(x)
-		infer_time=time.time-time1()
+		infer_time=time.time()-time1()
 		times.append(infer_time)
 		print(f'{i}/{steps} infer_time:{infer_time}')
 	time_interval=time.time()-stime
