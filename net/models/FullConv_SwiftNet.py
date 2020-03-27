@@ -6,7 +6,7 @@ class BasicBlock(nn.Module):
 	def __init__(self,in_dim,out_dim,stride=1,downsample=None):
 		super(BasicBlock,self).__init__()
 		self.conv1=nn.Conv2d(in_dim,out_dim,3,stride,1)
-		self.relu=nn.ReLU(inplace=False)
+		self.relu=nn.ReLU(inplace=True)
 		self.conv2=nn.Conv2d(out_dim,out_dim,3,1,1)
 		self.downsample=downsample
 	def forward(self,x):
@@ -24,7 +24,7 @@ class ResNet18(nn.Module):
 		super(ResNet18,self).__init__()
 		self.conv1 = nn.Conv2d(color, features[0], kernel_size=7, stride=2, padding=3,
 							bias=True)
-		self.relu = nn.ReLU(inplace=False)
+		self.relu = nn.ReLU(inplace=True)
 		self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 		block=BasicBlock
 		self.layer1 = self._make_layer(block, features[1], layers[0])
@@ -62,7 +62,7 @@ upsample = lambda x, size: F.interpolate(x, size, mode='bilinear', align_corners
 class ReluConv(nn.Sequential):
 	def __init__(self, in_dim, out_dim,k=3):
 		super(ReluConv, self).__init__()
-		self.add_module('relu', nn.ReLU(inplace=True))
+		self.add_module('relu', nn.ReLU(inplace=False))
 		self.add_module('conv', nn.Conv2d(in_dim, out_dim, kernel_size=k, padding=k//2))
 class SpatialPyramidPooling(nn.Module):
 	def __init__(self, num_maps_in, num_levels=3, bt_size=128, out_size=128,grids=(8, 4, 2, 1), square_grid=False,fixed_size=None):
