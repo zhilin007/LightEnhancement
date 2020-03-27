@@ -12,7 +12,8 @@ def print_ckp(dir):
 
 if __name__ == "__main__":
 	dir='net/best_pth/'
-	for i in os.listdir(dir):
+	for i in sorted(os.listdir(dir)):
 		if i.find('.pth')!=-1:
 			print(i)
 			print_ckp(dir+i)
+			print('\n')

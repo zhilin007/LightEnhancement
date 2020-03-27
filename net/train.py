@@ -90,9 +90,9 @@ def train(net,loader_train,loader_test,optim,criterion):
 				torch.save({'step':step,'max_psnr':max_psnr,'max_ssim':max_ssim,'ssims':ssims,'psnrs':psnrs,'losses':losses,'model':net.state_dict()},opt.pth)
 				print(f'\n best model saved at step :{step}| max_ssim:{max_ssim:.4f}| max_psnr:{max_psnr:.4f}|')
 
-	np.save(f'{cwd}/net/np_files/{model_name}_{opt.steps}_losses.npy',losses)
-	np.save(f'{cwd}/net/np_files/{model_name}_{opt.steps}_ssims.npy',ssims)
-	np.save(f'{cwd}/net/np_files/{model_name}_{opt.steps}_psnrs.npy',psnrs)
+	np.save(f'{cwd}/net/np_files/{model_name}_losses.npy',losses)
+	np.save(f'{cwd}/net/np_files/{model_name}_ssims.npy',ssims)
+	np.save(f'{cwd}/net/np_files/{model_name}_psnrs.npy',psnrs)
 
 def test(net,loader_test):
 	net.eval()

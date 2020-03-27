@@ -21,7 +21,7 @@ parser.add_argument('--device',type=str,default='cuda')
 parser.add_argument('--eval_step',type=int,default=1000)
 parser.add_argument('--lr', default=0.0001, type=float, help='learning rate')
 parser.add_argument('--pth',type=str,default='',help='model name to save')
-parser.add_argument('--net',type=str,default='')
+parser.add_argument('--net',type=str,default='')#for FPS & train
 parser.add_argument('--crop_size',type=int,default=256,help='crop_size')
 parser.add_argument('--print',action='store_true')
 parser.add_argument('--bs',type=int,default=1)
