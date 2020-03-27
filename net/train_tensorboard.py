@@ -21,7 +21,8 @@ models_={
 	'unet':UNet(),
 	'unet64':UNet64(),
 	'euunet':EUUNet(),
-	'swiftnet':SwiftNet()
+	'swiftnet':SwiftNet(),
+	'swiftnetslim':SwiftNetSlim()
 }
 
 start_time=time.time()

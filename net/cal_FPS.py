@@ -36,10 +36,8 @@ if __name__ == "__main__":
 	net=models_[opt.net].to(opt.device)
 	steps=opt.steps
 	# x=torch.ones([1,4,1024,1024]).to(opt.device)
-
 	x=torch.ones([1,3,1024,1024]).to(opt.device)
 	y=torch.ones([1,1,1024,1024]).to(opt.device)
-
 	times=[]
 	stime=time.time()
 	for i in range(steps):
