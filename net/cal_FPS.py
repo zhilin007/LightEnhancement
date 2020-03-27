@@ -2,7 +2,7 @@ import torch,time
 from models import *
 from option import cwd,opt
 x=torch.ones([1,4,1024,1024])
-net=Unet64()
+net=UNet64()
 net=torch.nn.DataParallel(net).to('cuda:0')
 def netload(net):
 	pth=os.path.join(cwd,net,'best_pth','unet64_160p_1e5_l1.pth')
@@ -17,7 +17,7 @@ for i in range(100000):
 		_=net(x)
 time_interval=time.time()-stime
 FPS=100000/time_interval
-print('FPS of net':FPS)
+print('FPS of net:',FPS)
 
 net=netload(net)
 x=torch.ones([1,4,1024,1024]).to('cuda:0')
@@ -28,5 +28,5 @@ for i in range(100000):
 		_=net(x)
 time_interval=time.time()-stime
 FPS=100000/time_interval
-print('FPS of trained_net':FPS)
+print('FPS of trained_net:',FPS)
 
