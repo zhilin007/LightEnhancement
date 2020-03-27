@@ -8,7 +8,7 @@ def netload(net):
 	pth=torch.load(pth)
 	net.load_state_dict(pth['model'])
 	return net
-steps=1000
+steps=2000
 x=torch.ones([1,4,1024,1024]).to('cuda:0')
 stime=time.time()
 for i in range(steps):
