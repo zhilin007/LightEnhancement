@@ -24,7 +24,7 @@ class ResNet18(nn.Module):
 		super(ResNet18,self).__init__()
 		self.conv1 = nn.Conv2d(color, features[0], kernel_size=7, stride=2, padding=3,
 							bias=True)
-		self.relu = nn.ReLU(inplace=True)
+		self.relu = nn.ReLU(inplace=False)
 		self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 		block=BasicBlock
 		self.layer1 = self._make_layer(block, features[1], layers[0])
@@ -142,7 +142,7 @@ class FullConv_SwiftNet(nn.Module):
 		self.encoder=ResNet18(incolor,features=features)#original features:[64,128,256,512]
 		self.spp=SpatialPyramidPooling(features[-1],out_size=self.sppdim)
 		self.decoder=Decoder(features,spp_dim=self.sppdim,incolor=incolor)
-		self.post=ReluConv(self.sppdim//4,outcolor,1)
+		self.post=ReluConv(self.sppdim-96,outcolor,1)
 	def forward(self,x):
 		image_size=x.size()[2:4]
 		#incolor,f[0],f[0],f[1],f[2],f[3]
