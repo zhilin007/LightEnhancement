@@ -6,4 +6,5 @@ from models.EUUnet import EUUNet
 from models.SwiftNet import SwiftNet
 from models.Swiftslim import SwiftNetSlim
 from models.FullConv_SwiftNet import FullConv_SwiftNet
+from models.TMPConv import FULLCONV
 

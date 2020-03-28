@@ -24,6 +24,7 @@ models_={
 	'swiftnet':SwiftNet(),
 	'swiftnetslim':SwiftNetSlim(),
 	'FullConv_SwiftNet':FullConv_SwiftNet(),
+	'FULLCONV':FULLCONV()
 }
 
 start_time=time.time()
