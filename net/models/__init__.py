@@ -6,3 +6,6 @@ from models.EUUnet import EUUNet
 from models.SwiftNet import SwiftNet
 from models.Swiftslim import SwiftNetSlim
 from models.FullConv_SwiftNet import FullConv_SwiftNet
+from models.FFA import FFA
+from models.Embed_FFA import Embed_FFA as EFFA
+

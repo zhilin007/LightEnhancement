@@ -23,7 +23,8 @@ models_={
 	'euunet':EUUNet(),
 	'swiftnet':SwiftNet(),
 	'swiftnetslim':SwiftNetSlim(),
-	'FullConv_SwiftNet':FullConv_SwiftNet()
+	'FullConv_SwiftNet':FullConv_SwiftNet(),
+	'EFFA':EFFA(2,10)
 }
 
 start_time=time.time()
