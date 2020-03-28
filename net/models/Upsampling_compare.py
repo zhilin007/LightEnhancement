@@ -41,6 +41,8 @@ if __name__ == "__main__":
 	steps=1000
 	x=torch.ones([1,3,256,256]).to('cuda:1')
 	nets=[BilinearUp().to('cuda:1'),SubPixel().to('cuda:1'),DeconvUp().to('cuda:1')]
+	#3.6s | 19.24s | 非常慢x100
+	#不需要运算的还是很快的
 	for net in nets:
 		torch.cuda.empty_cache()
 		sep_time=time.time()
