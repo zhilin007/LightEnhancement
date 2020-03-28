@@ -46,6 +46,6 @@ if __name__ == "__main__":
 		for i in range(steps):
 			print(f'\r  {i}/{steps}',end='',flush=True)
 			with torch.no_grad():
-				x=net(x)
+				_=net(x)
 		time_interval=time.time()-sep_time
 		print(time_interval)
