@@ -52,5 +52,6 @@ if __name__ == "__main__":
 	FPS=steps/time_interval
 	print('current device :',torch.cuda.get_device_name(0))
 	print(f'FPS of {opt.net}:',FPS)
+	print(x.size())
 	print(f'infer_time: avg{np.mean(times)},min{np.min(times)},max{np.max(times)}')
 
