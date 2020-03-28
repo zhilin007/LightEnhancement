@@ -7,7 +7,7 @@ class FULLCONV(nn.Module):
 		super(FULLCONV,self).__init__()
 		layer=[]
 		layer.append(nn.Conv2d(3,64,3,1,1))
-		for i in range(1,20):
+		for i in range(1,40):
 			layer.append(nn.Conv2d(64,64,3,3,1))
 			layer.append(nn.ReLU())
 		self.net=nn.Sequential(*layer)
