@@ -6,9 +6,9 @@ class FULLCONV(nn.Module):
 	def __init__(self):
 		super(FULLCONV,self).__init__()
 		layer=[]
-		layer.append(nn.Conv2d(3,16,3,1,1))
-		for i in range(1,10):
-			layer.append(nn.Conv2d(16,16,3,3,1))
+		layer.append(nn.Conv2d(3,64,3,1,1))
+		for i in range(1,20):
+			layer.append(nn.Conv2d(64,64,3,3,1))
 		self.net=nn.Sequential(*layer)
 	def forward(self,x):
 		return self.net(x)
