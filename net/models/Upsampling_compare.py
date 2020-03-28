@@ -40,7 +40,7 @@ if __name__ == "__main__":
 	import time
 	steps=1000
 	x=torch.ones([1,3,256,256]).to('cuda:1')
-	nets=[BilinearUp().to('cuda:1'),DeconvUp().to('cuda:1'),SubPixel().to('cuda:1')]
+	nets=[BilinearUp().to('cuda:1'),SubPixel().to('cuda:1'),DeconvUp().to('cuda:1')]
 	for net in nets:
 		torch.cuda.empty_cache()
 		sep_time=time.time()
