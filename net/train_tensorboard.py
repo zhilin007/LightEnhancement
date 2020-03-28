@@ -24,7 +24,6 @@ models_={
 	'swiftnet':SwiftNet(),
 	'swiftnetslim':SwiftNetSlim(),
 	'FullConv_SwiftNet':FullConv_SwiftNet(),
-	'FULLCONV':FULLCONV()
 }
 
 start_time=time.time()
@@ -144,7 +143,7 @@ if __name__ == "__main__":
 		criterion.update({'mseloss':nn.MSELoss().to(opt.device)})
 	if opt.ssimloss:
 		criterion.update({'ssimloss':ssimloss().to(opt.device)})
-	optimizer = RAdam(params=filter(lambda x: x.requires_grad, net.parameters()),lr=opt.lr, betas = (0.9, 0.999), eps=1e-08)
+	optimizer = RAdam(params=filter(lambda x: x.requires_grad, net.parameters()),lr=opt.lr)
 	optimizer.zero_grad()
 	train(net,loader_train,loader_test,loader_eval_train,optimizer,criterion)
 	
