@@ -1,0 +1,4 @@
+python train_tensorboard.py --net='UNet_Depth' --depth=8 --step=100000 --device=cuda:1 --pth=UNet_Depth8_128p_1e5_l1 --divisor=128 --bs=8 --l1loss --crop_size=128
+python train_tensorboard.py --net='UNet_Depth' --depth=8 --step=100000 --device=cuda:1 --pth=UNet_Depth8_256p_1e5_l1 --divisor=128 --bs=8 --l1loss --crop_size=256
+python train_tensorboard.py --net='UNet_Depth' --depth=8 --step=100000 --device=cuda:1 --pth=UNet_Depth8_512p_1e5_l1 --divisor=128 --bs=8 --l1loss --crop_size=512
+python train_tensorboard.py --net='UNet_Depth' --depth=8 --step=100000 --device=cuda:1 --pth=UNet_Depth8_1024p_1e5_l1 --divisor=128 --bs=8 --l1loss --crop_size=1024
