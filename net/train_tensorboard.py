@@ -76,6 +76,8 @@ def train(net,loader_train,loader_test,loader_eval_train,optim,criterion):
 		optim.step()
 		optim.zero_grad()
 		losses.append(loss.item())
+		with SummaryWriter(log_dir=opt.log_dir) as writer:
+					writer.add_scalars('loss',{'train_patch':loss.item()},step)
 		esti_time=((time.time()-start_time)/60)/(step-start_step)
 		esti_time=(opt.steps-step)*esti_time
 		print(f'\rtrain loss : {loss.item():.5f}| step :{step}/{opt.steps}|lr :{lr :.7f} |esti_time :{esti_time/60:.1f}h',end='',flush=True)
