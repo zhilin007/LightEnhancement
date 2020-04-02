@@ -162,7 +162,7 @@ class UNet_Depth(nn.Module):
 			x=self.maxpool(x)
 			x=self.encoder[i](x)
 			features.append(x)
-		print(len(features))
+		
 		features=features[::-1]
 		x=features[0]
 		for i in range(1,self.depth):
