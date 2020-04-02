@@ -36,6 +36,10 @@ parser.add_argument('--log_dir',type=str,default='logs/')
 #parser.add_argument('--save_fig',action='store_true',help='save fig in test_dataset.py')
 #parser.add_argument('--save_grid',action='store_true',help='save grid fig in test_dataset.py')
 
+#for model
+parser.add_argument('--depth',type=int,default=5,help='depth of unet divisor=x^(depth-1)')
+
+
 #for data
 parser.add_argument('--divisor',type=int,default=1,help='input fig must can be divisible by it')
 
