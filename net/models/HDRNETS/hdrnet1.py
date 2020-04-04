@@ -85,11 +85,8 @@ class Slice(nn.Module):
 	def forward(self, bilateral_grid, guidemap):
 		N, _, H, W = guidemap.shape
 		hg, wg = torch.meshgrid([torch.arange(0, H), torch.arange(0, W)])
-		# hg = hg.type(torch.cuda.FloatTensor).repeat(N, 1, 1).unsqueeze(3) / (H-1) * 2 - 1
-		# wg = wg.type(torch.cuda.FloatTensor).repeat(N, 1, 1).unsqueeze(3) / (W-1) * 2 - 1
-
-		hg = hg.type(torch.FloatTensor).repeat(N, 1, 1).unsqueeze(3) / (H-1) * 2 - 1
-		wg = wg.type(torch.FloatTensor).repeat(N, 1, 1).unsqueeze(3) / (W-1) * 2 - 1
+		hg = hg.type(torch.cuda.FloatTensor).repeat(N, 1, 1).unsqueeze(3) / (H-1) * 2 - 1
+		wg = wg.type(torch.cuda.FloatTensor).repeat(N, 1, 1).unsqueeze(3) / (W-1) * 2 - 1
 		guidemap = guidemap.permute(0,2,3,1).contiguous()
 		guidemap_guide = torch.cat([guidemap, hg, wg], dim=3).unsqueeze(1)
 		coeff = F.grid_sample(bilateral_grid, guidemap_guide)
