@@ -40,6 +40,7 @@ if __name__ == "__main__":
 	# y=torch.ones([1,1,1024,1024]).to(opt.device)
 	times=[]
 	stime=time.time()
+	net.eval()
 	for i in range(steps):
 		time1=time.time()
 		with torch.no_grad():
