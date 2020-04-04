@@ -16,6 +16,8 @@ nohup python >log.out
 |euunet|1e5|||4h|python train.py --net='euunet' --step=100000 --pth=euunet_160p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
 |gen_y_unet|2e5|20.6982|0.8325|12h|rpython Gen_Y_train.py --net='gen_y_unet' --step=200000 --pth=gen_y_unet_160p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
 |gen_y_unet64|2e5|||12h|python Gen_Y_train.py --net='gen_y_unet64' --step=200000 --pth=gen_y_unet64_160p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
+|`hdr1`|1e5|||4h|python train_tensorboard.py --net='hdr1' --step=100000 --device=cuda:2 --pth=hdr1_384p_1e5_l1 --divisor=1 --bs=8 --l1loss --crop_size=384|
+
 
 
 ### train_patch  | receptive field | test_image=1600*1200
@@ -37,9 +39,10 @@ receptive field of encoder:
 |UNet_Depth=5 验证代码没错|160|1e5|19.5771|0.8110|4h|python train_tensorboard.py --net='UNet_Depth' --depth=5 --step=100000 --device=cuda:0 --pth=UNet_Depth5_160p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
 |UNet_Depth=6|128|1e5|-|-|4h|python train_tensorboard.py --net='UNet_Depth' --depth=6 --step=100000 --device=cuda:0 --pth=UNet_Depth6_128p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=128|
 |UNet_Depth=6|256|1e5|-|-|4h|python train_tensorboard.py --net='UNet_Depth' --depth=6 --step=100000 --device=cuda:0 --pth=UNet_Depth6_256p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=256|
+|UNet_Depth=6|384|1e5|-|-|4h|python train_tensorboard.py --net='UNet_Depth' --depth=6 --step=100000 --device=cuda:0 --pth=UNet_Depth6_384p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=384|
 |UNet_Depth=7|128|1e5|-|-|4h|python train_tensorboard.py --net='UNet_Depth' --depth=7 --step=100000 --device=cuda:0 --pth=UNet_Depth7_128p_1e5_l1 --divisor=64 --bs=8 --l1loss --crop_size=128|
 |UNet_Depth=7|256|1e5|-|-|4h|python train_tensorboard.py --net='UNet_Depth' --depth=7 --step=100000 --device=cuda:0 --pth=UNet_Depth7_256p_1e5_l1 --divisor=64 --bs=8 --l1loss --crop_size=256|
-|UNet_Depth=7|512|1e5|-|-|4h|python train_tensorboard.py --net='UNet_Depth' --depth=7 --step=100000 --device=cuda:0 --pth=UNet_Depth7_512p_1e5_l1 --divisor=64 --bs=8 --l1loss --crop_size=512|
+|UNet_Depth=7|384|1e5|-|-|4h|python train_tensorboard.py --net='UNet_Depth' --depth=7 --step=100000 --device=cuda:0 --pth=UNet_Depth7_384p_1e5_l1 --divisor=64 --bs=8 --l1loss --crop_size=384|
 |UNet_Depth=8|128|1e5|-|-|4h|python train_tensorboard.py --net='UNet_Depth' --depth=8 --step=100000 --device=cuda:0 --pth=UNet_Depth8_128p_1e5_l1 --divisor=128 --bs=8 --l1loss --crop_size=128|
 |UNet_Depth=8|256|1e5|-|-|4h|python train_tensorboard.py --net='UNet_Depth' --depth=8 --step=100000 --device=cuda:0 --pth=UNet_Depth8_256p_1e5_l1 --divisor=128 --bs=8 --l1loss --crop_size=256|
 |UNet_Depth=8|512|1e5|-|-|4h|python train_tensorboard.py --net='UNet_Depth' --depth=8 --step=100000 --device=cuda:0 --pth=UNet_Depth8_512p_1e5_l1 --divisor=128 --bs=8 --l1loss --crop_size=512|

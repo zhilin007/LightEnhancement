@@ -7,5 +7,6 @@ from models.SwiftNet import SwiftNet
 from models.Swiftslim import SwiftNetSlim
 from models.FullConv_SwiftNet import FullConv_SwiftNet
 from models.Spatial_feature_extraction_network import Spatial_Extraction_MFF as MFF
+from models.HDRNETS.hdrnet1 import HDRNet as hdr1
 
 

@@ -24,7 +24,8 @@ models_={
 	'swiftnet':SwiftNet(),
 	'swiftnetslim':SwiftNetSlim(),
 	'FullConv_SwiftNet':FullConv_SwiftNet(),
-	'UNet_Depth':UNet_Depth(depth=opt.depth)
+	'UNet_Depth':UNet_Depth(depth=opt.depth),
+	'hdr1':hdr1()
 }
 
 start_time=time.time()
