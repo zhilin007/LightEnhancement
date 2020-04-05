@@ -11,3 +11,5 @@ pred_trained 和non-trained infer时间一样
 |gen_y_unet|GeForce GTX TITAN X|[1,3,1024,1024 & 1,1,1024,1024]|1.61|0.62|
 |FullConv_SwiftNet |GeForce GTX TITAN X|[1,4,1024,1024]|21.892|0.04565|
 |EFFA|GeForce GTX TITAN X|[1,3,1024,1024]|0.3|2.91|
+|hdr1 |GeForce GTX TITAN X|[1,4,1024,1024]|27|0.03663|
+
