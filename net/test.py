@@ -7,7 +7,7 @@ from PIL import Image
 import torchvision.transforms.transforms as tfs
 def dircheck(path):
 	if not os.path.exists(path):
-		print(path)
+		print('grids dir :',path)
 		os.makedirs(path)
 def getNet():
 	net=models_[opt.net].to(opt.device)

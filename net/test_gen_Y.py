@@ -1,12 +1,13 @@
 import torch,os,sys,torchvision,tools,glob
 from torchvision import utils
 from Gen_Y_train import models_
-from option import opt,cwd
+from option import opt,cwd,model_name
 from data_utils import get_eval_loader
 from PIL import Image
 import torchvision.transforms.transforms as tfs
 def dircheck(path):
 	if not os.path.exists(path):
+		print('grids dir :',path)
 		os.makedirs(path)
 def getNet():
 	net=models_[opt.net].to(opt.device)
@@ -33,7 +34,7 @@ def eval(net,loader):
 				tensorgrid=torch.cat([tensorgrid,pred],0)
 		grid=utils.make_grid(tensorgrid,4)
 		i_gt=tools.get_illumination(targets).item()
-		save_dir=os.path.join(cwd,'grids',opt.pth);dircheck(save_dir)
+		save_dir=os.path.join(cwd,'grids',model_name);dircheck(save_dir)
 		save_dir=os.path.join(save_dir,f'{ind}_in_gt_{i_gt}_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		print(type(grid),grid.shape,ind)
 		utils.save_image(grid,save_dir)
@@ -55,7 +56,7 @@ def eval_imgs(net,path):
 				_,pred=net(data,i_c)
 				grid=torch.cat([grid,pred.cpu()],0)
 		grid=utils.make_grid(grid,4)
-		save_dir=os.path.join(cwd,'grids_real',opt.pth);dircheck(save_dir)
+		save_dir=os.path.join(cwd,'grids_real',model_name);dircheck(save_dir)
 		save_dir=os.path.join(save_dir,f'{id}_in_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		utils.save_image(grid,save_dir)
 if __name__ == "__main__":
