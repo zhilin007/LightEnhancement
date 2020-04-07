@@ -8,7 +8,8 @@ import torchvision.transforms.transforms as tfs
 
 def getNet():
 	net=models_[opt.net].to(opt.device)
-	net=torch.nn.DataParallel(net)
+	if opt.device=='cuda':
+		net=torch.nn.DataParallel(net)
 	ckp=torch.load(opt.pth,opt.device)
 	net.load_state_dict(ckp['model'])
 	print(f'psnr:',ckp['max_psnr'],'ssim:',ckp['max_ssim'])
