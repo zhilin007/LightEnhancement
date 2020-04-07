@@ -1,6 +1,6 @@
 import torch,os,sys,torchvision,tools,glob
 from torchvision import utils
-from train import models_
+from train_tensorboard import models_
 from option import opt,cwd
 from data_utils import get_eval_loader
 from PIL import Image
