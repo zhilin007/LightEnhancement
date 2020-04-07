@@ -93,7 +93,7 @@ class Res18Net1(nn.Module):
 		x1,x2,x4,x8,x16=self.encoder(x)
 		out=self.decoder(x16,x8,x4,x2,x1)
 		out=self.post(out)
-		return out
+		return out+x[:,:3,:,:]
 if __name__ == "__main__":
 	x=torch.zeros([1,4,256,256])
 	net=Res18Net1()
