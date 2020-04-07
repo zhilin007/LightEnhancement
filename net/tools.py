@@ -97,17 +97,27 @@ def grid_sample_bilateral():
 	gt=os.getcwd()+'/data/LOL/eval/high/1.png';gt=Image.open(gt)
 	# gt.show()
 	gt=gt.resize((150,100))#x4
-	# gt.resize((600,400),Image.BILINEAR).show()#不管用哪种方式，其信息损失都很大
-	input=tfs.ToTensor()(input)[None,::];gt=tfs.ToTensor()(gt)[None,::]
-	# grid=tfs.Normalize(mean=[0.0629,0.0606,0.0558],std=[0.0430,0.0412,0.0425])(input)[None,::]
-	# grid=get_illumination(grid,m=False).permute(0,2,3,1)
+	gt.resize((600,400),Image.BILINEAR).show()#不管用哪种方式，其信息损失都很大
+	input=tfs.ToTensor()(input);gt=tfs.ToTensor()(gt)[None,::]
+	grid=tfs.Normalize(mean=[0.0629,0.0606,0.0558],std=[0.0430,0.0412,0.0425])(input)[None,::]
+	grid=get_illumination(grid,m=False)
 	# out=F.grid_sample(gt,torch.cat([grid,grid],dim=-1)) 和想的一样，和联合双边滤波不是一个东西
-
-	# N,C,H,W=input.size()
+	input=input[None,::]
+	N,C,H,W=input.size()
 	# gh,gw=torch.meshgrid([torch.range(0,H),torch.range(0,W)])
 	# gh = gh.float().repeat(N, 1, 1).unsqueeze(3) / (H-1) * 2 - 1 # norm to [-1,1] NxHxWx1
 	# gw = gw.float().repeat(N, 1, 1).unsqueeze(3) / (W-1) * 2 - 1 # norm to [-1,1] NxHxWx1
 	# out=F.grid_sample(gt,torch.cat([gw,gh],dim=-1)) 就是bilinear
+	# hg, wg = torch.meshgrid([torch.arange(0, H), torch.arange(0, W)])
+	# hg = hg.float().repeat(N, 1, 1).unsqueeze(3) / (H-1) * 2 - 1 # norm to [-1,1] NxHxWx1
+	# wg = wg.float().repeat(N, 1, 1).unsqueeze(3) / (W-1) * 2 - 1 # norm to [-1,1] NxHxWx1
+	# guidemap = grid.permute(0,2,3,1).contiguous()
+	# bilateral_grid=gt.unsqueeze(2)
+	# guidemap_guide = torch.cat([wg, hg, guidemap], dim=3).unsqueeze(1) # Nx1xHxWx3
+	# out = F.grid_sample(bilateral_grid, guidemap_guide)#[1, 3, 1, 400, 600]#也是biliear
+	# tensorShow([out[:,:,0,::]],[''])
+
+
 	
 
 	
