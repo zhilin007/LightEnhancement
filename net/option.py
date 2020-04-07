@@ -17,7 +17,7 @@ parser=argparse.ArgumentParser()
 #for train
 parser.add_argument('--data',type=str,default='/data')
 parser.add_argument('--steps',type=int,default=100000)
-parser.add_argument('--device',type=str,default='cuda')
+parser.add_argument('--device',type=str,default='cuda:0')
 parser.add_argument('--eval_step',type=int,default=1000)
 parser.add_argument('--lr', default=0.0001, type=float, help='learning rate')
 parser.add_argument('--pth',type=str,default='',help='model name to save')
