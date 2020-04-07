@@ -4,7 +4,10 @@ import torch.nn.functional as F
 import numpy as np
 from collections import OrderedDict
 
+'''
+grid_sample采用的是bilinear（x,y）,最关键的guided-map（z）没有采样！
 
+'''
 class ConvBlock(nn.Module):
 	def __init__(self, inc , outc, kernel_size=3, padding=1, stride=1, use_bias=True, activation=nn.ReLU, batch_norm=False):
 		super(ConvBlock, self).__init__()

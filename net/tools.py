@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import torchvision.transforms.transforms as tfs
 import torch.nn.functional as F
+from torchvision.utils import make_grid
+
 def rgb2yuv(ts):
 	#ts :ndarry :[N,H,W,C] 
 	R=ts[:,:,:,0];G=ts[:,:,:,1];B=ts[:,:,:,2]
@@ -78,8 +80,47 @@ def get_att_ill():
 		maxx=torch.max(x,dim=1,keepdim=True)[0]
 		a=(torch.abs(maxy-maxx)/maxy)
 		tensorShow([x,a,y,y_Y],['x','a','y','yY'])
+def tensorShow(tensors,titles=None):
+		'''
+		t:BCWH
+		'''
+		fig=plt.figure(figsize=(20,20))
+		for tensor,tit,i in zip(tensors,titles,range(len(tensors))):
+			img = make_grid(tensor)
+			npimg = img.numpy()
+			ax = fig.add_subplot(221+i)
+			ax.imshow(np.transpose(npimg, (1, 2, 0)))
+			ax.set_title(tit)
+		plt.show()
+def grid_sample_bilateral():
+	input=os.getcwd()+'/data/LOL/eval/low/1.png';input=Image.open(input)
+	gt=os.getcwd()+'/data/LOL/eval/high/1.png';gt=Image.open(gt)
+	# gt.show()
+	gt=gt.resize((150,100))#x4
+	# gt.resize((600,400),Image.BILINEAR).show()#不管用哪种方式，其信息损失都很大
+	input=tfs.ToTensor()(input)[None,::];gt=tfs.ToTensor()(gt)[None,::]
+	# grid=tfs.Normalize(mean=[0.0629,0.0606,0.0558],std=[0.0430,0.0412,0.0425])(input)[None,::]
+	# grid=get_illumination(grid,m=False).permute(0,2,3,1)
+	# out=F.grid_sample(gt,torch.cat([grid,grid],dim=-1)) 和想的一样，和联合双边滤波不是一个东西
+
+	# N,C,H,W=input.size()
+	# gh,gw=torch.meshgrid([torch.range(0,H),torch.range(0,W)])
+	# gh = gh.float().repeat(N, 1, 1).unsqueeze(3) / (H-1) * 2 - 1 # norm to [-1,1] NxHxWx1
+	# gw = gw.float().repeat(N, 1, 1).unsqueeze(3) / (W-1) * 2 - 1 # norm to [-1,1] NxHxWx1
+	# out=F.grid_sample(gt,torch.cat([gw,gh],dim=-1)) 就是bilinear
+	
+
+	
+
+
+
+	
+	
+	
+
 if __name__ == "__main__":
 	# ts=torch.ones([1,1,1,1])
 	# print(ts.item())
-	get_att_ill()
+	# get_att_ill()
+	grid_sample_bilateral()
 	
