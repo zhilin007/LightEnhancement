@@ -3,8 +3,7 @@ import torch.nn.functional as F
 '''
 dims=[16,24,32,48,64],最后一直上采样+conv到x 不能收敛
 
-dims=[32,64,64,64,64]
-
+dims=[64,64,64,64,64]
 如果可以的话，用input替代x1
 
 '''
@@ -83,7 +82,7 @@ class Decoder(nn.Module):
 		out=self.up4(x1,out)#x1
 		return out
 class Res18Net1(nn.Module):
-	def __init__(self,incolor=4,outcolor=3,dims=[16,24,32,48,64]):
+	def __init__(self,incolor=4,outcolor=3,dims=[64,64,64,64,64]):
 		super(Res18Net1,self).__init__()
 		self.encoder=ResNet18(dims=dims,color=incolor)
 		self.decoder=Decoder(in_dims=dims,out_dims=dims[:-1])
@@ -93,7 +92,7 @@ class Res18Net1(nn.Module):
 		x1,x2,x4,x8,x16=self.encoder(x)
 		out=self.decoder(x16,x8,x4,x2,x1)
 		out=self.post(out)
-		return out+x[:,:3,:,:]
+		return out
 if __name__ == "__main__":
 	x=torch.zeros([1,4,256,256])
 	net=Res18Net1()
