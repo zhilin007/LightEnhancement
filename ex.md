@@ -6,7 +6,7 @@ nohup python >log.out
 
 |net|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|
-|unet|1e5|19.6919|0.8089|4h|python train.py --net='unet' --step=100000 --pth=unet_160p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
+|unet`其结果模糊不清尽管能够做到denoise`|1e5|19.6919|0.8089|4h|python train.py --net='unet' --step=100000 --pth=unet_160p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
 |`unet64`|1e5|20.1542|0.7777|4h|python train_tensorboard.py --net='unet64' --step=100000 --device=cuda:0 --pth=unet64_160p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
 |unet64|3e5|19.7481|0.8190|12h|python train_tensorboard.py --net='unet64' --step=300000 --device=cuda:0 --pth=unet64_160p_3e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
 |unet64|1e5|19.9966|0.7806|4h|python train_tensorboard.py --net='unet64' --step=100000 --device=cuda:1 --pth=unet64_160p_1e5_l1_8eN5 --lr=0.00008 --divisor=16 --bs=8 --l1loss --crop_size=160|
@@ -15,7 +15,7 @@ nohup python >log.out
 |swiftnetslim约等于w=0.2|2e5|17.7897|0.6939|3h|python train_tensorboard.py --net='swiftnetslim' --device=cuda:0 --step=200000 --pth=swiftnetslim_160p_2e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=160 --lr=0.0004|
 |euunet|1e5|||4h|python train.py --net='euunet' --step=100000 --pth=euunet_160p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
 |gen_y_unet|2e5|20.6982|0.8325|12h|rpython Gen_Y_train.py --net='gen_y_unet' --step=200000 --pth=gen_y_unet_160p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
-|`hdr1`没有训练patch和整张图的过拟合（因为子分辨率变换算子与原分辨率算子相似），但是有train/test的过拟合，`grid_sample采用的是bilinear（x,y）,最关键的guided-map（z）没有采样！`|1e5|`25.6277`|`0.7534`|19h|python train_tensorboard.py --net='hdr1' --step=100000 --device=cuda:0 --pth=hdr1_384p_1e5_l1 --divisor=1 --bs=8 --l1loss --crop_size=384|
+|`hdr1`没有训练patch和整张图的过拟合（因为子分辨率变换算子与原分辨率算子相似），但是有train/test的过拟合，`grid_sample采用的是bilinear（x,y）,最关键的guided-map（z）没有采样！`|1e5|`25.6277结果较清晰`|`0.7534但存在很大的噪声`|19h|python train_tensorboard.py --net='hdr1' --step=100000 --device=cuda:0 --pth=hdr1_384p_1e5_l1 --divisor=1 --bs=8 --l1loss --crop_size=384|
 |Res18Net1 `dims=[16,24,32,48,64]不能收敛 dims=[64,64,64,64,64]收敛更差`|1e5||||python train_tensorboard.py --net=Res18Net1 --step=100000 --device=cuda:0 --pth=Res18Net1_384p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384|
 
 
