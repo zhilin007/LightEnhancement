@@ -43,4 +43,5 @@ def plot_all_files(dir,keys=['MPID','psnr'],filters=['']):
 	plots(files,'/'.join(keys))
 
 if __name__ == "__main__":
-	plot_all_files(abs,keys=['losses','1e5','unet64'],filters=[])
+	# x=np.load(abs+'unet_160p_1e5_l1_100000_losses.npy')
+	plot_all_files(abs,keys=['losses','1e5'],filters=[])

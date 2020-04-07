@@ -1,5 +1,8 @@
 import torch,torch.nn as nn
 import torch.nn.functional as F
+'''
+特征变为[16,32,64,64]原来[64,128,256,512]
+'''
 
 class BasicBlock(nn.Module):
 	expansion = 1

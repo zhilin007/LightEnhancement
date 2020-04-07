@@ -8,5 +8,6 @@ from models.Swiftslim import SwiftNetSlim
 from models.FullConv_SwiftNet import FullConv_SwiftNet
 from models.Spatial_feature_extraction_network import Spatial_Extraction_MFF as MFF
 from models.HDRNETS.hdr1 import HDRPointwiseNN as hdr1
+from models.Res18Net_1 import Res18Net1
 
 

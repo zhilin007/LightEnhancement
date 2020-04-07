@@ -16,7 +16,7 @@ class BasicBlock(nn.Module):
 		if self.downsample is not None:
 			residual=self.downsample(residual)
 		skip=out+residual
-		out=self.relu(out)
+		out=self.relu(out)### bug!!!!!!!!!!!!!!!!! 应该是skip！！！！！！
 		return skip,out
 class ResNet18(nn.Module):
 	def __init__(self,color=3,layers=[2,2,2,2]):
