@@ -10,7 +10,7 @@ nohup python >log.out
 |`unet64`|1e5|20.1542|0.7777|4h|python train_tensorboard.py --net='unet64' --step=100000 --device=cuda:0 --pth=unet64_160p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
 |unet64|3e5|19.7481|0.8190|12h|python train_tensorboard.py --net='unet64' --step=300000 --device=cuda:0 --pth=unet64_160p_3e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
 |unet64|1e5|19.9966|0.7806|4h|python train_tensorboard.py --net='unet64' --step=100000 --device=cuda:1 --pth=unet64_160p_1e5_l1_8eN5 --lr=0.00008 --divisor=16 --bs=8 --l1loss --crop_size=160|
-|`swiftnet`output是1/4 上采样|1e5|19.2726|0.7124|8h|python train_tensorboard.py --net='swiftnet' --device=cuda:0 --step=100000 --pth=swiftnet_160p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=160 --lr=0.0004|
+|`swiftnet`output是1/4 上采样 `结果模糊的要死`|1e5|19.2726|0.7124|8h|python train_tensorboard.py --net='swiftnet' --device=cuda:0 --step=100000 --pth=swiftnet_160p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=160 --lr=0.0004|
 |FullConv_SwiftNet|1e5|0.7805|19.5069|5h|python train_tensorboard.py --net='FullConv_SwiftNet' --device=cuda:0 --step=100000 --pth=FullConv_SwiftNet_160p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=160 --lr=0.0004|
 |swiftnetslim约等于w=0.2|2e5|17.7897|0.6939|3h|python train_tensorboard.py --net='swiftnetslim' --device=cuda:0 --step=200000 --pth=swiftnetslim_160p_2e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=160 --lr=0.0004|
 |euunet|1e5|||4h|python train.py --net='euunet' --step=100000 --pth=euunet_160p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|

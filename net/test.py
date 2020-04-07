@@ -60,7 +60,7 @@ def eval_imgs(net,path):
 		save_dir=os.path.join(save_dir,f'{id}_in_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		utils.save_image(grid,save_dir)
 if __name__ == "__main__":
-	#python test.py --net=hdr1 --pth=hdr1_384p_1e5_l1 --divisor=1
+	#python test.py --net=swiftnet --pth=swiftnet_160p_1e5_l1  --divisor=32
 
 	net=getNet()
 	loader=get_eval_loader()
