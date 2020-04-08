@@ -103,7 +103,8 @@ if __name__ == "__main__":
 	ckp=torch.load(opt.pth,opt.device)
 	net.load_state_dict(ckp['model'])
 	print(f'psnr:',ckp['max_psnr'],'ssim:',ckp['max_ssim'])
-	test(net,loader)
+	with torch.no_grad():
+		test(net,loader)
 	
 	
 	
