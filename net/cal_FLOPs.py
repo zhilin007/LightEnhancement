@@ -5,7 +5,7 @@ import torch
 # net=EUUNet()
 # net=SwiftNetSlim()
 # net=EFFA(2,10)
-net=Res18Net1()
+net=DeepGuidedFilterLayerAndMap()
 # print(net)
 # x=torch.ones([1,3,224,224])
 # net(x)

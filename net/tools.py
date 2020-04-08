@@ -88,45 +88,27 @@ def tensorShow(tensors,titles=None):
 		for tensor,tit,i in zip(tensors,titles,range(len(tensors))):
 			img = make_grid(tensor)
 			npimg = img.numpy()
-			ax = fig.add_subplot(221+i)
+			ax = fig.add_subplot(231+i)
 			ax.imshow(np.transpose(npimg, (1, 2, 0)))
 			ax.set_title(tit)
 		plt.show()
 def grid_sample_bilateral():
+	#F.grid_sample本质是biliear无法达到双边滤波效果
 	input=os.getcwd()+'/data/LOL/eval/low/1.png';input=Image.open(input)
 	gt=os.getcwd()+'/data/LOL/eval/high/1.png';gt=Image.open(gt)
 	# gt.show()
-	gt=gt.resize((150,100))#x4
-	gt.resize((600,400),Image.BILINEAR).show()#不管用哪种方式，其信息损失都很大
-	input=tfs.ToTensor()(input);gt=tfs.ToTensor()(gt)[None,::]
-	grid=tfs.Normalize(mean=[0.0629,0.0606,0.0558],std=[0.0430,0.0412,0.0425])(input)[None,::]
-	grid=get_illumination(grid,m=False)
-	# out=F.grid_sample(gt,torch.cat([grid,grid],dim=-1)) 和想的一样，和联合双边滤波不是一个东西
-	input=input[None,::]
-	N,C,H,W=input.size()
-	# gh,gw=torch.meshgrid([torch.range(0,H),torch.range(0,W)])
-	# gh = gh.float().repeat(N, 1, 1).unsqueeze(3) / (H-1) * 2 - 1 # norm to [-1,1] NxHxWx1
-	# gw = gw.float().repeat(N, 1, 1).unsqueeze(3) / (W-1) * 2 - 1 # norm to [-1,1] NxHxWx1
-	# out=F.grid_sample(gt,torch.cat([gw,gh],dim=-1)) 就是bilinear
-	# hg, wg = torch.meshgrid([torch.arange(0, H), torch.arange(0, W)])
-	# hg = hg.float().repeat(N, 1, 1).unsqueeze(3) / (H-1) * 2 - 1 # norm to [-1,1] NxHxWx1
-	# wg = wg.float().repeat(N, 1, 1).unsqueeze(3) / (W-1) * 2 - 1 # norm to [-1,1] NxHxWx1
-	# guidemap = grid.permute(0,2,3,1).contiguous()
-	# bilateral_grid=gt.unsqueeze(2)
-	# guidemap_guide = torch.cat([wg, hg, guidemap], dim=3).unsqueeze(1) # Nx1xHxWx3
-	# out = F.grid_sample(bilateral_grid, guidemap_guide)#[1, 3, 1, 400, 600]#也是biliear
-	# tensorShow([out[:,:,0,::]],[''])
-
-
-	
-
-	
-
-
-
-	
-	
-	
+	# gt.resize((600,400),Image.BILINEAR).show()#不管用哪种方式，其信息损失都很大
+	x_h=tfs.ToTensor()(input)[None,::];y_h=tfs.ToTensor()(gt)[None,::]
+	x_l=F.interpolate(x_h,scale_factor=0.25,mode='bilinear',align_corners=False)
+	y_l=F.interpolate(y_h,scale_factor=0.25,mode='bilinear',align_corners=False)
+	# grid=tfs.Normalize(mean=[0.0629,0.0606,0.0558],std=[0.0430,0.0412,0.0425])(input)[None,::]
+	from models import FastGuidedFilter
+	filter=FastGuidedFilter()
+	out=filter(x_l,y_l,x_h)
+	tensorShow([x_l,y_l,x_h,out,y_h],['x_l','y_l','x_h','out','y_h'])
+	from metrics import psnr,ssim
+	psnr1=psnr(out,y_h);ssim1=ssim(out,y_h)
+	# print(psnr1,ssim1)30.358 0.8506 我操。。
 
 if __name__ == "__main__":
 	# ts=torch.ones([1,1,1,1])

@@ -18,6 +18,14 @@ nohup python >log.out
 |`hdr1`没有训练patch和整张图的过拟合（因为子分辨率变换算子与原分辨率算子相似），但是有train/test的过拟合，`grid_sample采用的是bilinear（x,y）,最关键的guided-map（z）没有采样！`|1e5|`25.6277结果较清晰`|`0.7534但存在很大的噪声`|19h|python train_tensorboard.py --net='hdr1' --step=100000 --device=cuda:0 --pth=hdr1_384p_1e5_l1 --divisor=1 --bs=8 --l1loss --crop_size=384|
 |Res18Net1 `dims=[16,24,32,48,64]不能收敛 dims=[64,64,64,64,64]收敛更差`|1e5||||python train_tensorboard.py --net=Res18Net1 --step=100000 --device=cuda:0 --pth=Res18Net1_384p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384|
 
+### Guided Filter Network
+`
+|net|step|psnr|ssim|time|line|
+|-|-|-|-|-|-|
+|DeepGuidedFilter|1e5||||python train_tensorboard.py --net=DeepGuidedFilter --step=100000 --device=cuda:0 --pth=DeepGuidedFilter_384p_1e5_l1_025 --divisor=1 --bs=8 --l1loss --crop_size=384 --scale_factor=0.25|
+|DeepGuidedFilterAndMap|1e5||||python train_tensorboard.py --net=DeepGuidedFilterAndMap --step=100000 --device=cuda:0 --pth=DeepGuidedFilterAndMap_384p_1e5_l1_025 --divisor=1 --bs=8 --l1loss --crop_size=384 --scale_factor=0.25|
+|DeepGuidedFilterLayer|1e5||||python train_tensorboard.py --net=DeepGuidedFilterLayer --step=100000 --device=cuda:0 --pth=DeepGuidedFilterLayer_384p_1e5_l1_025 --divisor=1 --bs=8 --l1loss --crop_size=384 --scale_factor=0.25|
+|DeepGuidedFilterLayerAndMap|1e5||||python train_tensorboard.py --net=DeepGuidedFilterLayerAndMap --step=100000 --device=cuda:0 --pth=DeepGuidedFilterLayerAndMap_384p_1e5_l1_025 --divisor=1 --bs=8 --l1loss --crop_size=384 --scale_factor=0.25|
 
 ### train_patch  | receptive field | test_image=600x400
 

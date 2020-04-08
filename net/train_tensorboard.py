@@ -26,7 +26,11 @@ models_={
 	'FullConv_SwiftNet':FullConv_SwiftNet(),
 	'UNet_Depth':UNet_Depth(depth=opt.depth),
 	'hdr1':hdr1(),
-	'Res18Net1':Res18Net1()
+	'Res18Net1':Res18Net1(),
+	'DeepGuidedFilter':DeepGuidedFilter(scale=opt.scale_factor),
+	'DeepGuidedFilterAndMap':DeepGuidedFilterAndMap(scale=opt.scale_factor),
+	'DeepGuidedFilterLayer':DeepGuidedFilterLayer(scale=opt.scale_factor),
+	'DeepGuidedFilterLayerAndMap':DeepGuidedFilterLayerAndMap(scale=opt.scale_factor),
 }
 
 start_time=time.time()
