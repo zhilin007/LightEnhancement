@@ -5,6 +5,7 @@ from option import opt,cwd,model_name
 from data_utils import get_eval_loader
 from PIL import Image
 from ssim_loss import SSIM as ssimloss
+from metrics import psnr,ssim
 import torchvision.transforms.transforms as tfs
 def dircheck(path):
 	if not os.path.exists(path):
@@ -67,7 +68,7 @@ def test(net,loader_test):
 	psnrs=[]
 	losses=[]
 	for i ,(inputs,targets) in enumerate(loader_test):
-		print(f'\r {i}',end='',flush=True)
+		print(i)
 		inputs=inputs.to(opt.device);targets=targets.to(opt.device)
 		N,C,H,W=targets.size()
 		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
