@@ -12,5 +12,5 @@ from models.Res18Net_1 import Res18Net1
 
 from models.GuidedFilter.guided_filter import FastGuidedFilter, ConvGuidedFilter
 from models.GuidedFilter.GuidedFilterNetwork import DeepGuidedFilter,DeepGuidedFilterAndMap,DeepGuidedFilterLayer,DeepGuidedFilterLayerAndMap
-
+from models.SwiftNet_guidedfilter import SwiftNet_GuidedFilter
 

@@ -59,14 +59,51 @@ def eval_imgs(net,path):
 		save_dir=os.path.join(cwd,'grids_real',model_name);dircheck(save_dir)
 		save_dir=os.path.join(save_dir,f'{id}_in_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		utils.save_image(grid,save_dir)
+def test(net,loader_test):
+	net.eval()
+	torch.cuda.empty_cache()
+	ssims=[]
+	psnrs=[]
+	losses=[]
+	for i ,(inputs,targets) in enumerate(loader_test):
+		inputs=inputs.to(opt.device);targets=targets.to(opt.device)
+		N,C,H,W=targets.size()
+		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
+		pred=net(torch.cat([inputs,i],1))
+		loss1=0
+		if opt.l1loss:
+			loss1+=criterion['l1loss'](pred,targets)
+		if opt.mseloss:
+			loss1+=criterion['mseloss'](pred,targets)
+		if opt.ssimloss:
+			loss3=criterion['ssimloss'](pred,targets)
+			loss1+=(1-loss3)
+		ssim1=ssim(pred,targets).item()
+		psnr1=psnr(pred,targets)
+		ssims.append(ssim1)
+		psnrs.append(psnr1)
+		losses.append(loss1.item())
+	print( np.mean(ssims),np.mean(psnrs),np.mean(losses))
+
 if __name__ == "__main__":
 	#python test.py --net=swiftnet --pth=swiftnet_160p_1e5_l1  --divisor=32
-
-	net=getNet()
-	loader=get_eval_loader()
-	eval(net,loader)
 	# path='/data/code/LightEnhancement/figs'
 	# eval_imgs(net,path)
+
+	# net=getNet()
+	# loader=get_eval_loader()
+
+	from models import SwiftNet_GuidedFilter
+	net=SwiftNet_GuidedFilter().to(opt.device)
+	if opt.device=='cuda':
+		net=torch.nn.DataParallel(net)
+	ckp=torch.load(opt.pth,opt.device)
+	net.load_state_dict(ckp['model'])
+	print(f'psnr:',ckp['max_psnr'],'ssim:',ckp['max_ssim'])
+	
+	
+	
+	
 
 		
 
