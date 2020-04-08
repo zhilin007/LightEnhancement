@@ -1,9 +1,10 @@
-import torch,os,sys,torchvision,tools,glob
+import torch,os,sys,torchvision,tools,glob,numpy as np
 from torchvision import utils
 from train_tensorboard import models_
 from option import opt,cwd,model_name
 from data_utils import get_eval_loader
 from PIL import Image
+from ssim_loss import SSIM as ssimloss
 import torchvision.transforms.transforms as tfs
 def dircheck(path):
 	if not os.path.exists(path):
@@ -66,17 +67,18 @@ def test(net,loader_test):
 	psnrs=[]
 	losses=[]
 	for i ,(inputs,targets) in enumerate(loader_test):
+		print(f'\r {i}',end='',flush=True)
 		inputs=inputs.to(opt.device);targets=targets.to(opt.device)
 		N,C,H,W=targets.size()
 		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
 		pred=net(torch.cat([inputs,i],1))
 		loss1=0
 		if opt.l1loss:
-			loss1+=criterion['l1loss'](pred,targets)
+			loss1+=torch.nn.L1Loss()(pred,targets)
 		if opt.mseloss:
-			loss1+=criterion['mseloss'](pred,targets)
+			loss1+=torch.nn.MSELoss()(pred,targets)
 		if opt.ssimloss:
-			loss3=criterion['ssimloss'](pred,targets)
+			loss3=ssimloss()(pred,targets)
 			loss1+=(1-loss3)
 		ssim1=ssim(pred,targets).item()
 		psnr1=psnr(pred,targets)
@@ -86,12 +88,12 @@ def test(net,loader_test):
 	print( np.mean(ssims),np.mean(psnrs),np.mean(losses))
 
 if __name__ == "__main__":
-	#python test.py --net=swiftnet --pth=swiftnet_160p_1e5_l1  --divisor=32
+	#python test.py --net=swiftnet --pth=swiftnet_160p_1e5_l1  --divisor=32 --device=cuda:1
 	# path='/data/code/LightEnhancement/figs'
 	# eval_imgs(net,path)
 
 	# net=getNet()
-	# loader=get_eval_loader()
+	loader=get_eval_loader()
 
 	from models import SwiftNet_GuidedFilter
 	net=SwiftNet_GuidedFilter().to(opt.device)
@@ -100,6 +102,7 @@ if __name__ == "__main__":
 	ckp=torch.load(opt.pth,opt.device)
 	net.load_state_dict(ckp['model'])
 	print(f'psnr:',ckp['max_psnr'],'ssim:',ckp['max_ssim'])
+	test(net,loader)
 	
 	
 	
