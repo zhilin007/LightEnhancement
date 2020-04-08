@@ -146,9 +146,9 @@ class SwiftNet_GuidedFilter(nn.Module):
 		out_x4=self.decoder(x32,x16,x8,x4)
 		out_x4=self.post(out_x4)
 		# out=upsample(out_x4,image_size)
-		x_h=x[:,:3,::];x_l=F.interpolate(x[:,:3,::],scale_factor=0.25)
+		x_h=x[:,:3,::];x_l=F.interpolate(x_h,scale_factor=0.25)
 		out=self.filter(x_l,out_x4,x_h)
-		return out
+		return out_x4,out
 
 if __name__ == "__main__":
 	#最后output是1/4 上采样回去的，这对我们pixel-wise的评测标准非常不好!!!!

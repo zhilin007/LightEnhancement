@@ -85,11 +85,11 @@ def test(net,loader_test):
 		psnr1=psnr(pred,targets)
 		ssims.append(ssim1)
 		psnrs.append(psnr1)
-		losses.append(loss1.item())
+		losses.append(loss1)
 	print( np.mean(ssims),np.mean(psnrs),np.mean(losses))
 
 if __name__ == "__main__":
-	#python test.py --net=swiftnet --pth=swiftnet_160p_1e5_l1  --divisor=32 --device=cuda:1
+	#python test.py --net=swiftnet --l1loss --pth=swiftnet_160p_1e5_l1  --divisor=32 --device=cuda:1
 	# path='/data/code/LightEnhancement/figs'
 	# eval_imgs(net,path)
 
