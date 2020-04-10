@@ -14,4 +14,5 @@ from models.GuidedFilter.guided_filter import FastGuidedFilter, ConvGuidedFilter
 from models.GuidedFilter.GuidedFilterNetwork import DeepGuidedFilter,DeepGuidedFilterAndMap,DeepGuidedFilterLayer,DeepGuidedFilterLayerAndMap
 from models.SwiftNet_guidedfilter import SwiftNet_GuidedFilter
 from models.SwiftNetSlim_GuidedFilterLayerAndMap import SwiftNetSlim_GuidedFilterLayerAndMap
+from models.SwiftNetSlim_GFLAndMap_BN import SwiftNetSlim_GFLAndMap_BN
 
