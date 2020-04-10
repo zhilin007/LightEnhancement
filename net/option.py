@@ -39,6 +39,7 @@ parser.add_argument('--log_dir',type=str,default='logs/')
 #for model
 parser.add_argument('--depth',type=int,default=5,help='depth of unet divisor=x^(depth-1)')
 parser.add_argument('--scale_factor',type=float,default=0.25,help='down sample factor')
+parser.add_argument('--norm',action='store_true',help='model with norm ops')
 
 
 #for data

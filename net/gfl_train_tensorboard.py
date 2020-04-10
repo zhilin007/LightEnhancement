@@ -18,7 +18,7 @@ import tools
 warnings.filterwarnings('ignore')
 #out进行回归
 models_={
-	'SwiftNetSlim_GuidedFilterLayerAndMap':SwiftNetSlim_GuidedFilterLayerAndMap()
+	'SwiftNetSlim_GuidedFilterLayerAndMap':SwiftNetSlim_GuidedFilterLayerAndMap(norm=opt.norm)
 }
 
 start_time=time.time()

@@ -24,9 +24,10 @@ nohup python >log.out
 |net|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|
 |`swiftnet`output是1/4 上采样 `结果模糊的要死`|1e5|19.2726|0.7124|8h|python train_tensorboard.py --net='swiftnet' --device=cuda:0 --step=100000 --pth=swiftnet_160p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=160 --lr=0.0004|
-|SwiftNet_GuidedFilter`output使用GuidedFilter,回归x4,loss都是在x4下，psnr和ssim在原分辨率下`回归到0.01非常好，过拟合1：train_loss:0.05很差，过拟合2也存在|1e5|`22.3718`|0.7298|18h|python gf_train_tensorboard.py --net=SwiftNet_GuidedFilter --device=cuda:1 --step=100000 --pth=SwiftNet_GuidedFilter_384p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=384 --lr=0.0004|
-|swiftnetslim约等于w=0.2也是能回归的|2e5|17.7897|0.6939|3h|python train_tensorboard.py --net='swiftnetslim' --device=cuda:0 --step=200000 --pth=swiftnetslim_160p_2e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=160 --lr=0.0004|
-|SwiftNetSlim_GuidedFilterLayerAndMap`在out下进行回归,swiftslim没有使用norm,GFL使用Norm`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GuidedFilterLayerAndMap --device=cuda:0 --step=100000 --pth=SwiftNetSlim_GuidedFilterLayerAndMap_384p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=384 --lr=0.0004|
+|SwiftNet_GuidedFilter`output使用GuidedFilter,回归x4,loss都是在x4下，psnr和ssim在原分辨率下`回归到0.01非常好，过拟合1：train_loss:0.05很差，过拟合2也存在但较轻eval_loss:0.06|1e5|`22.3718`|0.7298|18h|python gf_train_tensorboard.py --net=SwiftNet_GuidedFilter --device=cuda:1 --step=100000 --pth=SwiftNet_GuidedFilter_384p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=384 --lr=0.0004|
+|swiftnetslim约等于w=0.2也是能回归的0.02|2e5|17.7897|0.6939|3h|python train_tensorboard.py --net='swiftnetslim' --device=cuda:0 --step=200000 --pth=swiftnetslim_160p_2e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=160 --lr=0.0004|
+|SwiftNetSlim_GuidedFilterLayerAndMap`在out下进行回归,swiftslim没有使用norm,GFL使用AdaptiveNorm`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GuidedFilterLayerAndMap --device=cuda:0 --step=100000 --pth=SwiftNetSlim_GuidedFilterLayerAndMap_384p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=384 --lr=0.0004|
+|SwiftNetSlim_GuidedFilterLayerAndMap`在out下进行回归,swiftslim使用InstanceNorm,GFL使用AdaptiveNorm`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GuidedFilterLayerAndMap --device=cuda:0 --step=100000 --pth=SwiftNetSlim_GuidedFilterLayerAndMap_384p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm|
 
 
 
