@@ -32,7 +32,7 @@ import numpy as np
 # print('FPS of trained_net:',FPS)
 
 if __name__ == "__main__":
-	#python cal_FPS.py --steps=1000 --device='cuda:1' --net=
+	#python cal_FPS.py --steps=1000 --device='cuda:1' --net=DeepGuidedFilterLayerAndMap
 	net=models_[opt.net].to(opt.device)
 	steps=opt.steps
 	x=torch.ones([1,4,1024,1024]).to(opt.device)

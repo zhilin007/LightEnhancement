@@ -108,7 +108,7 @@ def grid_sample_bilateral():
 	tensorShow([x_l,y_l,x_h,out,y_h],['x_l','y_l','x_h','out','y_h'])
 	from metrics import psnr,ssim
 	psnr1=psnr(out,y_h);ssim1=ssim(out,y_h)
-	# print(psnr1,ssim1)30.358 0.8506 我操。。
+	# print(psnr1,ssim1)30.358 0.8506 
 
 if __name__ == "__main__":
 	# ts=torch.ones([1,1,1,1])
