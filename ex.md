@@ -28,6 +28,7 @@ nohup python >log.out
 |swiftnetslim约等于w=0.2也是能回归的0.02|2e5|17.7897|0.6939|3h|python train_tensorboard.py --net='swiftnetslim' --device=cuda:0 --step=200000 --pth=swiftnetslim_160p_2e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=160 --lr=0.0004|
 |SwiftNetSlim_GuidedFilterLayerAndMap`在out下进行回归,swiftslim没有使用norm,GFL使用AdaptiveNorm`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GuidedFilterLayerAndMap --device=cuda:0 --step=100000 --pth=SwiftNetSlim_GuidedFilterLayerAndMap_384p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=384 --lr=0.0004|
 |SwiftNetSlim_GuidedFilterLayerAndMap`在out下进行回归,swiftslim使用InstanceNorm,GFL使用AdaptiveNorm`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GuidedFilterLayerAndMap --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GuidedFilterLayerAndMap_384p_1e5_l1_IN --divisor=32 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm|
+｜SwiftNetSlim_GFLAndMap_BN `,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN --device=cuda:0 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN_384p_1e5_l1_IN --divisor=32 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm|
 
 
 
@@ -43,6 +44,7 @@ nohup python >log.out
 |DeepGuidedFilterAndMap 回归到`0.05左右`，过拟合1效果同上，但过拟合2交情较轻|1e5|21.9899|0.7865`去躁了所以好了点`|20h|python train_tensorboard.py --net=DeepGuidedFilterAndMap --step=100000 --device=cuda:1 --pth=DeepGuidedFilterAndMap_384p_1e5_l1_025 --divisor=1 --bs=8 --l1loss --crop_size=384 --scale_factor=0.25|
 |DeepGuidedFilterLayer回归到`0.05左右`，过拟合1:train_loss在0.07上，过拟合2：几乎没有甚至eval比train在loss上更低|1e5|`22.1607`|0.7719|20h|python train_tensorboard.py --net=DeepGuidedFilterLayer --step=100000 --device=cuda:0 --pth=DeepGuidedFilterLayer_384p_1e5_l1_025 --divisor=1 --bs=8 --l1loss --crop_size=384 --scale_factor=0.25|
 |DeepGuidedFilterLayerAndMap回归到`0.05左右`过拟合1:train_loss在0.07上，过拟合2：几乎没有甚至eval比train在loss上更低|1e5|21.9514|`0.7808去躁了所以好了点`|20h|python train_tensorboard.py --net=DeepGuidedFilterLayerAndMap --step=100000 --device=cuda:1 --pth=DeepGuidedFilterLayerAndMap_384p_1e5_l1_025 --divisor=1 --bs=8 --l1loss --crop_size=384 --scale_factor=0.25|
+
 
 ### train_patch  | receptive field | test_image=600x400
 
