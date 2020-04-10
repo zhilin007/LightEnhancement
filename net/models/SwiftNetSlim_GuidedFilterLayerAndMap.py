@@ -79,7 +79,7 @@ class ReluConv(nn.Sequential):
 		super(ReluConv, self).__init__()
 		if norm:
 			self.add_module('norm', nn.InstanceNorm2d(in_dim))
-		self.add_module('relu', nn.ReLU(inplace=True))
+		self.add_module('relu', nn.ReLU(inplace=False))
 		self.add_module('conv', nn.Conv2d(in_dim, out_dim, kernel_size=k, padding=k//2))
 class SpatialPyramidPooling(nn.Module):
 	def __init__(self, num_maps_in, num_levels=3, bt_size=128, out_size=128,grids=(8, 4, 2, 1), square_grid=False,fixed_size=None,norm=False):
