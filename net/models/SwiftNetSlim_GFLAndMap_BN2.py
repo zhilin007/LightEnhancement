@@ -168,7 +168,7 @@ class SwiftNetSlim_GFLAndMap_BN2(nn.Module):
 		self.guided_map = nn.Sequential(
 			nn.Conv2d(3, 16, 1, bias=False),
 			AdaptiveNorm(16),
-			nn.LeakyReLU(0.2, inplace=True),
+			nn.ReLU(inplace=True),#改动！！！不是lrelu了
 			nn.Conv2d(16, 3, 1)
 		)
 	def forward(self,x):
