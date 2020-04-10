@@ -136,7 +136,7 @@ class Decoder(nn.Module):#out_dim=128 decoder to x4
 		return out
 class SwiftNetSlim(nn.Module):
 	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64]):
-		super(SwiftNetSlim_GuidedFilterLayerAndMap,self).__init__()
+		super(SwiftNetSlim,self).__init__()
 		self.sppdim=64 #original 128
 		self.encoder=ResNet18(incolor,features=features)#original features:[64,128,256,512]
 		self.spp=SpatialPyramidPooling(features[-1],out_size=self.sppdim)
