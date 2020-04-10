@@ -1,6 +1,6 @@
 import torch,torch.nn as nn
 import torch.nn.functional as F
-from GuidedFilter.guided_filter import ConvGuidedFilter
+from .GuidedFilter.guided_filter import ConvGuidedFilter
 '''
 特征变为[16,32,64,64]原来[64,128,256,512]
 '''
