@@ -17,6 +17,7 @@ class BasicBlock(nn.Module):
 			residual=self.downsample(residual)
 		skip=out+residual
 		out=self.relu(out)### bug!!!!!!!!!!!!!!!!! 应该是skip！！！！！！
+		#那你为什么不改？？？
 		return skip,out
 class ResNet18(nn.Module):
 	def __init__(self,color=3,layers=[2,2,2,2]):

@@ -16,10 +16,9 @@ from ssim_loss import SSIM as ssimloss
 from torchvision.models import vgg16
 import tools
 warnings.filterwarnings('ignore')
-#out_x4进行回归
+#out进行回归
 models_={
-	'SwiftNet_GuidedFilter':SwiftNet_GuidedFilter()
-	
+	'SwiftNetSlim_GuidedFilterLayerAndMap':SwiftNetSlim_GuidedFilterLayerAndMap()
 }
 
 start_time=time.time()
@@ -61,11 +60,11 @@ def train(net,loader_train,loader_test,loader_eval_train,optim,criterion):
 		outx4,out=net(torch.cat([x,i],1))
 		loss=0
 		if opt.l1loss:
-			loss=criterion['l1loss'](outx4,y_x4)+loss
+			loss=criterion['l1loss'](out,y)+loss
 		if opt.mseloss:
-			loss=criterion['mseloss'](outx4,y_x4)+loss
+			loss=criterion['mseloss'](out,y)+loss
 		if opt.ssimloss:
-			loss3=criterion['ssimloss'](outx4,y_x4)
+			loss3=criterion['ssimloss'](out,y)
 			loss=loss+(1-loss3)
 		loss.backward()
 		optim.step()
@@ -113,11 +112,11 @@ def test(net,loader_test):
 
 		loss1=0
 		if opt.l1loss:
-			loss1+=criterion['l1loss'](predx4,targets_x4)
+			loss1+=criterion['l1loss'](pred,targets)
 		if opt.mseloss:
-			loss1+=criterion['mseloss'](predx4,targets_x4)
+			loss1+=criterion['mseloss'](pred,targets)
 		if opt.ssimloss:
-			loss3=criterion['ssimloss'](predx4,targets_x4)
+			loss3=criterion['ssimloss'](pred,targets)
 			loss1+=(1-loss3)
 		ssim1=ssim(pred,targets).item()
 		psnr1=psnr(pred,targets)

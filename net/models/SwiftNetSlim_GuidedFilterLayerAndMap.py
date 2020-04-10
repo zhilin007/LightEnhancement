@@ -134,7 +134,16 @@ class Decoder(nn.Module):#out_dim=128 decoder to x4
 		out=self.up2(x8,out)#x8
 		out=self.up3(x4,out)#x4
 		return out
-class SwiftNetSlim(nn.Module):
+class AdaptiveNorm(nn.Module):
+	def __init__(self, n):
+		super(AdaptiveNorm, self).__init__()
+		self.w_0 = nn.Parameter(torch.Tensor([1.0]))
+		self.w_1 = nn.Parameter(torch.Tensor([0.0]))
+		self.bn  = nn.BatchNorm2d(n, momentum=0.999, eps=0.001)
+	def forward(self, x):
+		return self.w_0 * x + self.w_1 * self.bn(x)
+
+class SwiftNetSlim_GuidedFilterLayerAndMap(nn.Module):
 	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64]):
 		super(SwiftNetSlim_GuidedFilterLayerAndMap,self).__init__()
 		self.sppdim=64 #original 128
@@ -142,20 +151,29 @@ class SwiftNetSlim(nn.Module):
 		self.spp=SpatialPyramidPooling(features[-1],out_size=self.sppdim)
 		self.decoder=Decoder(features,in_dim=self.sppdim)
 		self.post=ReluConv(features[-4],outcolor,1)
+		self.filter = ConvGuidedFilter(1, norm=AdaptiveNorm)
+		self.guided_map = nn.Sequential(
+			nn.Conv2d(3, 16, 1, bias=False),
+			AdaptiveNorm(16),
+			nn.LeakyReLU(0.2, inplace=True),
+			nn.Conv2d(16, 3, 1)
+		)
 	def forward(self,x):
 		image_size=x.size()[2:4]
 		x1,x2,x4,x8,x16,x32=self.encoder(x)
 		x32=self.spp(x32)
 		out_x4=self.decoder(x32,x16,x8,x4)
 		out_x4=self.post(out_x4)
-		out=upsample(out_x4,image_size)
-		return out
+		# out=upsample(out_x4,image_size)
+		x_h=x[:,:3,::];x_l=F.interpolate(x_h,scale_factor=0.25)
+		out=self.filter(self.guided_map(x_l),out_x4,self.guided_map(x_h))
+		return out_x4,out
 
 if __name__ == "__main__":
 	#最后output是1/4 上采样回去的，这对我们pixel-wise的评测标准非常不好!!!!
 	#devisor=32
 	x=torch.zeros([1,4,160,160])
-	net=SwiftNetSlim()
+	net=SwiftNetSlim_GuidedFilterLayerAndMap()
 	# print(sum([p.numel() for p in net.parameters()]))
 	net(x)
 

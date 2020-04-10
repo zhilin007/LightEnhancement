@@ -44,4 +44,7 @@ def plot_all_files(dir,keys=['MPID','psnr'],filters=['']):
 
 if __name__ == "__main__":
 	# x=np.load(abs+'unet_160p_1e5_l1_100000_losses.npy')
-	plot_all_files(abs,keys=['losses','1e5'],filters=[])
+	# plot_all_files(abs,keys=['losses','swiftnetslim'],filters=[])
+	x=np.load(abs+'swiftnetslim_160p_2e5_l1_losses.npy')
+	print(x.mean())
+	print(x.min())

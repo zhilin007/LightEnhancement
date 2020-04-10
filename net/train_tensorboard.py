@@ -31,7 +31,8 @@ models_={
 	'DeepGuidedFilterAndMap':DeepGuidedFilterAndMap(scale=opt.scale_factor),
 	'DeepGuidedFilterLayer':DeepGuidedFilterLayer(scale=opt.scale_factor),
 	'DeepGuidedFilterLayerAndMap':DeepGuidedFilterLayerAndMap(scale=opt.scale_factor),
-	'SwiftNet_GuidedFilter':SwiftNet_GuidedFilter()
+	'SwiftNet_GuidedFilter':SwiftNet_GuidedFilter(),
+	'SwiftNetSlim_GuidedFilterLayerAndMap':SwiftNetSlim_GuidedFilterLayerAndMap()
 }
 
 start_time=time.time()

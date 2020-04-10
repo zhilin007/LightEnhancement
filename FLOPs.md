@@ -16,6 +16,7 @@
 |`hdr1`|3x1920x1056|271.08M|381.25MB|482,065|
 |Res18Net1|4x1920x1056|34.1G|1419.26M|482,065|
 |`DeepGuidedFilterLayerAndMap`|4x1920x1056|3.98G|700.44MB|28,761|
+|SwiftNetSlim_GuidedFilterLayerAndMap|4x1920x1056|7.36G|740.10MB|425,680|
 
 #### 224x224
 |net|InputSize|FLOPs|memory|paras|
