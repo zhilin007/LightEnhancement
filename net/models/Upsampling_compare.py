@@ -48,7 +48,7 @@ class ConvGuidedFilter(nn.Module):#为了对比时效修改过
 									nn.ReLU(inplace=True),
 									nn.Conv2d(32, 3, kernel_size=1, bias=False))
 		self.box_filter.weight.data[...] = 1.0
-		self.x_hr=torch.zeros([1,3,256*16,256*16])
+		self.x_hr=torch.zeros([1,3,256*16,256*16]).to('cuda:2')
 	def forward(self, x_lr):
 		x_hr=self.x_hr
 		y_lr=x_lr
