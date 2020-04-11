@@ -80,6 +80,7 @@ if __name__ == "__main__":
 	#3.6s | 19.24s | 非常慢x100
 	#不需要运算的还是很快的
 	nets=[BilinearUp().to('cuda:2'),ConvGuidedFilter().to('cuda:2')]
+	#3.6 |12.7|
 	for net in nets:
 		torch.cuda.empty_cache()
 		sep_time=time.time()
