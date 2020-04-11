@@ -16,5 +16,6 @@ from models.SwiftNet_guidedfilter import SwiftNet_GuidedFilter
 from models.SwiftNetSlim_GuidedFilterLayerAndMap import SwiftNetSlim_GuidedFilterLayerAndMap
 from models.SwiftNetSlim_GFLAndMap_BN import SwiftNetSlim_GFLAndMap_BN
 from models.SwiftNetSlim_GFLAndMap_BN2 import SwiftNetSlim_GFLAndMap_BN2
+from models.SwiftNetSlim_GFL_SN import SwiftNetSlim_GFL_SN
 
 

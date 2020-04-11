@@ -21,6 +21,7 @@ models_={
 	'SwiftNetSlim_GuidedFilterLayerAndMap':SwiftNetSlim_GuidedFilterLayerAndMap(norm=opt.norm),
 	'SwiftNetSlim_GFLAndMap_BN':SwiftNetSlim_GFLAndMap_BN(norm=opt.norm),
 	'SwiftNetSlim_GFLAndMap_BN2':SwiftNetSlim_GFLAndMap_BN2(norm=opt.norm),
+	'SwiftNetSlim_GFL_SN':SwiftNetSlim_GFL_SN(norm=opt.norm)
 }
 
 start_time=time.time()

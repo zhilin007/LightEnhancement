@@ -20,7 +20,7 @@ nohup python >log.out
 
 `收敛标准在0.02左右`
 `InstanceNorm能够有效解决过拟合1`
-`因为使用了Batch norm更好解决过拟合2`
+`因为使用了Batch norm并不能够有效解决过拟合2`
 
 
 |net|step|psnr|ssim|time|line|
@@ -32,7 +32,9 @@ nohup python >log.out
 |SwiftNetSlim_GuidedFilterLayerAndMap`在out下进行回归,swiftslim使用InstanceNorm,GFL使用AdaptiveNorm``patch_loss:0.023 train_loss:0.023(没有过拟合1) psnr:29.57 ssim:0.872 test_loss:0.40psnr:25.8(-4过拟合2严重)ssim:0.815（-0.06严重）`|1e5|`25.8456`|0.8169|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GuidedFilterLayerAndMap --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GuidedFilterLayerAndMap_384p_1e5_l1_IN --divisor=32 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm|
 |SwiftNetSlim_GFLAndMap_BN `,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm``patch_loss:0.02-0.024 train_loss:0.024 psnr:29.7 ssim:0.87 test_loss:0.037(过拟合2）psnr:26.4（-3）ssim:0.819（-0.05）`|1e5|`26.4670`|0.8207|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN --device=cuda:0 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN_384p_1e5_l1_IN --divisor=32 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm|
 |SwiftNetSlim_GFLAndMap_BN `在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm SSIMLOSS`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN --device=cuda:0 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
+|SwiftNetSlim_GFL_SN 全部替换为`SwitchableNorm保留adaptiveNorm形式，SSIMLOSS`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFL_SN --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFL_SN_384p_1e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
 |SwiftNetSlim_GFLAndMap_BN2 `,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm(改动)` `256P` SSIMLOSS `patch_loss:0.13-0.15 train_loss:0.15 psnr:27.15 ssim:0.877 test_loss:0.212 psnr:25.36(-2)ssim:0.82(-0.05)`|1e5|25.6620|`0.8249`|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN2_256p_1e5_l1_ssim_IN --divisor=1 --bs=8 --l1loss --crop_size=256 --lr=0.0004 --norm --ssimloss|
+|SwiftNetSlim_GFLAndMap_BN2 `,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm(改动)` `384P` SSIMLOSS |1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN2 --device=cuda:0 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=256 --lr=0.0004 --norm --ssimloss|
 
 
 
