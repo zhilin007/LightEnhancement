@@ -17,6 +17,7 @@ pred_trained 和non-trained infer时间一样
 |DeepGuidedFilterLayerAndMap|GeForce GTX TITAN X|[1,4,1024,1024]|83.81|0.0118|
 |SwiftNet_GuidedFilter|GeForce GTX TITAN X|[1,4,1024,1024]|40.40|0.0246|
 |SwiftNetSlim_GuidedFilterLayerAndMap|GeForce GTX TITAN X|[1,4,1024,1024]|75.94|0.013|
+|SwiftNetSlim_GFLAndMap_BN|GeForce GTX TITAN X|[1,4,1024,1024]|||
 
 
 
