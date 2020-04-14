@@ -20,3 +20,5 @@ from models.SwiftNetSlim_GFL_SN import SwiftNetSlim_GFL_SN
 from models.SwiftNetSlim2_GFLAndMap_BN2 import SwiftNetSlim2_GFLAndMap_BN2
 
 
+from models.GENY.Gen_Y_Swiftslim2_BN2 import Gen_Y_Swiftslim2_BN2
+from models.GENY.Gen_Y_Swiftslim2_BN2_Share import Gen_Y_Swiftslim2_BN2_Share

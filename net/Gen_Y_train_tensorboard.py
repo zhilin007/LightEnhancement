@@ -18,9 +18,9 @@ import tools
 warnings.filterwarnings('ignore')
 #test时候同时画train和eval的psnr,ssim,loss
 models_={
-	'gen_y_unet':GE_Y_Unet(),
-	'gen_y_unet64':GE_Y_Unet64(),
-
+	# 'gen_y_unet':GE_Y_Unet(),
+	# 'gen_y_unet64':GE_Y_Unet64(),
+	'Gen_Y_Swiftslim2_BN2':Gen_Y_Swiftslim2_BN2(scale_factor=opt.scale_factor)
 }
 
 start_time=time.time()
@@ -147,7 +147,7 @@ if __name__ == "__main__":
 		criterion.update({'ssimloss':ssimloss().to(opt.device)})
 	optimizer_y = RAdam(params=filter(lambda x: x.requires_grad,net.module.genY.parameters()),lr=opt.lr, betas = (0.9, 0.999), eps=1e-08)
 	optimizer_y.zero_grad()
-	optimizer_net=RAdam(params=filter(lambda x: x.requires_grad,net.module.unet.parameters()),lr=opt.lr,betas = (0.9, 0.999), eps=1e-08)
+	optimizer_net=RAdam(params=filter(lambda x: x.requires_grad,net.module.genO.parameters()),lr=opt.lr,betas = (0.9, 0.999), eps=1e-08)
 	optimizer_net.zero_grad()
 	train(net,loader_train,loader_test,loader_eval_train,optimizer_y,optimizer_net,criterion)
 	
