@@ -40,11 +40,14 @@ nohup python >log.out
 
 ### GEN Y 
 
-
+`在guidedmap_indim & out_dim有改动，`
 
 |net|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|
-|Gen_Y_Swiftslim2_BN2|2e5|1e5|||18h||python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --scale_factor=0.25|
+|Gen_Y_Swiftslim2_BN2`Y结果使用上采样`|2e5||||18h||python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --scale_factor=0.25|
+|Gen_Y_Swiftslim2_BN2_Share`Y结果使用上采样 & 共享encoder SPP`|
+|Gen_Y_Swiftslim2_Bn2_2`直接堆上两个一样的网络像UNET那样`|
+|Gen_Y_Swiftslim2_Bn2_SAME_share`共享encoder SPP`｜
 
 
 
