@@ -216,6 +216,42 @@ class Backbone(nn.Module):
 		x_h=x;x_l=F.interpolate(x_h,scale_factor=0.25)
 		out=self.filter(self.guided_map(x_l),out_x4,self.guided_map(x_h))
 		return out
+class Backbone_downsample(nn.Module):#在下采样下处理Y
+	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=False,scale_factor=0.25):
+		super(Backbone_downsample,self).__init__()
+		self.sppdim=64 #original 128
+		self.encoder=ResNet18(incolor,features=features,norm=norm)#original features:[64,128,256,512]
+		self.spp=SpatialPyramidPooling(features[-1],out_size=self.sppdim,norm=norm)
+		self.decoder=Decoder(features,in_dim=self.sppdim,norm=norm)
+		self.post=ReluConv(features[-4],outcolor,1,norm=norm)
+		self.filter = ConvGuidedFilter(1, norm=AdaptiveNorm,dim=outcolor)
+		self.guided_map = nn.Sequential(
+			nn.Conv2d(4, 16, 1, bias=False),
+			AdaptiveNorm(16),
+			nn.ReLU(inplace=True),
+			nn.Conv2d(16, outcolor, 1)
+		)
+	def forward(self,x):
+		x_l=F.interpolate(x,scale_factor=0.25)
+		x1,x2,x4,x8,x16,x32=self.encoder(x_l)
+		x32=self.spp(x32)
+		out_x4=self.decoder(x32,x16,x8,x4)
+		out_x4=self.post(out_x4)
+		x_ll=F.interpolate(x,size=out_x4.size()[2:4])
+		out=self.filter(self.guided_map(x_ll),out_x4,self.guided_map(x))
+		return out
+class Gen_Y_Swiftslim2_BN2_SAME_DownSample(nn.Module):
+	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=True,scale_factor=0.25):#downsample X to genY
+		super(Gen_Y_Swiftslim2_BN2_SAME_DownSample,self).__init__()
+		self.genY=Backbone_downsample(incolor,1,features,norm,scale_factor)
+		self.genO=Backbone(incolor,outcolor,features,norm)
+	def forward(self,x,illumin_cond):
+		in_Y=torch.cat([x,illumin_cond],1)
+		Y=self.genY(in_Y)
+		in_net=torch.cat([x,Y.detach()],1)
+		out=self.genO(in_net)
+		return Y,out
+
 class Gen_Y_Swiftslim2_BN2_SAME(nn.Module):
 	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=True):
 		super(Gen_Y_Swiftslim2_BN2_SAME,self).__init__()
@@ -238,7 +274,7 @@ if __name__ == "__main__":
 	x=torch.zeros([1,3,160,160])
 	y=torch.zeros([1,1,160,160])
 
-	net=Gen_Y_Swiftslim2_BN2_SAME(norm=True)
+	net=Gen_Y_Swiftslim2_BN2_SAME_DownSample(norm=True)
 	print(sum([p.numel() for p in net.parameters()]))
 	net(x,y)
 	print(net)

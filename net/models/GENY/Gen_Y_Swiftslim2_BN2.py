@@ -230,7 +230,7 @@ class Gen_O(nn.Module):
 		return out
 
 class Gen_Y_Swiftslim2_BN2(nn.Module):
-	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=False,scale_factor=0.25):
+	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=True,scale_factor=0.25):
 		super(Gen_Y_Swiftslim2_BN2,self).__init__()
 		self.genY=Gen_Y(incolor,outcolor,features,norm,scale_factor)
 		self.genO=Gen_O(incolor,outcolor,features,norm,scale_factor)
