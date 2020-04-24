@@ -42,13 +42,14 @@ nohup python >log.out
 
 `在guidedmap_indim & out_dim有改动，`
 
+
 |net|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|
-|Gen_Y_Swiftslim2_BN2`Y在下采样下处理，结果使用bilinear上采样`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2 --scale_factor=0.25 --ssimloss|
+|Gen_Y_Swiftslim2_BN2`Y在下采样下处理，结果使用bilinear上采样`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2 --scale_factor=0.25 |
 |Gen_Y_Swiftslim2_BN2_Share`Y结果使用上采样 & 共享encoder SPP`|
-|Gen_Y_Swiftslim2_BN2_SAME`Y网络和主网络一样`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:1' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_SAME_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2_SAME --ssimloss|
+|Gen_Y_Swiftslim2_BN2_SAME`Y网络和主网络一样`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:1' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_SAME_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2_SAME|
 |Gen_Y_Swiftslim2_Bn2_SAME_share`共享encoder SPP`|
-|Gen_Y_Swiftslim2_BN2_SAME_DownSample`genY:在下采样分辨率下处理，结果使用GFL`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_SAME_DownSample_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2_SAME_DownSample --scale_factor=0.25 --ssimloss|
+|Gen_Y_Swiftslim2_BN2_SAME_DownSample`genY:在下采样分辨率下处理，结果使用GFL`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_SAME_DownSample_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2_SAME_DownSample --scale_factor=0.25|
 
 
 
