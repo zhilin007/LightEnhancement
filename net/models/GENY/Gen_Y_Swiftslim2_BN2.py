@@ -236,17 +236,18 @@ class Gen_Y_Swiftslim2_BN2(nn.Module):
 		self.genO=Gen_O(incolor,outcolor,features,norm,scale_factor)
 	def forward(self,x,ill):
 		Y=self.genY(x,ill)
-		out=self.genO(x.Y.detach())
+		out=self.genO(x,Y.detach())
 		return Y,out
 
 if __name__ == "__main__":
 
 	#devisor=32
-	x=torch.zeros([1,4,160,160])
+	x=torch.zeros([1,3,160,160])
+	y=torch.zeros([1,1,160,160])
 	net=Gen_Y_Swiftslim2_BN2(norm=True)
 	print(type(net.parameters()))
 	# print(sum([p.numel() for p in net.parameters()]))
-	# net(x)
+	net(x,y)
 	print(net)
 
 	
