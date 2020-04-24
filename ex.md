@@ -36,7 +36,7 @@ nohup python >log.out
 |SwiftNetSlim_GFLAndMap_BN2 `,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm(改动)` `256P` SSIMLOSS `patch_loss:0.13-0.15 train_loss:0.15 psnr:27.15 ssim:0.877 test_loss:0.212 psnr:25.36(-2)ssim:0.82(-0.05)`|1e5|25.6620|`0.8249`|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN2_256p_1e5_l1_ssim_IN --divisor=1 --bs=8 --l1loss --crop_size=256 --lr=0.0004 --norm --ssimloss|
 |SwiftNetSlim_GFLAndMap_BN2 `,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm(改动)` `384P` SSIMLOSS `patch_loss: train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
 |SwiftNetSlim2_GFLAndMap_BN2 `在前一个基础上conv改为3x3而不是7x7` `256P` SSIMLOSS  `patch_loss: 0.15 train_loss:0.145 psnr:28.47 ssim:0.875 test_loss:0.21 psnr:25.6(-3)ssim:0.822(-0.05)`|1e5|25.7234|0.8224|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim2_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim2_GFLAndMap_BN2_256p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=256 --lr=0.0004 --norm --ssimloss|
-|SwiftNetSlim2_GFLAndMap_BN2 在前一个基础 `384P` SSIMLOSS  `patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim2_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim2_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
+|SwiftNetSlim2_GFLAndMap_BN2 在前一个基础 `384P` SSIMLOSS  `patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim2_GFLAndMap_BN2 --device=cuda:0 --step=100000 --pth=SwiftNetSlim2_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
 
 ### GEN Y 
 
@@ -44,9 +44,9 @@ nohup python >log.out
 
 |net|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|
-|Gen_Y_Swiftslim2_BN2`Y结果使用上采样`|2e5||||18h||python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --scale_factor=0.25|
+|Gen_Y_Swiftslim2_BN2`Y在下采样下处理，结果使用bilinear上采样`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --scale_factor=0.25|
 |Gen_Y_Swiftslim2_BN2_Share`Y结果使用上采样 & 共享encoder SPP`|
-|Gen_Y_Swiftslim2_Bn2_2`直接堆上两个一样的网络像UNET那样`|
+|Gen_Y_Swiftslim2_BN2_SAME`Y网络和主网络一样`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:1' --steps=200000 lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_SAME_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm|
 |Gen_Y_Swiftslim2_Bn2_SAME_share`共享encoder SPP`｜
 
 

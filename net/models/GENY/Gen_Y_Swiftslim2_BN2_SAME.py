@@ -217,7 +217,7 @@ class Backbone(nn.Module):
 		out=self.filter(self.guided_map(x_l),out_x4,self.guided_map(x_h))
 		return out
 class Gen_Y_Swiftslim2_BN2_SAME(nn.Module):
-	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=False):
+	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=True):
 		super(Gen_Y_Swiftslim2_BN2_SAME,self).__init__()
 		self.genY=Backbone(incolor,1,features,norm)
 		self.genO=Backbone(incolor,outcolor,features,norm)
@@ -228,7 +228,7 @@ class Gen_Y_Swiftslim2_BN2_SAME(nn.Module):
 		out=self.genO(in_net)
 		return Y,out
 class Gen_Y_Swiftslim2_BN2_SAME_share(nn.Module):
-	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=False):
+	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=True):
 		pass
 	def forward(self,x,illumin_cond):
 		pass
@@ -238,7 +238,7 @@ if __name__ == "__main__":
 	x=torch.zeros([1,3,160,160])
 	y=torch.zeros([1,1,160,160])
 
-	net=Gen_Y_Swiftslim2_Bn2_2(norm=True)
+	net=Gen_Y_Swiftslim2_BN2_SAME(norm=True)
 	print(sum([p.numel() for p in net.parameters()]))
 	net(x,y)
 	print(net)
