@@ -6,6 +6,12 @@ nohup python >log.out
 
 过拟合1:patch与total_image关于image_size的过拟合
 过拟合2:train/test的过拟合
+`
+gen_y_unet_160p_2e5_l1.pth
+step : 88000
+max_psnr : 20.69818210016854(+1)
+max_ssim : 0.8325258769386841(+0.03)
+`
 
 |net|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|
@@ -34,9 +40,9 @@ nohup python >log.out
 |SwiftNetSlim_GFLAndMap_BN `在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm SSIMLOSS``patch_loss:0.15 train_loss:0.13 psnr:30.0 ssim:0.88 test_loss:0.20 psnr:26(-4)ssim:0.83(-0.05)`|1e5|26.0504|`0.8297`|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN --device=cuda:0 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
 |SwiftNetSlim_GFL_SN 全部替换为`SwitchableNorm保留adaptiveNorm形式，SSIMLOSS``patch_loss:0.14 train_loss:0.12 psnr:30.3 ssim:0.89 test_loss:0.20 psnr:26.3(-4)ssim:0.83(-0.06)`|1e5|26.4075|`0.8298`|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFL_SN --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFL_SN_384p_1e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
 |SwiftNetSlim_GFLAndMap_BN2 `,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm(改动)` `256P` SSIMLOSS `patch_loss:0.13-0.15 train_loss:0.15 psnr:27.15 ssim:0.877 test_loss:0.212 psnr:25.36(-2)ssim:0.82(-0.05)`|1e5|25.6620|`0.8249`|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN2_256p_1e5_l1_ssim_IN --divisor=1 --bs=8 --l1loss --crop_size=256 --lr=0.0004 --norm --ssimloss|
-|SwiftNetSlim_GFLAndMap_BN2 `,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm(改动)` `384P` SSIMLOSS `patch_loss: train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
+|SwiftNetSlim_GFLAndMap_BN2 `Backbone``,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm(改动)` `384P` SSIMLOSS `patch_loss:0.14 train_loss:0.13 psnr:30. ssim:0.88 test_loss:0.20 psnr:26.2ssim:0.83`|1e5|`26.2817`|`0.8316`|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
 |SwiftNetSlim2_GFLAndMap_BN2 `在前一个基础上conv改为3x3而不是7x7` `256P` SSIMLOSS  `patch_loss: 0.15 train_loss:0.145 psnr:28.47 ssim:0.875 test_loss:0.21 psnr:25.6(-3)ssim:0.822(-0.05)`|1e5|25.7234|0.8224|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim2_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim2_GFLAndMap_BN2_256p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=256 --lr=0.0004 --norm --ssimloss|
-|SwiftNetSlim2_GFLAndMap_BN2 在前一个基础 `384P` SSIMLOSS  `patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|||18h|python gfl_train_tensorboard.py --net=SwiftNetSlim2_GFLAndMap_BN2 --device=cuda:0 --step=100000 --pth=SwiftNetSlim2_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
+|SwiftNetSlim2_GFLAndMap_BN2 `Backbone` 在前一个基础 `384P` SSIMLOSS  `patch_loss:0.15train_loss:0.13 psnr:29.4 ssim:0.88 test_loss:0.21 psnr:25.8ssim:0.82`|1e5|`25.9860`|0.8245|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim2_GFLAndMap_BN2 --device=cuda:0 --step=100000 --pth=SwiftNetSlim2_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
 
 ### GEN Y 
 
@@ -46,7 +52,7 @@ nohup python >log.out
 |net|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|
 |Gen_Y_Swiftslim2_BN2`Y在下采样下处理，结果使用bilinear上采样`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2 --scale_factor=0.25 |
-|Gen_Y_Swiftslim2_BN2_Share`Y结果使用上采样 & 共享encoder SPP`|
+|Gen_Y_Swiftslim2_BN2_Share`Y结果使用上采样 & 共享encoder SPP`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:2' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_Share_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2_Share --scale_factor=0.25 |
 |Gen_Y_Swiftslim2_BN2_SAME`Y网络和主网络一样`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:1' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_SAME_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2_SAME|
 |Gen_Y_Swiftslim2_Bn2_SAME_share`共享encoder SPP`|
 |Gen_Y_Swiftslim2_BN2_SAME_DownSample`genY:在下采样分辨率下处理，结果使用GFL`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_SAME_DownSample_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2_SAME_DownSample --scale_factor=0.25|
@@ -64,39 +70,4 @@ nohup python >log.out
 |DeepGuidedFilterAndMap 回归到`0.05左右`，过拟合1效果同上，但过拟合2交情较轻|1e5|21.9899|0.7865`去躁了所以好了点`|20h|python train_tensorboard.py --net=DeepGuidedFilterAndMap --step=100000 --device=cuda:1 --pth=DeepGuidedFilterAndMap_384p_1e5_l1_025 --divisor=1 --bs=8 --l1loss --crop_size=384 --scale_factor=0.25|
 |DeepGuidedFilterLayer回归到`0.05左右`，过拟合1:train_loss在0.07上，过拟合2：几乎没有甚至eval比train在loss上更低|1e5|`22.1607`|0.7719|20h|python train_tensorboard.py --net=DeepGuidedFilterLayer --step=100000 --device=cuda:0 --pth=DeepGuidedFilterLayer_384p_1e5_l1_025 --divisor=1 --bs=8 --l1loss --crop_size=384 --scale_factor=0.25|
 |DeepGuidedFilterLayerAndMap回归到`0.05左右`过拟合1:train_loss在0.07上，过拟合2：几乎没有甚至eval比train在loss上更低|1e5|21.9514|`0.7808去躁了所以好了点`|20h|python train_tensorboard.py --net=DeepGuidedFilterLayerAndMap --step=100000 --device=cuda:1 --pth=DeepGuidedFilterLayerAndMap_384p_1e5_l1_025 --divisor=1 --bs=8 --l1loss --crop_size=384 --scale_factor=0.25|
-
-
-### train_patch  | receptive field | test_image=600x400
-
-
-在整张图上的train/test loss曲线都是先减小后变大 abnormal
-
-`都是存在着对训练patch对过拟合`
-
-downsample :2^(depth-1)
-receptive field of `encoder`:
-|depth|receptive field|
-|-|-|
-|5|140|
-|6|284|
-|7|572|
-|8|1148|
-
-`有过拟合风险`
-
-`分析` pending tensorboard画不出来
-相同depth下：
-相同patch下：
-
-|net|patch|step|psnr|ssim|time|line|
-|-|-|-|-|-|-|-|
-|UNet_Depth=5 验证代码没错|160|1e5|19.5771|0.8110|4h|python train_tensorboard.py --net='UNet_Depth' --depth=5 --step=100000 --device=cuda:0 --pth=UNet_Depth5_160p_1e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=160|
-|UNet_Depth=6|128|1e5|16.66|0.7402|4h|python train_tensorboard.py --net='UNet_Depth' --depth=6 --step=100000 --device=cuda:0 --pth=UNet_Depth6_128p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=128|
-|UNet_Depth=6|256|1e5|20.56| 0.79|4h|python train_tensorboard.py --net='UNet_Depth' --depth=6 --step=100000 --device=cuda:0 --pth=UNet_Depth6_256p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=256|
-|UNet_Depth=6|`384尽可能对接近test图像大小`|1e5|`23.82`|`0.841`|4h|python train_tensorboard.py --net='UNet_Depth' --depth=6 --step=100000 --device=cuda:0 --pth=UNet_Depth6_384p_1e5_l1 --divisor=32 --bs=8 --l1loss --crop_size=384|
-|UNet_Depth=7|128|1e5|18.39|0.7235|4h|python train_tensorboard.py --net='UNet_Depth' --depth=7 --step=100000 --device=cuda:0 --pth=UNet_Depth7_128p_1e5_l1 --divisor=64 --bs=8 --l1loss --crop_size=128|
-|UNet_Depth=7|256|1e5|17.9177|0.8016|4h|python train_tensorboard.py --net='UNet_Depth' --depth=7 --step=100000 --device=cuda:0 --pth=UNet_Depth7_256p_1e5_l1 --divisor=64 --bs=8 --l1loss --crop_size=256|
-|UNet_Depth=7|`384`|1e5|`22.460`|`0.8258`|4h|python train_tensorboard.py --net='UNet_Depth' --depth=7 --step=100000 --device=cuda:0 --pth=UNet_Depth7_384p_1e5_l1 --divisor=64 --bs=8 --l1loss --crop_size=384|
-|UNet_Depth=8|128|1e5|18.4298|0.7430|4h|python train_tensorboard.py --net='UNet_Depth' --depth=8 --step=100000 --device=cuda:0 --pth=UNet_Depth8_128p_1e5_l1 --divisor=128 --bs=8 --l1loss --crop_size=128|
-|UNet_Depth=8|256|1e5|16.669|0.7882|4h|python train_tensorboard.py --net='UNet_Depth' --depth=8 --step=100000 --device=cuda:0 --pth=UNet_Depth8_256p_1e5_l1 --divisor=128 --bs=8 --l1loss --crop_size=256|
 

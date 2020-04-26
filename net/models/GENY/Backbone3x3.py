@@ -1,44 +1,10 @@
-'''
-slim2 + bn2 +GFL + InstanceNorm+batchNorm
-'''
 import torch,torch.nn as nn
 import torch.nn.functional as F
+from .GuidedFilter.guided_filter import ConvGuidedFilter
 '''
 特征变为[16,32,64,64]原来[64,128,256,512]
 第一个conv变为3X3
 '''
-class ConvGuidedFilter(nn.Module):
-    def __init__(self, radius=1, norm=nn.BatchNorm2d):
-        super(ConvGuidedFilter, self).__init__()
-        self.box_filter = nn.Conv2d(3, 3, kernel_size=3, padding=radius, dilation=radius, bias=False, groups=3)
-        self.conv_a = nn.Sequential(nn.Conv2d(6, 32, kernel_size=1, bias=False),
-                                    norm(32),
-                                    nn.ReLU(inplace=True),
-                                    nn.Conv2d(32, 32, kernel_size=1, bias=False),
-                                    norm(32),
-                                    nn.ReLU(inplace=True),
-                                    nn.Conv2d(32, 3, kernel_size=1, bias=False))
-        self.box_filter.weight.data[...] = 1.0
-    def forward(self, x_lr, y_lr, x_hr):
-        _, _, h_lrx, w_lrx = x_lr.size()
-        _, _, h_hrx, w_hrx = x_hr.size()
-        N = self.box_filter(x_lr.data.new().resize_((1, 3, h_lrx, w_lrx)).fill_(1.0))
-        ## mean_x
-        mean_x = self.box_filter(x_lr)/N
-        ## mean_y
-        mean_y = self.box_filter(y_lr)/N
-        ## cov_xy
-        cov_xy = self.box_filter(x_lr * y_lr)/N - mean_x * mean_y
-        ## var_x
-        var_x  = self.box_filter(x_lr * x_lr)/N - mean_x * mean_x
-        ## A
-        A = self.conv_a(torch.cat([cov_xy, var_x], dim=1))
-        ## b
-        b = mean_y - A * mean_x
-        ## mean_A; mean_b
-        mean_A = F.interpolate(A, (h_hrx, w_hrx), mode='bilinear', align_corners=True)
-        mean_b = F.interpolate(b, (h_hrx, w_hrx), mode='bilinear', align_corners=True)
-        return mean_A * x_hr + mean_b
 
 class BasicBlock(nn.Module):
 	expansion = 1
@@ -189,54 +155,38 @@ class AdaptiveNorm(nn.Module):
 	def forward(self, x):
 		return self.w_0 * x + self.w_1 * self.bn(x)
 
-class Gen_Y_Swiftslim2_BN2_Share(nn.Module):
-	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=True,scale_factor=0.25):
-		super(Gen_Y_Swiftslim2_BN2_Share,self).__init__()
+class Backbone3x3(nn.Module):
+	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=False):
+		super(Backbone3x3,self).__init__()
 		self.sppdim=64 #original 128
-		#share feature encoder 
-		
-		self.encoder=ResNet18(incolor,features=features,norm=norm)#share feature
+		self.encoder=ResNet18(incolor,features=features,norm=norm)#original features:[64,128,256,512]
 		self.spp=SpatialPyramidPooling(features[-1],out_size=self.sppdim,norm=norm)
-
-		#decoder for geny
-		self.scale_factor=scale_factor
-		self.decoder2=Decoder(features,in_dim=self.sppdim,norm=norm)
-		self.post2=ReluConv(features[-4],1,1,norm=norm)
-
-		#decoder for output
 		self.decoder=Decoder(features,in_dim=self.sppdim,norm=norm)
 		self.post=ReluConv(features[-4],outcolor,1,norm=norm)
 		self.filter = ConvGuidedFilter(1, norm=AdaptiveNorm)
 		self.guided_map = nn.Sequential(
-			nn.Conv2d(4, 16, 1, bias=False),
+			nn.Conv2d(3, 16, 1, bias=False),
 			AdaptiveNorm(16),
 			nn.ReLU(inplace=True),#改动！！！不是lrelu了
 			nn.Conv2d(16, 3, 1)
 		)
-		
-	def forward(self,x,ill):
-		N,C,H,W=x.size()
-		#for gen_Y
-		input_geny=F.interpolate(torch.cat([x,ill],dim=1),scale_factor=self.scale_factor,mode='bilinear')
-		y1,y2,y4,y8,y16,y32=self.encoder(input_geny);y32=self.spp(y32)
-		y_out_x4=self.decoder2(y32,y16,y8,y4);y_out_x4=self.post2(y_out_x4)
-		Y=F.interpolate(y_out_x4,size=[H,W],mode='bilinear')
-		#for output
-		input=torch.cat([x,Y.detach()],dim=1)
-		x1,x2,x4,x8,x16,x32=self.encoder(input);x32=self.spp(x32)
+	def forward(self,x):
+		image_size=x.size()[2:4]
+		x1,x2,x4,x8,x16,x32=self.encoder(x)
+		x32=self.spp(x32)
 		out_x4=self.decoder(x32,x16,x8,x4)
 		out_x4=self.post(out_x4)
-		x_h=input;x_l=F.interpolate(x_h,scale_factor=0.25,mode='bilinear')
+		# out=upsample(out_x4,image_size)
+		x_h=x[:,:3,::];x_l=F.interpolate(x_h,scale_factor=0.25)
 		out=self.filter(self.guided_map(x_l),out_x4,self.guided_map(x_h))
-		return Y,out
+		return out_x4,out
 
 if __name__ == "__main__":
 
 	#devisor=32
 	x=torch.zeros([1,4,160,160])
-	net=Gen_Y_Swiftslim2_BN2_Share(norm=True)
-	print(type(net.parameters()))
-	# print(sum([p.numel() for p in net.parameters()]))
+	net=Backbone3x3(norm=True)
+	print(sum([p.numel() for p in net.parameters()]))
 	# net(x)
 	print(net)
 
