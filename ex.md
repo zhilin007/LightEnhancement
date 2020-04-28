@@ -44,19 +44,6 @@ max_ssim : 0.8325258769386841(+0.03)
 |SwiftNetSlim2_GFLAndMap_BN2 `在前一个基础上conv改为3x3而不是7x7` `256P` SSIMLOSS  `patch_loss: 0.15 train_loss:0.145 psnr:28.47 ssim:0.875 test_loss:0.21 psnr:25.6(-3)ssim:0.822(-0.05)`|1e5|25.7234|0.8224|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim2_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim2_GFLAndMap_BN2_256p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=256 --lr=0.0004 --norm --ssimloss|
 |SwiftNetSlim2_GFLAndMap_BN2 `Backbone` 在前一个基础 `384P` SSIMLOSS  `patch_loss:0.15train_loss:0.13 psnr:29.4 ssim:0.88 test_loss:0.21 psnr:25.8ssim:0.82`|1e5|`25.9860`|0.8245|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim2_GFLAndMap_BN2 --device=cuda:0 --step=100000 --pth=SwiftNetSlim2_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
 
-### GEN Y 
-
-`在guidedmap_indim & out_dim有改动，`
-
-
-|net|step|psnr|ssim|time|line|
-|-|-|-|-|-|-|
-|Gen_Y_Swiftslim2_BN2`Y在下采样下处理，结果使用bilinear上采样`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2 --scale_factor=0.25 |
-|Gen_Y_Swiftslim2_BN2_Share`Y结果使用上采样 & 共享encoder SPP`|2e5|||18h|python Gen_Y_Share_train_tensorboard.py --device='cuda:2' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_Share_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2_Share --scale_factor=0.25 |
-|Gen_Y_Swiftslim2_BN2_SAME`Y网络和主网络一样`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:1' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_SAME_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2_SAME|
-|Gen_Y_Swiftslim2_Bn2_SAME_share`共享encoder SPP`|
-|Gen_Y_Swiftslim2_BN2_SAME_DownSample`genY:在下采样分辨率下处理，结果使用GFL`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Swiftslim2_BN2_SAME_DownSample_384p_2e5_l1 --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Swiftslim2_BN2_SAME_DownSample --scale_factor=0.25|
-
 
 
 ### Guided Filter Network

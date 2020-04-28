@@ -24,6 +24,7 @@ models_={
 	'Gen_Y_Swiftslim2_BN2_Share':Gen_Y_Swiftslim2_BN2_Share(norm=opt.norm,scale_factor=opt.scale_factor),
 	'Gen_Y_Swiftslim2_BN2_SAME':Gen_Y_Swiftslim2_BN2_SAME(norm=opt.norm),
 	'Gen_Y_Swiftslim2_BN2_SAME_DownSample':Gen_Y_Swiftslim2_BN2_SAME_DownSample(norm=opt.norm,scale_factor=opt.scale_factor),
+	'Gen_Y_Swiftslim_BN2':Gen_Y_Swiftslim_BN2(norm=opt.norm,scale_factor=opt.scale_factor),
 }
 
 start_time=time.time()
@@ -67,9 +68,19 @@ def train(net,loader_train,loader_test,loader_eval_train,optim_y,optim_net,crite
 		Y_gt=tools.get_illumination(y,False).to(opt.device)
 
 		Y_out,out=net(x,Y_mean)
-		#l1lss as default
-		loss_out=criterion['l1loss'](out,y)
+		#l1lss as default for y
 		loss_y=criterion['l1loss'](Y_out,Y_gt)
+
+		loss_out=0
+		if opt.l1loss:
+			loss_out=criterion['l1loss'](out,y)+loss_out
+		if opt.mseloss:
+			loss_out=criterion['mseloss'](out,y)+loss_out
+		if opt.ssimloss:
+			loss3=criterion['ssimloss'](out,y)
+			loss_out=loss_out+(1-loss3)
+
+		
 
 		loss_y.backward()
 		optim_y.step()
@@ -118,9 +129,17 @@ def test(net,loader_test):
 		N,C,H,W=targets.size()
 		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
 		Y_gt=tools.get_illumination(targets,False).to(opt.device)
-
 		y_pred,pred=net(inputs,i)
-		loss_out=criterion['l1loss'](pred,targets)
+
+		loss_out=0
+		if opt.l1loss:
+			loss_out=criterion['l1loss'](pred,targets)+loss_out
+		if opt.mseloss:
+			loss_out=criterion['mseloss'](pred,targets)+loss_out
+		if opt.ssimloss:
+			loss3=criterion['ssimloss'](pred,targets)
+			loss_out=loss_out+(1-loss3)
+		# loss_out=criterion['l1loss'](pred,targets)
 		loss_y=criterion['l1loss'](y_pred,Y_gt)
 		loss1=loss_out+loss_y
 		
