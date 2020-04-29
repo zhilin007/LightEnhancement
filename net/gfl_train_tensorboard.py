@@ -61,13 +61,15 @@ def train(net,loader_train,loader_test,loader_eval_train,optim,criterion):
 		x,y=next(iter(loader_train))
 		x=x.to(opt.device);y=y.to(opt.device);y_x4=F.interpolate(y,scale_factor=0.25,mode='bilinear')
 		N,C,H,W=y.size()
-		i=tools.get_illumination(y)+torch.zeros([N,1,H,W]).to(opt.device)
 		if opt.incolor==4:
-			outx4,out=net(torch.cat([x,i],1))
-		elif opt.incolor==3 :
-			outx4,out=net(x)
+			i=tools.get_illumination(y)+torch.zeros([N,1,H,W]).to(opt.device)
+		elif opt.incolor==3:
+			i=torch.Tensor([0.458971])+torch.zeros([N,1,H,W]).to(opt.device)#ImageNet
 		else :
 			raise Exception('Runtime Error')
+
+		outx4,out=net(torch.cat([x,i],1))
+		
 		loss=0
 		if opt.l1loss:
 			loss=criterion['l1loss'](out,y)+loss
@@ -117,14 +119,15 @@ def test(net,loader_test):
 		inputs=inputs.to(opt.device);targets=targets.to(opt.device)
 		targets_x4=F.interpolate(targets,scale_factor=0.25,mode='bilinear')
 		N,C,H,W=targets.size()
-		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
 		if opt.incolor==4:
-			predx4,pred=net(torch.cat([inputs,i],1))
+			i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
 		elif opt.incolor==3:
-			predx4,pred=net(inputs)
-		else :
+			i=torch.Tensor([0.458971])+torch.zeros([N,1,H,W]).to(opt.device)#ImageNet
+		else:
 			raise Exception('Runtime Error')
-			
+		
+		predx4,pred=net(torch.cat([inputs,i],1))
+		
 		loss1=0
 		if opt.l1loss:
 			loss1+=criterion['l1loss'](pred,targets)

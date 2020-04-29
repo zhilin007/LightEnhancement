@@ -218,8 +218,8 @@ class Backbone7x7(nn.Module):
 if __name__ == "__main__":
 
 	#devisor=32
-	x=torch.zeros([1,4,160,160])
-	net=Backbone7x7(norm=True)
+	x=torch.zeros([1,3,160,160])
+	net=Backbone7x7(3,norm=True)
 	print(sum([p.numel() for p in net.parameters()]))
 	# net(x)
 	print(net)
