@@ -37,9 +37,9 @@ if __name__ == "__main__":
 	#python cal_FPS.py --steps=1000 --device='cuda:2' --net=SwiftNetSlim_GFL_SN --norm
 	net=models_[opt.net].to(opt.device)
 	steps=opt.steps
-	# x=torch.ones([1,4,1024,1024]).to(opt.device)
-	x=torch.ones([1,3,1024,1024]).to(opt.device)
-	y=torch.ones([1,1,1024,1024]).to(opt.device)
+	# x=torch.ones([1,4,opt.w,opt.h]).to(opt.device)
+	x=torch.ones([1,3,opt.w,opt.h]).to(opt.device)
+	y=torch.ones([1,1,opt.w,opt.h]).to(opt.device)
 	times=[]
 	stime=time.time()
 	net.eval()

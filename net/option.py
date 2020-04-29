@@ -45,6 +45,11 @@ parser.add_argument('--norm',action='store_true',help='model with norm ops')
 #for data
 parser.add_argument('--divisor',type=int,default=1,help='input fig must can be divisible by it')
 
+#for FPS
+parser.add_argument('--w',type=int,default=1024,help='width of image')
+parser.add_argument('--h',type=int,default=1024,help='height of image')
+
+
 opt=parser.parse_args()
 cwd='/'.join(os.path.realpath(__file__).split('/')[:-2])
 #/home/zhilin007/VS/derain/
