@@ -208,7 +208,7 @@ class Gen_Y_Swiftslim_BN2_Share(nn.Module):
 		self.post=ReluConv(features[-4],outcolor,1,norm=norm)
 		self.filter = ConvGuidedFilter(1, norm=AdaptiveNorm)
 		self.guided_map = nn.Sequential(
-			nn.Conv2d(4, 16, 1, bias=False),
+			nn.Conv2d(incolor, 16, 1, bias=False),
 			AdaptiveNorm(16),
 			nn.ReLU(inplace=True),#改动！！！不是lrelu了
 			nn.Conv2d(16, 3, 1)

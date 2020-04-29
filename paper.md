@@ -19,14 +19,13 @@
 |Backbone7x7 `实验条件和上相同` `验证引导图incolor`|`patch_loss: train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|||18h|python gfl_train_tensorboard.py --net=Backbone7x7 --device=cuda:0 --step=100000 --pth=Backbone7x7_inC4_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss --incolor=4|
 |Backbone7x7 `实验条件和上相同` `验证未知GT光亮incolor=3下ImageNet光亮下性能`|`patch_loss: train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|||18h|python gfl_train_tensorboard.py --net=Backbone7x7 --device=cuda:2 --step=100000 --pth=Backbone7x7_inC3_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss --incolor=3|
 
-### GEN Y: BackBone7x7 
+### GEN Y: BackBone7x7 `未验证在未知GT光亮incolor=3下ImageNet光亮下性能`
 
 `Y:l1 0ut: l1+ssimloss `
 
 `scale_factor超参！：Y在下采样下(0.25)处理，结果使用bilinear上采样`
 
 `共享encoder+SPP或not`
-
 
 |net|regression|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|-|
