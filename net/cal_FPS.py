@@ -46,8 +46,8 @@ if __name__ == "__main__":
 	for i in range(steps):
 		time1=time.time()
 		with torch.no_grad():
-			# _=net(x)
-			_=net(x,y)
+			_=net(x)
+			# _=net(x,y)
 		infer_time=time.time()-time1
 		times.append(infer_time)
 		print(f'{i}/{steps} infer_time:{infer_time}')
