@@ -20,6 +20,7 @@ warnings.filterwarnings('ignore')
 models_={
 	'Gen_Y_Swiftslim2_BN2_Share':Gen_Y_Swiftslim2_BN2_Share(norm=opt.norm,scale_factor=opt.scale_factor),
 	'Gen_Y_Swiftslim_BN2_Share':Gen_Y_Swiftslim_BN2_Share(norm=opt.norm,scale_factor=opt.scale_factor),
+	'Gen_Y_Backbone7x7_Share':Gen_Y_Backbone7x7_Share(norm=opt.norm,scale_factor=opt.scale_factor),
 
 }
 

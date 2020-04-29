@@ -25,6 +25,7 @@ models_={
 	'Gen_Y_Swiftslim2_BN2_SAME':Gen_Y_Swiftslim2_BN2_SAME(norm=opt.norm),
 	'Gen_Y_Swiftslim2_BN2_SAME_DownSample':Gen_Y_Swiftslim2_BN2_SAME_DownSample(norm=opt.norm,scale_factor=opt.scale_factor),
 	'Gen_Y_Swiftslim_BN2':Gen_Y_Swiftslim_BN2(norm=opt.norm,scale_factor=opt.scale_factor),
+	'Gen_Y_Backbone7x7':Gen_Y_Backbone7x7(norm=opt.norm,scale_factor=opt.scale_factor),
 }
 
 start_time=time.time()
