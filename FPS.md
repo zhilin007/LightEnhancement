@@ -22,7 +22,10 @@ pred_trained 和non-trained infer时间一样
 |SwiftNetSlim2_GFLAndMap_BN2 使用norm|GeForce GTX TITAN X|[1,4,1024,1024]|71.9|0.013|
 
 ### FSP of BackBone with norm: on 1080p
-
+｜net|device|resolution|FPS|avg_infer_decay|
+|-|-|-|-|-|
+|SwiftNetSlim_GFLAndMap_BN2|GeForce GTX TITAN X|[1,3,1920,1080]|31.87|0.030|
+ 
 ### GENY with norm on 1080p!
 ｜net|device|resolution|FPS|avg_infer_decay|
 |-|-|-|-|-|
