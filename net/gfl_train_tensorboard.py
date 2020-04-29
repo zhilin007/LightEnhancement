@@ -23,7 +23,7 @@ models_={
 	'SwiftNetSlim_GFLAndMap_BN2':SwiftNetSlim_GFLAndMap_BN2(norm=opt.norm),
 	'SwiftNetSlim_GFL_SN':SwiftNetSlim_GFL_SN(norm=opt.norm),
 	'SwiftNetSlim2_GFLAndMap_BN2':SwiftNetSlim2_GFLAndMap_BN2(norm=opt.norm),
-	'Backbone7x7':Backbone7x7(incolor=opt.incolor,norm=opt.norm)
+	'Backbone7x7':Backbone7x7(norm=opt.norm)
 }
 
 start_time=time.time()
@@ -125,7 +125,7 @@ def test(net,loader_test):
 			i=torch.Tensor([0.458971])+torch.zeros([N,1,H,W]).to(opt.device)#ImageNet
 		else:
 			raise Exception('Runtime Error')
-		
+
 		predx4,pred=net(torch.cat([inputs,i],1))
 		
 		loss1=0
