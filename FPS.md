@@ -1,4 +1,4 @@
-### FPS粗略判断
+### FPS粗略判断 on 1megapixel
 
 pred_trained 和non-trained infer时间一样
 
@@ -21,10 +21,17 @@ pred_trained 和non-trained infer时间一样
 |SwiftNetSlim_GFLAndMap_BN使用用NORM|GeForce GTX TITAN X|[1,4,1024,1024]|74.268|0.013|
 |SwiftNetSlim2_GFLAndMap_BN2 使用norm|GeForce GTX TITAN X|[1,4,1024,1024]|71.9|0.013|
 
-### GENY
+### FSP of BackBone with norm: on 1080p
+
+### GENY with norm on 1080p!
 ｜net|device|resolution|FPS|avg_infer_decay|
 |-|-|-|-|-|
-|Gen_Y_Swiftslim_BN2_Share 使用norm|GeForce GTX TITAN X|[1,3,1920,1080]|31.5|0.031|
+|Gen_Y_Swiftslim`2`_BN2`并没有加快多少`|GeForce GTX TITAN X|[1,3,1920,1080]|31.87|0.030|
+|Gen_Y_Swiftslim2_BN2_Share|GeForce GTX TITAN X|[1,3,1920,1080]|31.87|0.030|
+|Gen_Y_Swiftslim2_BN2_SAME_DownSample|GeForce GTX TITAN X|[1,3,1920,1080]|21.88|0.044|
+|Gen_Y_Swiftslim2_BN2_SAME`这样确实慢`|GeForce GTX TITAN X|[1,3,1920,1080]|18.63|0.053|
+|Gen_Y_Swiftslim_BN2 |GeForce GTX TITAN X|[1,3,1920,1080]|31.5|0.031|
+|Gen_Y_Swiftslim_BN2_Share `确实一样`|GeForce GTX TITAN X|[1,3,1920,1080]|31.5|0.031|
 
 
 
