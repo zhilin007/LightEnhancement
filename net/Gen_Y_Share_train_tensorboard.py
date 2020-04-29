@@ -60,8 +60,14 @@ def train(net,loader_train,loader_test,loader_eval_train,optim_y,optim_net,crite
 		x,y=next(iter(loader_train))
 		x=x.to(opt.device);y=y.to(opt.device)
 		N,C,H,W=y.size()
-		Y_mean=tools.get_illumination(y)+torch.zeros([N,1,H,W]).to(opt.device)
 		Y_gt=tools.get_illumination(y,False).to(opt.device)
+
+		if opt.incolor==4:
+			Y_mean=tools.get_illumination(y)+torch.zeros([N,1,H,W]).to(opt.device)
+		elif opt.incolor==3:
+			Y_mean=torch.Tensor([0.458971]).to(opt.device)+torch.zeros([N,1,H,W]).to(opt.device)#ImageNet
+		else :
+			raise Exception('Runtime Error')
 
 		Y_out,out=net(x,Y_mean)
 		#l1lss as default for y
@@ -121,9 +127,14 @@ def test(net,loader_test):
 	for i ,(inputs,targets) in enumerate(loader_test):
 		inputs=inputs.to(opt.device);targets=targets.to(opt.device)
 		N,C,H,W=targets.size()
-		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
-		Y_gt=tools.get_illumination(targets,False).to(opt.device)
+		if opt.incolor==4:
+			i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
+		elif opt.incolor==3:
+			i=torch.Tensor([0.458971]).to(opt.device)+torch.zeros([N,1,H,W]).to(opt.device)#ImageNet
+		else:
+			raise Exception('Runtime Error')
 
+		Y_gt=tools.get_illumination(targets,False).to(opt.device)
 		y_pred,pred=net(inputs,i)
 		loss_out=0
 		if opt.l1loss:
