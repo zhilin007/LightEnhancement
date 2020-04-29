@@ -1,9 +1,9 @@
 ### BackBone
 
-|net|step|psnr|ssim|time|line|
-|-|-|-|-|-|-|
-|SwiftNetSlim_GFLAndMap_BN2 `Backbone7x7``,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm(改动)` `384P` SSIMLOSS `patch_loss:0.14 train_loss:0.13 psnr:30. ssim:0.88 test_loss:0.20 psnr:26.2ssim:0.83`|1e5|`26.2817`|`0.8316`|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
-|SwiftNetSlim2_GFLAndMap_BN2 `Backbone3x3` 在前一个基础 `384P` SSIMLOSS  `patch_loss:0.15train_loss:0.13 psnr:29.4 ssim:0.88 test_loss:0.21 psnr:25.8ssim:0.82`|1e5|`25.9860`|0.8245|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim2_GFLAndMap_BN2 --device=cuda:0 --step=100000 --pth=SwiftNetSlim2_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
+|net||regressionstep|psnr|ssim|time|line|
+|-|-|-|-|-|-|-|
+|SwiftNetSlim_GFLAndMap_BN2 `Backbone7x7``,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm(改动)` `384P` SSIMLOSS |`patch_loss:0.14 train_loss:0.13 psnr:30. ssim:0.88 test_loss:0.20 psnr:26.2ssim:0.83`|1e5|`26.2817`|`0.8316`|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
+|SwiftNetSlim2_GFLAndMap_BN2 `Backbone3x3` 在前一个基础 `384P` SSIMLOSS |`patch_loss:0.15train_loss:0.13 psnr:29.4 ssim:0.88 test_loss:0.21 psnr:25.8ssim:0.82`|1e5|`25.9860`|0.8245|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim2_GFLAndMap_BN2 --device=cuda:0 --step=100000 --pth=SwiftNetSlim2_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
 
 ### GEN Y BackBone3x3 l1loss
 

@@ -22,7 +22,8 @@ models_={
 	'SwiftNetSlim_GFLAndMap_BN':SwiftNetSlim_GFLAndMap_BN(norm=opt.norm),
 	'SwiftNetSlim_GFLAndMap_BN2':SwiftNetSlim_GFLAndMap_BN2(norm=opt.norm),
 	'SwiftNetSlim_GFL_SN':SwiftNetSlim_GFL_SN(norm=opt.norm),
-	'SwiftNetSlim2_GFLAndMap_BN2':SwiftNetSlim2_GFLAndMap_BN2(norm=opt.norm)
+	'SwiftNetSlim2_GFLAndMap_BN2':SwiftNetSlim2_GFLAndMap_BN2(norm=opt.norm),
+	'Backbone7x7':Backbone7x7(incolor=opt.incolor,norm=opt.norm)
 }
 
 start_time=time.time()
@@ -61,7 +62,12 @@ def train(net,loader_train,loader_test,loader_eval_train,optim,criterion):
 		x=x.to(opt.device);y=y.to(opt.device);y_x4=F.interpolate(y,scale_factor=0.25,mode='bilinear')
 		N,C,H,W=y.size()
 		i=tools.get_illumination(y)+torch.zeros([N,1,H,W]).to(opt.device)
-		outx4,out=net(torch.cat([x,i],1))
+		if opt.incolor==4:
+			outx4,out=net(torch.cat([x,i],1))
+		elif opt.incolor==3 :
+			outx4,out=net(x)
+		else :
+			raise Exception('Runtime Error')
 		loss=0
 		if opt.l1loss:
 			loss=criterion['l1loss'](out,y)+loss
@@ -112,8 +118,13 @@ def test(net,loader_test):
 		targets_x4=F.interpolate(targets,scale_factor=0.25,mode='bilinear')
 		N,C,H,W=targets.size()
 		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
-		predx4,pred=net(torch.cat([inputs,i],1))
-
+		if opt.incolor==4:
+			predx4,pred=net(torch.cat([inputs,i],1))
+		elif opt.incolor==3:
+			predx4,pred=net(inputs)
+		else :
+			raise Exception('Runtime Error')
+			
 		loss1=0
 		if opt.l1loss:
 			loss1+=criterion['l1loss'](pred,targets)

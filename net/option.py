@@ -28,7 +28,7 @@ parser.add_argument('--bs',type=int,default=1)
 parser.add_argument('--l1loss',action='store_true',help='l1 loss func')
 parser.add_argument('--mseloss',action='store_true',help='l2 loss')
 parser.add_argument('--ssimloss',action='store_true',help='ssim loss for train')
-
+parser.add_argument('--incolor',type=int,default=4,help='4 or 3 ；4知道光照控制信息，3：未知GT的光照信息')
 #for tensorboard
 parser.add_argument('--log_dir',type=str,default='logs/')
 

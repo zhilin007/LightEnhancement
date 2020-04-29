@@ -28,3 +28,5 @@ from models.GENY.Gen_Y_Swiftslim2_BN2_SAME import Gen_Y_Swiftslim2_BN2_SAME_Down
 from models.GENY.Gen_Y_Swiftslim_BN2 import Gen_Y_Swiftslim_BN2
 from models.GENY.Gen_Y_Swiftslim_BN2_Share import Gen_Y_Swiftslim_BN2_Share
 
+from models.Defined_Network.Backbone7x7 import Backbone7x7
+
