@@ -230,9 +230,9 @@ class Gen_O(nn.Module):
 		out=self.filter(self.guided_map(x_l),out_x4,self.guided_map(x_h))
 		return out
 
-class Gen_Y_BackBone7x7(nn.Module):
+class Gen_Y_Backbone7x7(nn.Module):
 	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=True,scale_factor=0.25):
-		super(Gen_Y_BackBone7x7,self).__init__()
+		super(Gen_Y_Backbone7x7,self).__init__()
 		self.genY=Gen_Y(incolor,outcolor,features,norm,scale_factor)
 		self.genO=Gen_O(4,outcolor,features,norm,scale_factor)
 	def forward(self,x,ill):
@@ -245,7 +245,7 @@ if __name__ == "__main__":
 	#devisor=32
 	x=torch.zeros([1,3,160,160])
 	y=torch.zeros([1,1,160,160])
-	net=Gen_Y_BackBone7x7(4,norm=True)
+	net=Gen_Y_Backbone7x7(4,norm=True)
 	print(type(net.parameters()))
 	# print(sum([p.numel() for p in net.parameters()]))
 	net(x,y)

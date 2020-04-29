@@ -189,9 +189,9 @@ class AdaptiveNorm(nn.Module):
 	def forward(self, x):
 		return self.w_0 * x + self.w_1 * self.bn(x)
 
-class Gen_Y_Swiftslim_BN2_Share(nn.Module):
+class Gen_Y_Backbone7x7_Share(nn.Module):
 	def __init__(self,incolor=4,outcolor=3,features=[16,32,64,64],norm=True,scale_factor=0.25):
-		super(Gen_Y_Swiftslim_BN2_Share,self).__init__()
+		super(Gen_Y_Backbone7x7_Share,self).__init__()
 		self.sppdim=64 #original 128
 		#share feature encoder 
 		
@@ -234,7 +234,7 @@ if __name__ == "__main__":
 
 	#devisor=32
 	x=torch.zeros([1,4,160,160])
-	net=Gen_Y_Swiftslim_BN2_Share(norm=True)
+	net=Gen_Y_Backbone7x7_Share(norm=True)
 	print(type(net.parameters()))
 	# print(sum([p.numel() for p in net.parameters()]))
 	# net(x)
