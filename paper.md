@@ -16,8 +16,6 @@
 |net|regressionstep|psnr|ssim|time|line|
 |-|-|-|-|-|-|-|
 |SwiftNetSlim_GFLAndMap_BN2 `Backbone7x7``,在out下进行回归,decode使用bn而不是in,encoder使用InstanceNorm,GFL使用AdaptiveNorm(改动)` `384P` SSIMLOSS |`patch_loss:0.14 train_loss:0.13 psnr:30. ssim:0.88 test_loss:0.20 psnr:26.2ssim:0.83`|1e5|`26.2817`|`0.8316`|18h|python gfl_train_tensorboard.py --net=SwiftNetSlim_GFLAndMap_BN2 --device=cuda:1 --step=100000 --pth=SwiftNetSlim_GFLAndMap_BN2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss|
-|net|regressionstep|psnr|ssim|time|line|
-|-|-|-|-|-|-|-|
 |Backbone7x7 `实验条件和上相同` `验证引导图incolor`|`patch_loss: train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|||18h|python gfl_train_tensorboard.py --net=Backbone7x7 --device=cuda:0 --step=100000 --pth=Backbone7x7_inC4_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss --incolor=4|
 |Backbone7x7 `实验条件和上相同` `验证未知GT光亮incolor=3下ImageNet光亮下性能`|`patch_loss: train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|||18h|python gfl_train_tensorboard.py --net=Backbone7x7 --device=cuda:2 --step=100000 --pth=Backbone7x7_inC3_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss --incolor=3|
 

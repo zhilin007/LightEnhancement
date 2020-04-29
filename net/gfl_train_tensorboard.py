@@ -64,7 +64,7 @@ def train(net,loader_train,loader_test,loader_eval_train,optim,criterion):
 		if opt.incolor==4:
 			i=tools.get_illumination(y)+torch.zeros([N,1,H,W]).to(opt.device)
 		elif opt.incolor==3:
-			i=torch.Tensor([0.458971])+torch.zeros([N,1,H,W]).to(opt.device)#ImageNet
+			i=torch.Tensor([0.458971]).to(opt.device)+torch.zeros([N,1,H,W]).to(opt.device)#ImageNet
 		else :
 			raise Exception('Runtime Error')
 
@@ -122,7 +122,7 @@ def test(net,loader_test):
 		if opt.incolor==4:
 			i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
 		elif opt.incolor==3:
-			i=torch.Tensor([0.458971])+torch.zeros([N,1,H,W]).to(opt.device)#ImageNet
+			i=torch.Tensor([0.458971]).to(opt.device)+torch.zeros([N,1,H,W]).to(opt.device)#ImageNet
 		else:
 			raise Exception('Runtime Error')
 
