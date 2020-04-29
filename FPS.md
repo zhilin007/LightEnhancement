@@ -18,8 +18,13 @@ pred_trained 和non-trained infer时间一样
 |SwiftNet_GuidedFilter|GeForce GTX TITAN X|[1,4,1024,1024]|40.40|0.0246|
 |SwiftNetSlim_GuidedFilterLayerAndMap|GeForce GTX TITAN X|[1,4,1024,1024]|75.94|0.013|
 |SwiftNetSlim_GFLAndMap_BN|GeForce GTX TITAN X|[1,4,1024,1024]|58.08|0.0171|
-|SwiftNetSlim_GFLAndMap_BN使用用NORM|GeForce GTX TITAN X|74.268|0.013|
-|SwiftNetSlim2_GFLAndMap_BN2 使用norm|GeForce GTX TITAN X|71.9|0.013|
+|SwiftNetSlim_GFLAndMap_BN使用用NORM|GeForce GTX TITAN X|[1,4,1024,1024]|74.268|0.013|
+|SwiftNetSlim2_GFLAndMap_BN2 使用norm|GeForce GTX TITAN X|[1,4,1024,1024]|71.9|0.013|
+
+### GENY
+｜net|device|resolution|FPS|avg_infer_decay|
+|-|-|-|-|-|
+|Gen_Y_Swiftslim_BN2_Share 使用norm|GeForce GTX TITAN X|[1,3,1920,1080]|31.5|0.031|
 
 
 
