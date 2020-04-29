@@ -21,6 +21,9 @@
 
 ### GEN Y: BackBone7x7 `未验证在未知GT光亮incolor=3下ImageNet光亮下性能`
 
+* Gen_Y_Swiftslim_BN2=Gen_Y_Backbone7x7
+* Gen_Y_Swiftslim_BN2_Share=Gen_Y_Backbone7x7_Share
+
 `Y:l1 0ut: l1+ssimloss `
 
 `scale_factor超参！：Y在下采样下(0.25)处理，结果使用bilinear上采样`
