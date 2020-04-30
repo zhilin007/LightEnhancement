@@ -79,7 +79,6 @@ def train_y(net,loader_train,loader_test,loader_eval_train,optim_y,criterion,ste
 			torch.save({'step':step,'max_psnr':0,'max_ssim':0,'ssims':[],'psnrs':[],'losses':[],'model':net.state_dict()},step_save_pth)
 def test_y(net,loader_test):
 	net.eval()
-	torch.cuda.empty_cache()
 	losses=[]
 	for i ,(inputs,targets) in enumerate(loader_test):
 		inputs=inputs.to(opt.device);targets=targets.to(opt.device)
