@@ -186,7 +186,6 @@ def train_out(net,loader_train,loader_test,loader_eval_train,optim_y,optim_net,c
 
 def test_out(net,loader_test):
 	net.eval()
-	torch.cuda.empty_cache()
 	ssims=[]
 	psnrs=[]
 	losses=[]
