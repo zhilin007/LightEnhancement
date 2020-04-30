@@ -71,15 +71,15 @@ class EHDataset(data.Dataset):
         return len(self.lows)
 def get_train_loader(trainset='LOL'):
     path=os.path.join(opt.data,trainset)
-    loader=DataLoader(EHDataset(path,'train','png'),batch_size=opt.bs,shuffle=True,pin_memory=True)
+    loader=DataLoader(EHDataset(path,'train','png'),batch_size=opt.bs,shuffle=True)
     return loader
 def get_eval_loader(trainset='LOL'):
     path=os.path.join(opt.data,trainset)
-    loader=DataLoader(EHDataset(path,'eval','png'),batch_size=1,shuffle=False,pin_memory=True)
+    loader=DataLoader(EHDataset(path,'eval','png'),batch_size=1,shuffle=False)
     return loader
 def get_eval_train_loader(trainset='LOL'):#查看是否overfit，和eval数据集一样有15张，从train集合的子集
     path=os.path.join(opt.data,trainset)
-    loader=DataLoader(EHDataset(path,'eval_train','png'),batch_size=1,shuffle=False,pin_memory=True)
+    loader=DataLoader(EHDataset(path,'eval_train','png'),batch_size=1,shuffle=False)
     return loader
 
 if __name__ == "__main__":
