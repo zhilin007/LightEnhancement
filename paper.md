@@ -47,6 +47,24 @@
 |Gen_Y_Backbone7x7_Share `2-step train`|`patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|2e5|||18h|python Gen_Y_Share_train_tensorboard_2steps.py --device='cuda:2' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_Share_2steps_inC3_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --ssimloss --incolor=3|
 
 
+### GEN Y: BackBone7x7 在GT光亮incolor=4
+
+* Gen_Y_Swiftslim_BN2=Gen_Y_Backbone7x7
+* Gen_Y_Swiftslim_BN2_Share=Gen_Y_Backbone7x7_Share
+
+`Y:l1 0ut: l1+ssimloss `
+
+`scale_factor超参！：Y在下采样下(0.25)处理，结果使用bilinear上采样`
+
+`共享encoder+SPP或not`
+
+|net|regression|step|psnr|ssim|time|line|
+|-|-|-|-|-|-|-|
+|Gen_Y_Backbone7x7|`patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|2e5|||18h|python Gen_Y_train_tensorboard.py --device='cuda:1' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_inC4_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7 --scale_factor=0.25 --ssimloss --incolor=4|
+|Gen_Y_Backbone7x7 `2-step train`|`patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|2e5|||18h|python Gen_Y_train_tensorboard_2steps.py --device='cuda:1' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_2steps_inC4_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7 --scale_factor=0.25 --ssimloss --incolor=4|
+|Gen_Y_Backbone7x7_Share|`patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|2e5|||18h|python Gen_Y_Share_train_tensorboard.py --device='cuda:2' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_Share_inC4_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --ssimloss --incolor=4|
+|Gen_Y_Backbone7x7_Share `2-step train`|`patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|2e5|||18h|python Gen_Y_Share_train_tensorboard_2steps.py --device='cuda:2' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_Share_2steps_inC4_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --ssimloss --incolor=4|
+
 
 ### FPS with norm: on 1080p 以后替换为BackBone
 
