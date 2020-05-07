@@ -13,6 +13,7 @@ import torchvision.utils as vutils
 from option import opt,step_save_pth,model_name
 from data_utils import *
 from ssim_loss import SSIM as ssimloss
+from EdgeMaskL1Loss import EML1Loss
 from torchvision.models import vgg16
 import tools
 warnings.filterwarnings('ignore')
@@ -71,8 +72,11 @@ def train(net,loader_train,loader_test,loader_eval_train,optim,criterion):
 		outx4,out=net(torch.cat([x,i],1))
 		
 		loss=0
+		
 		if opt.l1loss:
 			loss=criterion['l1loss'](out,y)+loss
+		if opt.eml1loss:
+			loss=criterion['eml1loss'](out,y)+loss
 		if opt.mseloss:
 			loss=criterion['mseloss'](out,y)+loss
 		if opt.ssimloss:
@@ -131,6 +135,8 @@ def test(net,loader_test):
 		loss1=0
 		if opt.l1loss:
 			loss1+=criterion['l1loss'](pred,targets)
+		if opt.eml1loss:
+			loss1+=criterion['eml1loss'](pred,targets)
 		if opt.mseloss:
 			loss1+=criterion['mseloss'](pred,targets)
 		if opt.ssimloss:
@@ -159,6 +165,8 @@ if __name__ == "__main__":
 		criterion.update({'mseloss':nn.MSELoss().to(opt.device)})
 	if opt.ssimloss:
 		criterion.update({'ssimloss':ssimloss().to(opt.device)})
+	if opt.eml1loss:
+		criterion.update({'eml1loss':EML1Loss().to(opt.device)})
 	optimizer = RAdam(params=filter(lambda x: x.requires_grad, net.parameters()),lr=opt.lr)
 	optimizer.zero_grad()
 	train(net,loader_train,loader_test,loader_eval_train,optimizer,criterion)
