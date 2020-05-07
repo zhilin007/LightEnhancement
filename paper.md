@@ -19,14 +19,14 @@
 |Backbone7x7过拟合严重，拟合能力也不强 `实验条件和上相同` `验证未知GT光亮incolor=3下ImageNet光亮下性能`|`patch_loss:0.15 train_loss:0.15 psnr:27.4 ssim:0.88 test_loss:0.27 psnr:21.3ssim:0.80`|1e5|21.9252|0.8018|18h|python gfl_train_tensorboard.py --net=Backbone7x7 --device=cuda:2 --step=100000 --pth=Backbone7x7_inC3_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss --incolor=3|
 |Backbone7x7 `太差``实验条件和上相同` `训练使用gt光亮,infer使用imagenet光亮`|`patch_loss:0.15 train_loss:0.23 psnr:21.2 ssim:0.85 test_loss:0.32 psnr:18.63ssim:0.78`|1e5|18.7321|0.7633|18h|python gfl_train_tensorboard`2`.py --net=Backbone7x7 --device=cuda:1 --step=100000 --pth=Backbone7x7_inC3_2_384p_1e5_l1_ssim_IN --divisor=16 --bs=8 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss --incolor=3|
 
-### 最后确定的BackBone 是7x7 BS=96
+### 最后确定的BackBone 是7x7 BS=96没啥大作用
 `res18_Slim7x7 + SPP + Upsample(swiftnet) 384p`
 
 `SSIMLOSS InstanceNorm BatchNorm AdaptiveNorm(也许不是这么这么叫)`
 
 |net|regression|step|psnr|ssim|time|line|
 |-|-|-|-|-|-|-|
-|Backbone7x7`实验条件和上相同``扩大BS=96`|`patch_loss: train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|||18h|python gfl_train_tensorboard.py --net=Backbone7x7 --device=cuda:0 --step=100000 --pth=Backbone7x7_inC3_384p_1e5_l1_ssim_IN_96bs --divisor=16 --bs=96 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss --`incolor=3`|
+|Backbone7x7`实验条件和上相同``扩大BS=96`|`patch_loss: train_loss: psnr: ssim: test_loss: psnr:ssim:`|1e5|21.9674|0.8039|18h|python gfl_train_tensorboard.py --net=Backbone7x7 --device=cuda:0 --step=100000 --pth=Backbone7x7_inC3_384p_1e5_l1_ssim_IN_96bs --divisor=16 --bs=96 --l1loss --crop_size=384 --lr=0.0004 --norm --ssimloss --`incolor=3`|
 
 `2-steptraining strategy没用`
 
