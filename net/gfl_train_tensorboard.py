@@ -19,11 +19,11 @@ import tools
 warnings.filterwarnings('ignore')
 #out进行回归
 models_={
-	'SwiftNetSlim_GuidedFilterLayerAndMap':SwiftNetSlim_GuidedFilterLayerAndMap(norm=opt.norm),
-	'SwiftNetSlim_GFLAndMap_BN':SwiftNetSlim_GFLAndMap_BN(norm=opt.norm),
-	'SwiftNetSlim_GFLAndMap_BN2':SwiftNetSlim_GFLAndMap_BN2(norm=opt.norm),
-	'SwiftNetSlim_GFL_SN':SwiftNetSlim_GFL_SN(norm=opt.norm),
-	'SwiftNetSlim2_GFLAndMap_BN2':SwiftNetSlim2_GFLAndMap_BN2(norm=opt.norm),
+	# 'SwiftNetSlim_GuidedFilterLayerAndMap':SwiftNetSlim_GuidedFilterLayerAndMap(norm=opt.norm),
+	# 'SwiftNetSlim_GFLAndMap_BN':SwiftNetSlim_GFLAndMap_BN(norm=opt.norm),
+	# 'SwiftNetSlim_GFLAndMap_BN2':SwiftNetSlim_GFLAndMap_BN2(norm=opt.norm),
+	# 'SwiftNetSlim_GFL_SN':SwiftNetSlim_GFL_SN(norm=opt.norm),
+	# 'SwiftNetSlim2_GFLAndMap_BN2':SwiftNetSlim2_GFLAndMap_BN2(norm=opt.norm),
 	'Backbone7x7':Backbone7x7(norm=opt.norm)
 }
 

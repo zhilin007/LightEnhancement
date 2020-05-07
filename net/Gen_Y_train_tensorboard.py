@@ -20,11 +20,11 @@ warnings.filterwarnings('ignore')
 models_={
 	# 'gen_y_unet':GE_Y_Unet(),
 	# 'gen_y_unet64':GE_Y_Unet64(),
-	'Gen_Y_Swiftslim2_BN2':Gen_Y_Swiftslim2_BN2(norm=opt.norm,scale_factor=opt.scale_factor),
-	'Gen_Y_Swiftslim2_BN2_Share':Gen_Y_Swiftslim2_BN2_Share(norm=opt.norm,scale_factor=opt.scale_factor),
-	'Gen_Y_Swiftslim2_BN2_SAME':Gen_Y_Swiftslim2_BN2_SAME(norm=opt.norm),
-	'Gen_Y_Swiftslim2_BN2_SAME_DownSample':Gen_Y_Swiftslim2_BN2_SAME_DownSample(norm=opt.norm,scale_factor=opt.scale_factor),
-	'Gen_Y_Swiftslim_BN2':Gen_Y_Swiftslim_BN2(norm=opt.norm,scale_factor=opt.scale_factor),
+	# 'Gen_Y_Swiftslim2_BN2':Gen_Y_Swiftslim2_BN2(norm=opt.norm,scale_factor=opt.scale_factor),
+	# 'Gen_Y_Swiftslim2_BN2_Share':Gen_Y_Swiftslim2_BN2_Share(norm=opt.norm,scale_factor=opt.scale_factor),
+	# 'Gen_Y_Swiftslim2_BN2_SAME':Gen_Y_Swiftslim2_BN2_SAME(norm=opt.norm),
+	# 'Gen_Y_Swiftslim2_BN2_SAME_DownSample':Gen_Y_Swiftslim2_BN2_SAME_DownSample(norm=opt.norm,scale_factor=opt.scale_factor),
+	# 'Gen_Y_Swiftslim_BN2':Gen_Y_Swiftslim_BN2(norm=opt.norm,scale_factor=opt.scale_factor),
 	'Gen_Y_Backbone7x7':Gen_Y_Backbone7x7(norm=opt.norm,scale_factor=opt.scale_factor),
 }
 
