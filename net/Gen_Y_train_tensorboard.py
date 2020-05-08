@@ -13,6 +13,7 @@ import torchvision.utils as vutils
 from option import opt,step_save_pth,model_name
 from data_utils import *
 from ssim_loss import SSIM as ssimloss
+from EdgeMaskL1Loss import EML1Loss
 from torchvision.models import vgg16
 import tools
 warnings.filterwarnings('ignore')
@@ -76,11 +77,16 @@ def train(net,loader_train,loader_test,loader_eval_train,optim_y,optim_net,crite
 
 		Y_out,out=net(x,Y_mean)
 		#l1lss as default for y
-		loss_y=criterion['l1loss'](Y_out,Y_gt)
+		if opt.l1loss:
+			loss_y=criterion['l1loss'](Y_out,Y_gt)
+		if opt.eml1loss:
+			loss_y=criterion['eml1loss'](Y_out,Y_gt)
 
 		loss_out=0
 		if opt.l1loss:
 			loss_out=criterion['l1loss'](out,y)+loss_out
+		if opt.eml1loss:
+			loss_out=criterion['eml1loss'](out,y)+loss_out
 		if opt.mseloss:
 			loss_out=criterion['mseloss'](out,y)+loss_out
 		if opt.ssimloss:
@@ -145,13 +151,18 @@ def test(net,loader_test):
 		loss_out=0
 		if opt.l1loss:
 			loss_out=criterion['l1loss'](pred,targets)+loss_out
+		if opt.eml1loss:
+			loss_out=criterion['eml1loss'](pred,targets)+loss_out
 		if opt.mseloss:
 			loss_out=criterion['mseloss'](pred,targets)+loss_out
 		if opt.ssimloss:
 			loss3=criterion['ssimloss'](pred,targets)
 			loss_out=loss_out+(1-loss3)
 		# loss_out=criterion['l1loss'](pred,targets)
-		loss_y=criterion['l1loss'](y_pred,Y_gt)
+		if opt.l1loss:
+			loss_y=criterion['l1loss'](y_pred,Y_gt)
+		if opt.eml1loss:
+			loss_y=criterion['eml1loss'](y_pred,Y_gt)
 		loss1=loss_out+loss_y
 		
 		ssim1=ssim(pred,targets).item()
@@ -178,6 +189,8 @@ if __name__ == "__main__":
 		criterion.update({'mseloss':nn.MSELoss().to(opt.device)})
 	if opt.ssimloss:
 		criterion.update({'ssimloss':ssimloss().to(opt.device)})
+	if opt.eml1loss:
+		criterion.update({'eml1loss':EML1Loss().to(opt.device)})
 	optimizer_y = RAdam(params=filter(lambda x: x.requires_grad,net.genY.parameters()),lr=opt.lr, betas = (0.9, 0.999), eps=1e-08)
 	optimizer_y.zero_grad()
 	optimizer_net=RAdam(params=filter(lambda x: x.requires_grad,net.genO.parameters()),lr=opt.lr,betas = (0.9, 0.999), eps=1e-08)
