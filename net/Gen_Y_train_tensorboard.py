@@ -77,10 +77,9 @@ def train(net,loader_train,loader_test,loader_eval_train,optim_y,optim_net,crite
 
 		Y_out,out=net(x,Y_mean)
 		#l1lss as default for y
-		if opt.l1loss:
-			loss_y=criterion['l1loss'](Y_out,Y_gt)
-		if opt.eml1loss:
-			loss_y=criterion['eml1loss'](Y_out,Y_gt)
+		
+		loss_y=criterion['l1loss'](Y_out,Y_gt)
+		
 
 		loss_out=0
 		if opt.l1loss:
@@ -159,10 +158,9 @@ def test(net,loader_test):
 			loss3=criterion['ssimloss'](pred,targets)
 			loss_out=loss_out+(1-loss3)
 		# loss_out=criterion['l1loss'](pred,targets)
-		if opt.l1loss:
-			loss_y=criterion['l1loss'](y_pred,Y_gt)
-		if opt.eml1loss:
-			loss_y=criterion['eml1loss'](y_pred,Y_gt)
+		
+		loss_y=criterion['l1loss'](y_pred,Y_gt)
+		
 		loss1=loss_out+loss_y
 		
 		ssim1=ssim(pred,targets).item()
