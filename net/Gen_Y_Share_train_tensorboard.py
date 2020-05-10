@@ -175,8 +175,8 @@ if __name__ == "__main__":
 		net=torch.nn.DataParallel(net)
 		cudnn.benchmark=True
 	criterion = {}
-	if opt.l1loss:
-		criterion.update({'l1loss':nn.L1Loss().to(opt.device)})
+	# if opt.l1loss:
+	criterion.update({'l1loss':nn.L1Loss().to(opt.device)})
 	if opt.mseloss:
 		criterion.update({'mseloss':nn.MSELoss().to(opt.device)})
 	if opt.ssimloss:
