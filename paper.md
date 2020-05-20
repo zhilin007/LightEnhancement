@@ -63,18 +63,25 @@
 |-|-|-|-|-|-|-|
 |Gen_Y_Backbone7x7|`patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|2e5|26.2966|0.8330|18h|python Gen_Y_train_tensorboard.py --device='cuda:1' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_inC4_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7 --scale_factor=0.25 --ssimloss --incolor=4|
 |Gen_Y_Backbone7x7_Share|`patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|2e5|`26.4421`|`0.8338`|18h|python Gen_Y_Share_train_tensorboard.py --device='cuda:2' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_Share_inC4_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --ssimloss --incolor=4|
-|Gen_Y_Backbone7x7 `EML1LOSS`||2e5|26.5438|0.8343|18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_inC4_384p_2e5_eml1_ssim --divisor=16 --bs=8 --eml1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7 --scale_factor=0.25 --ssimloss --incolor=4|
-|Gen_Y_Backbone7x7_Share`EML1LOSS`||2e5|26.1463|0.8321|18h|python Gen_Y_Share_train_tensorboard.py --device='cuda:1' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_Share_inC4_384p_2e5_eml1_ssim --divisor=16 --bs=8 --eml1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --ssimloss --incolor=4|
+
+<!-- |Gen_Y_Backbone7x7 `EML1LOSS`||2e5|26.5438|0.8343|18h|python Gen_Y_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_inC4_384p_2e5_eml1_ssim --divisor=16 --bs=8 --eml1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7 --scale_factor=0.25 --ssimloss --incolor=4|
+|Gen_Y_Backbone7x7_Share`EML1LOSS`||2e5|26.1463|0.8321|18h|python Gen_Y_Share_train_tensorboard.py --device='cuda:1' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_Share_inC4_384p_2e5_eml1_ssim --divisor=16 --bs=8 --eml1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --ssimloss --incolor=4| -->
 
 <!-- |Gen_Y_Backbone7x7 `2-step train`|`patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|2e5|26.0745|0.8300|18h|python Gen_Y_train_tensorboard_2steps.py --device='cuda:1' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_2steps_inC4_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7 --scale_factor=0.25 --ssimloss --incolor=4| -->
 <!-- |Gen_Y_Backbone7x7_Share `2-step train`|`patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:`|2e5|25.6229|0.8279|18h|python Gen_Y_Share_train_tensorboard_2steps.py --device='cuda:2' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_Share_2steps_inC4_384p_2e5_l1_ssim --divisor=16 --bs=8 --l1loss --crop_size=384 --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --ssimloss --incolor=4| -->
-
+### AttentionGuided Dataset
+|net|regression|step|psnr|ssim|time|line|
+|-|-|-|-|-|-|-|
+|Backbone7x7 `dark`|patch_loss: train_loss: psnr: ssim: test_loss: psnr::ssim:|1e5|||18h|python gfl_train_tensorboard.py --net=Backbone7x7 --device=cuda:0 --step=100000 --pth=Backbone7x7_inC4_256p_1e5_l1_ssim_IN_AG_dark --divisor=16 --bs=8 --l1loss --crop_size=256 --lr=0.0004 --norm --ssimloss --incolor=4 --trainset=AttentionGuided --subset=dark|
+|Backbone7x7 `lowlight`|patch_loss: train_loss: psnr: ssim: test_loss: psnr::ssim:|1e5|||18h|python gfl_train_tensorboard.py --net=Backbone7x7 --device=cuda:0 --step=100000 --pth=Backbone7x7_inC4_256p_1e5_l1_ssim_IN_AG_lowlight --divisor=16 --bs=8 --l1loss --crop_size=256 --lr=0.0004 --norm --ssimloss --incolor=4 --trainset=AttentionGuided --subset=lowlight|
+|Gen_Y_Backbone7x7_Share `dark`|patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:|2e5|||18h|python Gen_Y_Share_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_Share_inC4_256p_2e5_l1_ssim_AG_dark --divisor=16 --bs=8 --l1loss --crop_size=256 --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --ssimloss --incolor=4 --trainset=AttentionGuided --subset=dark|
+|Gen_Y_Backbone7x7_Share `lowlight`|patch_loss:train_loss: psnr: ssim: test_loss: psnr:ssim:|2e5|||18h|python Gen_Y_Share_train_tensorboard.py --device='cuda:0' --steps=200000 --lr=0.0004 --pth=Gen_Y_Backbone7x7_Share_inC4_256p_2e5_l1_ssim_AG_lowlight --divisor=16 --bs=8 --l1loss --crop_size=256 --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --ssimloss --incolor=4 --trainset=AttentionGuided --subset=lowlight|
 
 ### FPS with norm: on 1920x1080 resolution
 
 `这种下采样genY的方式并没有增加多少运算量但是能够提升性能`
 
-｜net|device|resolution|FPS|avg_infer_decay|
+|net|device|resolution|FPS|avg_infer_decay|
 |-|-|-|-|-|
 |Backbone7x7|GeForce GTX TITAN X|[1,4,1920,1080]|34.86|0.028|
 |Gen_Y_Backbone7x7主干网络是Backbone7x7|GeForce GTX TITAN X|[1,3,1920,1080]|`31.5`|`0.031`|
