@@ -44,6 +44,9 @@ parser.add_argument('--norm',action='store_true',help='model with norm ops')
 
 
 #for data
+parser.add_argument('--trainset',type=str,default='LOL',help='dataset')
+parser.add_argument('--subset',type=str,default='lowlight',help='subset for AttentionGuided')
+
 parser.add_argument('--divisor',type=int,default=1,help='input fig must can be divisible by it')
 
 #for FPS

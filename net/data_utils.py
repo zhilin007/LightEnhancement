@@ -69,23 +69,75 @@ class EHDataset(data.Dataset):
         return  data ,target
     def __len__(self):
         return len(self.lows)
-def get_train_loader(trainset='LOL'):
+
+class AttentionGuidedDataset(data.Dataset):#dir:dataset/test/(enhance|dark|lowlight)/*.png
+    def __init__(self,path,mode,subset,format):#subset:dark/lowlight
+        super(AttentionGuidedDataset,self).__init__()
+        self.mode=mode
+        ins=glob.glob(os.path.join(path,mode,subset,'*.'+format))
+        self.lows=[]
+        self.highs=[]
+        for im in tqdm(ins):
+            low=Image.open(im);self.lows.append(low)
+            high=Image.open(im.replace(subset,'enhance'));self.highs.append(high)
+    def __getitem__(self, index):
+        low=self.lows[index]
+        high=self.highs[index]
+        if self.mode=='train':
+            i,j,h,w=tfs.RandomCrop.get_params(low,output_size=(opt.crop_size,opt.crop_size))
+            low=FF.crop(low,i,j,h,w)
+            high=FF.crop(high,i,j,h,w)
+        if self.mode!='train':#must can be divisible by opt.divisor
+            low=pad_pil(low,opt.divisor)
+            high=pad_pil(high,opt.divisor)
+        low,high=self.augData(low.convert('RGB'),high.convert('RGB'))
+        return low,high
+    def augData(self,data,target):
+        if self.mode=='train':
+            rand_hor=random.randint(0,1)
+            rand_ver=random.randint(0,1)
+            rand_rot=random.randint(0,3)
+            data=tfs.RandomHorizontalFlip(rand_hor)(data)
+            target=tfs.RandomHorizontalFlip(rand_hor)(target)
+            data=tfs.RandomVerticalFlip(rand_ver)(data)
+            target=tfs.RandomVerticalFlip(rand_ver)(target)
+            if rand_rot:
+                data=FF.rotate(data,90*rand_rot)
+                target=FF.rotate(target,90*rand_rot)
+        data=tfs.ToTensor()(data)
+        target=tfs.ToTensor()(target)
+        data=tfs.Normalize(mean=[0.0629,0.0606,0.0558],std=[0.0430,0.0412,0.0425])(data)
+        return  data ,target
+    def __len__(self):
+        return len(self.lows)
+
+
+def get_train_loader(trainset=opt.trainset):
     path=os.path.join(opt.data,trainset)
-    loader=DataLoader(EHDataset(path,'train','png'),batch_size=opt.bs,shuffle=True)
+    if trainset=='LOL':
+        loader=DataLoader(EHDataset(path,'train','png'),batch_size=opt.bs,shuffle=True)
+    if trainset=='AttentionGuided':
+        loader=DataLoader(AttentionGuidedDataset(path,'train',opt.subset,'png'),batch_size=opt.bs,shuffle=True)
     return loader
-def get_eval_loader(trainset='LOL'):
+def get_eval_loader(trainset=opt.trainset):
     path=os.path.join(opt.data,trainset)
-    loader=DataLoader(EHDataset(path,'eval','png'),batch_size=1,shuffle=False)
+    if trainset=='LOL':
+        loader=DataLoader(EHDataset(path,'eval','png'),batch_size=1,shuffle=False)
+    if trainset=='AttentionGuided':
+        loader=DataLoader(AttentionGuidedDataset(path,'test',opt.subset,'png'),batch_size=1,shuffle=False)
     return loader
-def get_eval_train_loader(trainset='LOL'):#查看是否overfit，和eval数据集一样有15张，从train集合的子集
+def get_eval_train_loader(trainset=opt.trainset):#查看是否overfit，和eval数据集一样有15张，从train集合的子集
     path=os.path.join(opt.data,trainset)
-    loader=DataLoader(EHDataset(path,'eval_train','png'),batch_size=1,shuffle=False)
+    if trainset=='LOL':
+        loader=DataLoader(EHDataset(path,'eval_train','png'),batch_size=1,shuffle=False)
+    if trainset=='AttentionGuided':
+        loader=DataLoader(AttentionGuidedDataset(path,'eval_train',opt.subset,'png'),batch_size=1,shuffle=False)
     return loader
 
 if __name__ == "__main__":
     #python data_utils.py --dcp_data --l1loss
     from tools import get_illumination
-    t_loader=get_train_loader()
+    t_loader=get_eval_loader()
     for _,(input,gt) in enumerate(t_loader):
         # ssim1=ssim(input,gt)
         i1=get_illumination(input)
