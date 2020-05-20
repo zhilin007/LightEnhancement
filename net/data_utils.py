@@ -135,7 +135,7 @@ def get_eval_train_loader(trainset=opt.trainset):#查看是否overfit，和eval�
     return loader
 
 if __name__ == "__main__":
-    #python data_utils.py --dcp_data --l1loss
+    #python data_utils.py --trainset= --subset=
     from tools import get_illumination
     t_loader=get_eval_loader()
     for _,(input,gt) in enumerate(t_loader):
