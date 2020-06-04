@@ -114,5 +114,6 @@ if __name__ == "__main__":
 	# ts=torch.ones([1,1,1,1])
 	# print(ts.item())
 	# get_att_ill()
-	grid_sample_bilateral()
+	# grid_sample_bilateral()
+	check()
 	

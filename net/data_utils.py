@@ -121,6 +121,7 @@ class AttentionGuidedDataset(data.Dataset):#dir:dataset/test/(enhance|dark|lowli
 
 def get_train_loader(trainset=opt.trainset):
     path=os.path.join(opt.data,trainset)
+    print(path)
     if trainset=='LOL':
         loader=DataLoader(EHDataset(path,'train','png'),batch_size=opt.bs,shuffle=True)
     if trainset=='AttentionGuided':
