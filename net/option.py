@@ -22,7 +22,7 @@ parser.add_argument('--eval_step',type=int,default=1000)
 parser.add_argument('--lr', default=0.0001, type=float, help='learning rate')
 parser.add_argument('--pth',type=str,default='',help='model name to save')
 parser.add_argument('--net',type=str,default='')#for FPS & train
-parser.add_argument('--crop_size',type=int,default=256,help='crop_size')
+parser.add_argument('--crop_size',type=int,default=384,help='crop_size')
 parser.add_argument('--print',action='store_true')
 parser.add_argument('--bs',type=int,default=1)
 parser.add_argument('--l1loss',action='store_true',help='l1 loss func')
@@ -45,9 +45,9 @@ parser.add_argument('--norm',action='store_true',help='model with norm ops')
 
 #for data
 parser.add_argument('--trainset',type=str,default='LOL',help='dataset')
-parser.add_argument('--subset',type=str,default='lowlight',help='subset for AttentionGuided')
+parser.add_argument('--subset',type=str,default='lowlight',help='dark lowlight')
 
-parser.add_argument('--divisor',type=int,default=1,help='input fig must can be divisible by it')
+parser.add_argument('--divisor',type=int,default=16,help='input fig must can be divisible by it')
 
 #for FPS
 parser.add_argument('--w',type=int,default=1024,help='width of image')

@@ -78,13 +78,20 @@ class AttentionGuidedDataset(data.Dataset):#dir:dataset/test/(enhance|dark|lowli
         self.lows=[]
         self.highs=[]
         for im in tqdm(ins):
-            low=Image.open(im);self.lows.append(low)
-            high=Image.open(im.replace(subset,'enhance'));self.highs.append(high)
+            self.lows.append(im)
+            self.highs.append(im.replace(subset,'enhance'))
+            # low=Image.open(im);self.lows.append(low)
+            # high=Image.open(im.replace(subset,'enhance'));self.highs.append(high)
     def __getitem__(self, index):
-        low=self.lows[index]
-        high=self.highs[index]
+        low=Image.open(self.lows[index])
+        high=Image.open(self.highs[index])
+        minWid=min(low.size)
         if self.mode=='train':
-            i,j,h,w=tfs.RandomCrop.get_params(low,output_size=(opt.crop_size,opt.crop_size))
+            if opt.crop_size>minWid:
+                crop_size=minWid-minWid%opt.divisor
+                i,j,h,w=tfs.RandomCrop.get_params(low,output_size=(crop_size,crop_size))#不够crop的话，就用稍小的size来crop
+            else :
+                i,j,h,w=tfs.RandomCrop.get_params(low,output_size=(opt.crop_size,opt.crop_size))
             low=FF.crop(low,i,j,h,w)
             high=FF.crop(high,i,j,h,w)
         if self.mode!='train':#must can be divisible by opt.divisor
@@ -135,9 +142,11 @@ def get_eval_train_loader(trainset=opt.trainset):#查看是否overfit，和eval�
     return loader
 
 if __name__ == "__main__":
-    #python data_utils.py --trainset= --subset=
+    #python data_utils.py --trainset=AttentionGuided --subset=dark lowlight
     from tools import get_illumination
-    t_loader=get_eval_loader()
+    t_loader=get_train_loader()
+    # t_loader=get_eval_loader()
+    # t_loader=get_eval_train_loader()
     for _,(input,gt) in enumerate(t_loader):
         # ssim1=ssim(input,gt)
         i1=get_illumination(input)
