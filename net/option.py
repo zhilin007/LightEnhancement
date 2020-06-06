@@ -24,7 +24,7 @@ parser.add_argument('--pth',type=str,default='',help='model name to save')
 parser.add_argument('--net',type=str,default='')#for FPS & train
 parser.add_argument('--crop_size',type=int,default=384,help='crop_size')
 parser.add_argument('--print',action='store_true')
-parser.add_argument('--bs',type=int,default=1)
+parser.add_argument('--bs',type=int,default=8)
 parser.add_argument('--l1loss',action='store_true',help='l1 loss func')
 parser.add_argument('--eml1loss',action='store_true',help='Edge mask l1 loss func')
 parser.add_argument('--mseloss',action='store_true',help='l2 loss')

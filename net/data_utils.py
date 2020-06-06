@@ -25,7 +25,7 @@ def tensorShow(tensors,titles=None):
         for tensor,tit,i in zip(tensors,titles,range(len(tensors))):
             img = make_grid(tensor)
             npimg = img.numpy()
-            ax = fig.add_subplot(221+i)
+            ax = fig.add_subplot(211+i)
             ax.imshow(np.transpose(npimg, (1, 2, 0)))
             ax.set_title(tit)
         plt.show()
@@ -90,10 +90,12 @@ class AttentionGuidedDataset(data.Dataset):#dir:dataset/test/(enhance|dark|lowli
             if opt.crop_size>minWid:
                 crop_size=minWid-minWid%opt.divisor
                 i,j,h,w=tfs.RandomCrop.get_params(low,output_size=(crop_size,crop_size))#不够crop的话，就用稍小的size来crop
+                low=FF.crop(low,i,j,h,w);low=low.resize((opt.crop_size,opt.crop_size),Image.BILINEAR)
+                high=FF.crop(high,i,j,h,w);high=high.resize((opt.crop_size,opt.crop_size),Image.BILINEAR)
             else :
                 i,j,h,w=tfs.RandomCrop.get_params(low,output_size=(opt.crop_size,opt.crop_size))
-            low=FF.crop(low,i,j,h,w)
-            high=FF.crop(high,i,j,h,w)
+                low=FF.crop(low,i,j,h,w)
+                high=FF.crop(high,i,j,h,w)
         if self.mode!='train':#must can be divisible by opt.divisor
             low=pad_pil(low,opt.divisor)
             high=pad_pil(high,opt.divisor)
