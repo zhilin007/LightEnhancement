@@ -1,6 +1,6 @@
 import torch,os,sys,torchvision,tools,glob
 from torchvision import utils
-from Gen_Y_train import models_
+from Gen_Y_Share_train_tensorboard import models_
 from option import opt,cwd,model_name
 from data_utils import get_eval_loader
 from PIL import Image
@@ -61,7 +61,7 @@ def eval_imgs(net,path):
 		save_dir=os.path.join(save_dir,f'{id}_in_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		utils.save_image(grid,save_dir)
 if __name__ == "__main__":
-	#python gen_y_test.py --pth=Gen_Y_Backbone7x7_Share_inC4_384p_2e5_l1_ssim --divisor=16 --device='cuda:2' --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --incolor=4
+	#python test_gen_Y.py --pth=Gen_Y_Backbone7x7_Share_inC4_384p_2e5_l1_ssim --divisor=16 --device='cuda:2' --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --incolor=4
 	net=getNet()
 	loader=get_eval_loader()
 	eval(net,loader)
