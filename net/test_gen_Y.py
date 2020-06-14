@@ -11,7 +11,8 @@ def dircheck(path):
 		os.makedirs(path)
 def getNet():
 	net=models_[opt.net].to(opt.device)
-	net=torch.nn.DataParallel(net)
+	if opt.device=='cuda':
+		net=torch.nn.DataParallel(net)
 	ckp=torch.load(opt.pth,opt.device)
 	net.load_state_dict(ckp['model'])
 	print(f'psnr:',ckp['max_psnr'],'ssim:',ckp['max_ssim'])
@@ -60,8 +61,7 @@ def eval_imgs(net,path):
 		save_dir=os.path.join(save_dir,f'{id}_in_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		utils.save_image(grid,save_dir)
 if __name__ == "__main__":
-	#rpython test.py --net='unet' --pth=unet_160p_1e5_l1 --divisor=16
-	#python gen_y_test.py --net='gen_y_unet' --pth=gen_y_unet_160p_2e5_l1 --divisor=16 
+	#python gen_y_test.py --pth=Gen_Y_Backbone7x7_Share_inC4_384p_2e5_l1_ssim --divisor=16 --device='cuda:2' --norm --net=Gen_Y_Backbone7x7_Share --scale_factor=0.25 --incolor=4
 	net=getNet()
 	loader=get_eval_loader()
 	eval(net,loader)
