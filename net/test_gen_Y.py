@@ -37,7 +37,9 @@ def eval(net,loader):
 		grid=utils.make_grid(tensorgrid,4)
 		i_gt=tools.get_illumination(targets).item()
 		save_dir=os.path.join(cwd,'grids',model_name);dircheck(save_dir)
-		save_dir=os.path.join(save_dir,f'{ind}_in_gt_{i_gt}_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
+		# save_dir=os.path.join(save_dir,f'{ind}_in_gt_{i_gt}_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
+		save_dir=os.path.join(save_dir,f'{ind}_in_gt_{i_gt}.png')
+
 		print(type(grid),grid.shape,ind)
 		utils.save_image(grid,save_dir)
 def eval_imgs(net,path):
