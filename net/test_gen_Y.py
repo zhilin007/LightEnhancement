@@ -25,18 +25,19 @@ def eval(net,loader):
 		N,C,H,W=targets.size()
 		i=tools.get_illumination(targets)+torch.zeros([N,1,H,W]).to(opt.device)
 		with torch.no_grad():
-			_,pred1=net(inputs,i)
-		tensorgrid=torch.cat([tools.unNorm(inputs),targets,pred1],dim=0)
-		i_conditions=tools.def_illumination(illumination,[1,1,H,W])
-		for i_c in i_conditions:
-			i_c=i_c.to(opt.device)
-			with torch.no_grad():
-				_,pred=net(inputs,i_c)
-				tensorgrid=torch.cat([tensorgrid,pred],0)
+			pred1_Y,pred1=net(inputs,i)
+		tensorgrid=torch.cat([tools.unNorm(inputs),targets,pred1_Y,pred1],dim=0)
+		#暂时不用这么多Y
+		# i_conditions=tools.def_illumination(illumination,[1,1,H,W])
+		# for i_c in i_conditions:
+		# 	i_c=i_c.to(opt.device)
+		# 	with torch.no_grad():
+		# 		_,pred=net(inputs,i_c)
+		# 		tensorgrid=torch.cat([tensorgrid,pred],0)
 		grid=utils.make_grid(tensorgrid,4)
 		i_gt=tools.get_illumination(targets).item()
 		save_dir=os.path.join(cwd,'grids',model_name);dircheck(save_dir)
-		save_dir=os.path.join(save_dir,f'{ind}_in_gt_{i_gt}_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
+		save_dir=os.path.join(save_dir,f'{ind}_in_gt_predY_{i_gt}_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		print(type(grid),grid.shape,ind)
 		utils.save_image(grid,save_dir)
 def eval_imgs(net,path):
