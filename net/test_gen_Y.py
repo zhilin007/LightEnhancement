@@ -20,6 +20,7 @@ def getNet():
 	print(f'psnr:',ckp['max_psnr'],'ssim:',ckp['max_ssim'])
 	return net
 def eval(net,loader):
+	net.eval()
 	illumination=[0.01,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
 	for ind ,(inputs,targets) in enumerate(loader):
 		print(ind)
