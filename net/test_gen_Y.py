@@ -71,6 +71,7 @@ def eval_imgs(net,path):
 		utils.save_image(grid,save_dir)
 if __name__ == "__main__":
 	#python test_gen_Y.py --pth=Gen_Y_Backbone7x7_inC4_384p_2e5_l1_ssim --divisor=16 --device='cuda:2' --norm --net=Gen_Y_Backbone7x7  --scale_factor=0.25 --incolor=4
+	# python test_gen_Y.py --pth=gen_y_unet_160p_2e5_l1 --divisor=16 --net=gen_y_unet
 	net=getNet()
 	loader=get_eval_loader()
 	eval(net,loader)
