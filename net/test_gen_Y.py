@@ -16,7 +16,7 @@ def getNet():
 	if opt.device=='cuda':
 		net=torch.nn.DataParallel(net)
 	ckp=torch.load(opt.pth,opt.device)
-	net=net.load_state_dict(ckp['model'])
+	net.load_state_dict(ckp['model'])
 	print(f'psnr:',ckp['max_psnr'],'ssim:',ckp['max_ssim'])
 	return net
 def eval(net,loader):
