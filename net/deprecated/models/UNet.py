@@ -144,15 +144,12 @@ class UNet_Depth(nn.Module):
 		self.encoder.append(Block(in_color,feature))
 		for _ in range(1,depth):
 			self.encoder.append(Block(feature,feature))
-
 		self.up=nn.ModuleList()
 		for _ in range(1,depth):
 			self.up.append(Up(feature,feature))
-
 		self.decoder=nn.ModuleList()
 		for _ in range(1,depth):
 			self.decoder.append(Block(feature*2,feature))
-
 		self.conv1x1=nn.Conv2d(feature,out_color,kernel_size=1,stride=1,padding=0)
 	def forward(self,x):
 		features=[]
@@ -162,7 +159,6 @@ class UNet_Depth(nn.Module):
 			x=self.maxpool(x)
 			x=self.encoder[i](x)
 			features.append(x)
-		
 		features=features[::-1]
 		x=features[0]
 		for i in range(1,self.depth):
@@ -171,10 +167,8 @@ class UNet_Depth(nn.Module):
 		out=self.conv1x1(x)
 		return out
 
-
-
 if __name__ == "__main__":
-	x=torch.zeros([1,4,256,256])
+	x=torch.zeros([1,3,256,256])
 	net=UNet_Depth(depth=9)
 	y=net(x)
 	print(y.size())
