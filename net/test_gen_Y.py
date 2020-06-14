@@ -16,7 +16,7 @@ def getNet():
 	if opt.device=='cuda':
 		net=torch.nn.DataParallel(net)
 	ckp=torch.load(opt.pth,opt.device)
-	net.load_state_dict(ckp['model'])
+	net=net.load_state_dict(ckp['model'])
 	print(f'psnr:',ckp['max_psnr'],'ssim:',ckp['max_ssim'])
 	return net
 def eval(net,loader):
@@ -44,7 +44,7 @@ def eval(net,loader):
 		# save_dir=os.path.join(save_dir,f'{ind}_in_gt_{i_gt}_0.01_0.1_0.2_0.3_0.4_0.5_0.6_0.7_0.8_0.9_1.png')
 		save_dir=os.path.join(save_dir,f'{ind}_in_gt_{i_gt}_{psnr1}_{ssim1}.png')
 
-		print(type(grid),grid.shape,ind)
+		print(type(grid),grid.shape,ind,psnr1,ssim1)
 		utils.save_image(grid,save_dir)
 def eval_imgs(net,path):
 	imgs=glob.glob(os.path.join(path,'*.png'))
